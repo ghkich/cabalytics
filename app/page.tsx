@@ -1,7 +1,7 @@
 export default function Home() {
     return (
-        <main className="flex items-center max-w-lg">
-            <h1 className="text-center text-xs text-gray-300">HOME</h1>
+        <main className="flex max-w-lg items-center">
+            <h1 className="text-center text-xs text-gray-300">About</h1>
         </main>
     )
 }

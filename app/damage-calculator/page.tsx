@@ -6,7 +6,11 @@ import { AttackAttributes, DefenseAttributes } from '@/app/types/attributes'
 import { CalculateDamageRequest } from '@/app/api/calculate-damage/route'
 
 type DamageMode = 'pvp' | 'pve'
-const getAttackAttributeFinalValue = (attacker: CharacterFormData, attribute: keyof AttackAttributes, damageMode?: DamageMode) => {
+const getAttackAttributeFinalValue = (
+    attacker: CharacterFormData,
+    attribute: keyof AttackAttributes,
+    damageMode?: DamageMode
+) => {
     const generalAttribute = attacker?.attackAttributes?.general?.[attribute] || 0
     const pvpAttribute = attacker?.attackAttributes?.pvp?.[attribute] || 0
     const pveAttribute = attacker?.attackAttributes?.pve?.[attribute] || 0
@@ -14,14 +18,21 @@ const getAttackAttributeFinalValue = (attacker: CharacterFormData, attribute: ke
     return generalAttribute + pvpAttribute
 }
 
-const getDefenseAttributeFinalValue = (defender: CharacterFormData, attribute: keyof DefenseAttributes, damageMode?: DamageMode) => {
+const getDefenseAttributeFinalValue = (
+    defender: CharacterFormData,
+    attribute: keyof DefenseAttributes,
+    damageMode?: DamageMode
+) => {
     const generalAttribute = defender?.defenseAttributes?.general?.[attribute] || 0
     const pvpAttribute = defender?.defenseAttributes?.pvp?.[attribute] || 0
     const pveAttribute = defender?.defenseAttributes?.pve?.[attribute] || 0
     if (damageMode === 'pve') return generalAttribute + pveAttribute
     return generalAttribute + pvpAttribute
 }
-const prepareCalculateDamagePayload = (attacker: CharacterFormData, defender: CharacterFormData): CalculateDamageRequest => {
+const prepareCalculateDamagePayload = (
+    attacker: CharacterFormData,
+    defender: CharacterFormData
+): CalculateDamageRequest => {
     if (!attacker.battleStyle || !defender.battleStyle) return {} as CalculateDamageRequest
     const isAttackerMagicBased = magicBasedBattleStyles.includes(attacker.battleStyle)
     return {
@@ -48,7 +59,10 @@ const prepareCalculateDamagePayload = (attacker: CharacterFormData, defender: Ch
             damageReduction: getDefenseAttributeFinalValue(defender, 'damageReduction'),
             resistCriticalRate: getDefenseAttributeFinalValue(defender, 'resistCriticalRate'),
             resistCriticalDamage: getDefenseAttributeFinalValue(defender, 'resistCriticalDamage'),
-            resistSkillAmp: getDefenseAttributeFinalValue(defender, isAttackerMagicBased ? 'resistMagicSkillAmp' : 'resistSwordSkillAmp'),
+            resistSkillAmp: getDefenseAttributeFinalValue(
+                defender,
+                isAttackerMagicBased ? 'resistMagicSkillAmp' : 'resistSwordSkillAmp'
+            ),
             ignorePenetration: getDefenseAttributeFinalValue(defender, 'ignorePenetration'),
             cancelIgnoreDamageReduction: getDefenseAttributeFinalValue(defender, 'cancelIgnoreDamageReduction'),
             finalDamageDown: getDefenseAttributeFinalValue(defender, 'finalDamageDown'),
@@ -80,9 +94,8 @@ export default function DamageCalculator() {
 
     return (
         <div className="">
-            <h1 className="pb-2 text-[10px] text-white text-opacity-25"> Damage Calculator v0.1 (Alpha)</h1>
             <div className="flex">
-                <div className="w-1/3 shrink-0">
+                <div className="min-w-[180px]">
                     <CharacterForm onChange={(character) => setAttacker(character)} />
                 </div>
                 <div className="flex w-full justify-center px-2">
@@ -91,7 +104,7 @@ export default function DamageCalculator() {
                         <div className="text-blue-400">{damage.critical.toFixed()}</div>
                     </div>
                 </div>
-                <div className="w-1/3 shrink-0">
+                <div className="min-w-[180px]">
                     <CharacterForm onChange={(character) => setDefender(character)} />
                 </div>
             </div>

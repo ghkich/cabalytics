@@ -2,13 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 255, 255, 255;
-  --background-rgb: 14, 14, 14;
-}
-
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background-color: rgb(var(--background-rgb));
+  height: 100vh;
+  @apply bg-gradient-to-t from-[#090909] to-[#111] text-white;
+
 }

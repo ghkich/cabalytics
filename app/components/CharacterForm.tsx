@@ -3,7 +3,7 @@ import { AttackAttributes, attackAttributes, defenseAttributes, DefenseAttribute
 import { Input } from '@/app/components/Input'
 import { battleStyleItems, BattleStyles } from '@/app/types/battleStyles'
 import { Select } from '@/app/components/Select'
-import clsx from 'clsx'
+import { cls } from '@/app/lib/utils'
 
 const initialAttackAttributes: AttackAttributes = {
     attack: 0,
@@ -115,10 +115,9 @@ export const CharacterForm = ({ onChange }: Props) => {
                         <button
                             key={type}
                             type="button"
-                            className={clsx(
-                                'w-full p-1 text-[11px]',
-                                attributeType === type ? '' : 'bg-white bg-opacity-5 opacity-30'
-                            )}
+                            className={cls('w-full p-1 text-[11px]', {
+                                ['bg-white bg-opacity-5 opacity-30']: attributeType !== type,
+                            })}
                             onClick={() => setAttributeType(type)}
                         >
                             {type}
@@ -130,10 +129,9 @@ export const CharacterForm = ({ onChange }: Props) => {
                         <button
                             key={category}
                             type="button"
-                            className={clsx(
-                                'w-full p-1 text-[9px]',
-                                attributeCategory === category ? '' : 'bg-white bg-opacity-5 opacity-30'
-                            )}
+                            className={cls('w-full p-1 text-[9px]', {
+                                'bg-white bg-opacity-5 opacity-30': attributeCategory === category,
+                            })}
                             onClick={() => setAttributeCategory(category)}
                         >
                             {category}
