@@ -1,5 +1,5 @@
 'use client'
-import { CharacterForm, CharacterFormData } from '@/app/components/CharacterForm'
+import { CharacterForm, CharacterFormData } from '@/app/[lang]/components/CharacterForm'
 import React, { useEffect, useState } from 'react'
 import { battleStyles, magicBasedBattleStyles } from '@/app/types/battleStyles'
 import { AttackAttributes, DefenseAttributes } from '@/app/types/attributes'
@@ -92,11 +92,19 @@ export default function DamageCalculator() {
             })
     }, [attacker, defender])
 
+    const handleAttackerChange = React.useCallback((character: CharacterFormData) => {
+        setAttacker(character)
+    }, [])
+
+    const handleDefenderChange = React.useCallback((character: CharacterFormData) => {
+        setDefender(character)
+    }, [])
+
     return (
         <div className="">
             <div className="flex">
                 <div className="min-w-[180px]">
-                    <CharacterForm onChange={(character) => setAttacker(character)} />
+                    <CharacterForm onChange={handleAttackerChange} />
                 </div>
                 <div className="flex w-full justify-center px-2">
                     <div className="flex gap-2">
@@ -105,7 +113,7 @@ export default function DamageCalculator() {
                     </div>
                 </div>
                 <div className="min-w-[180px]">
-                    <CharacterForm onChange={(character) => setDefender(character)} />
+                    <CharacterForm onChange={handleDefenderChange} />
                 </div>
             </div>
         </div>

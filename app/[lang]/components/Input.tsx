@@ -19,6 +19,7 @@ export const Input = ({ onChange, name, label, placeholder, value, type, disable
             </label>
             <div>
                 <input
+                    id={name}
                     type={type}
                     name={name}
                     aria-label={label}

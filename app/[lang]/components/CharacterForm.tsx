@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { AttackAttributes, attackAttributes, defenseAttributes, DefenseAttributes } from '@/app/types/attributes'
-import { Input } from '@/app/components/Input'
+import { Input } from '@/app/[lang]/components/Input'
 import { battleStyleItems, BattleStyles } from '@/app/types/battleStyles'
-import { Select } from '@/app/components/Select'
-import { cls } from '@/app/lib/utils'
+import { Select } from '@/app/[lang]/components/Select'
+import { cls } from '@/lib/utils'
 
 const initialAttackAttributes: AttackAttributes = {
     attack: 0,
@@ -71,6 +71,7 @@ export const CharacterForm = ({ onChange }: Props) => {
     const [attributeType, setAttributeType] = useState<AttributeType>('attack')
     const [attributeCategory, setAttributeCategory] = useState<AttributeCategory>('general')
     const [attackGeneral, setAttackGeneral] = useState<AttackAttributes>(initialAttackAttributes)
+    const [attackPvP, setAttackPvP] = useState<AttackAttributes>(initialAttackAttributes)
     const [defenseGeneral, setDefenseGeneral] = useState<DefenseAttributes>(initialDefenseAttributes)
 
     const handleChange = React.useCallback(
@@ -79,6 +80,11 @@ export const CharacterForm = ({ onChange }: Props) => {
 
             if (attributeType === 'attack' && attributeCategory === 'general') {
                 setAttackGeneral((prev) => ({ ...prev, [name]: value }))
+                return
+            }
+
+            if (attributeType === 'attack' && attributeCategory === 'pvp') {
+                setAttackPvP((prev) => ({ ...prev, [name]: value }))
                 return
             }
 
@@ -139,30 +145,34 @@ export const CharacterForm = ({ onChange }: Props) => {
                     ))}
                 </div>
             </div>
-            {attributeType === 'attack' &&
-                Object.entries(attackAttributes).map(([key, { description }]) => (
-                    <Input
-                        key={key}
-                        type="number"
-                        name={key}
-                        label={description.pt}
-                        onChange={handleChange}
-                        value={attackGeneral?.[key as keyof AttackAttributes]}
-                        min={0}
-                    />
-                ))}
-            {attributeType === 'defense' &&
-                Object.entries(defenseAttributes).map(([key, { description }]) => (
-                    <Input
-                        key={key}
-                        type="number"
-                        name={key}
-                        label={description.pt}
-                        onChange={handleChange}
-                        value={defenseGeneral?.[key as keyof DefenseAttributes]}
-                        min={0}
-                    />
-                ))}
+            <form>
+                {attributeType === 'attack' &&
+                    Object.entries(attackAttributes).map(([key, { description }]) => (
+                        <Input
+                            key={key}
+                            type="number"
+                            name={key}
+                            label={description.pt}
+                            onChange={handleChange}
+                            value={attackGeneral?.[key as keyof AttackAttributes]}
+                            min={0}
+                        />
+                    ))}
+            </form>
+            <form>
+                {attributeType === 'defense' &&
+                    Object.entries(defenseAttributes).map(([key, { description }]) => (
+                        <Input
+                            key={key}
+                            type="number"
+                            name={key}
+                            label={description.pt}
+                            onChange={handleChange}
+                            value={defenseGeneral?.[key as keyof DefenseAttributes]}
+                            min={0}
+                        />
+                    ))}
+            </form>
         </div>
     )
 }
