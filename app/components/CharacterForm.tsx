@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { AttackAttributes, attackAttributes, defenseAttributes, DefenseAttributes } from '@/app/types/attributes'
 import { Input } from '@/app/components/Input'
 import { battleStyleItems, BattleStyles } from '@/app/types/battleStyles'
@@ -46,13 +46,13 @@ const initialDefenseAttributes: DefenseAttributes = {
 
 export type CharacterFormData = {
     battleStyle?: BattleStyles
-    attackAttributes?: {
-        general?: AttackAttributes
+    attackAttributes: {
+        general: AttackAttributes
         pvp?: AttackAttributes
         pve?: AttackAttributes
     }
-    defenseAttributes?: {
-        general?: DefenseAttributes
+    defenseAttributes: {
+        general: DefenseAttributes
         pvp?: DefenseAttributes
         pve?: DefenseAttributes
     }
@@ -73,30 +73,30 @@ export const CharacterForm = ({ onChange }: Props) => {
     const [attackGeneral, setAttackGeneral] = useState<AttackAttributes>(initialAttackAttributes)
     const [defenseGeneral, setDefenseGeneral] = useState<DefenseAttributes>(initialDefenseAttributes)
 
+    const handleChange = React.useCallback(
+        (e: ChangeEvent<HTMLInputElement>) => {
+            const { name, value } = e.target
+
+            if (attributeType === 'attack' && attributeCategory === 'general') {
+                setAttackGeneral((prev) => ({ ...prev, [name]: value }))
+                return
+            }
+
+            if (attributeType === 'defense' && attributeCategory === 'general') {
+                setDefenseGeneral((prev) => ({ ...prev, [name]: value }))
+                return
+            }
+        },
+        [attributeType, attributeCategory]
+    )
+
     useEffect(() => {
         onChange({
             battleStyle,
             attackAttributes: { general: attackGeneral },
             defenseAttributes: { general: defenseGeneral },
         })
-    }, [battleStyle, attackGeneral, defenseGeneral])
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target
-        if (attributeType === 'attack') {
-            switch (attributeCategory) {
-                case 'general':
-                    setAttackGeneral((prev) => ({ ...prev, [name]: value }))
-                    break
-            }
-        }
-        if (attributeType === 'defense') {
-            switch (attributeCategory) {
-                case 'general':
-                    setDefenseGeneral((prev) => ({ ...prev, [name]: value }))
-                    break
-            }
-        }
-    }
+    }, [battleStyle, attackGeneral, defenseGeneral, onChange])
 
     return (
         <div className="">
