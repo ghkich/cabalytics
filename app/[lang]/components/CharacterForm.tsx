@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { AttackAttributes, attackAttributes, defenseAttributes, DefenseAttributes } from '@/app/types/attributes'
 import { Input } from '@/app/[lang]/components/Input'
-import { battleStyleItems, BattleStyles, magicBasedBattleStyles } from '@/app/types/battleStyles'
+import { BattleStyles, getBattleStyles, magicBasedBattleStyles } from '@/app/types/battleStyles'
 import { Select } from '@/app/[lang]/components/Select'
-import { cls } from '@/lib/utils'
 import useTranslation from '@/lib/useTranslation'
 import useFormatLocale from '@/lib/useFormatLocale'
+import { TabButton } from '@/app/[lang]/components/TabButton'
 
 const initialAttackAttributes: AttackAttributes = {
     attack: 0,
@@ -198,81 +198,79 @@ export const CharacterForm = ({ onChange }: Props) => {
     }, [battleStyle, attackGeneral, defenseGeneral, onChange])
 
     return (
-        <div className="">
+        <div className="flex flex-col gap-1 bg-neutral-800 bg-opacity-30 p-2">
             <Select
                 name="battle-style"
                 label={t('placeholders.battle_style')}
-                items={battleStyleItems}
+                items={getBattleStyles(lang)}
                 onChange={(e) => {
                     setBattleStyle(e.target.value as BattleStyles)
                 }}
             />
-            <div className="py-1 text-center text-[8px] font-light leading-tight text-neutral-500">
+            <div className="bg-neutral-800 bg-opacity-10 p-1.5 text-center text-[10px] font-light text-neutral-500">
                 <div className="">Combat Power</div>
-                <div className="text-[10px] text-neutral-200">{getCombatPower('total')}</div>
+                <div className="text-xs text-yellow-200">{getCombatPower('total')}</div>
             </div>
-            <div className="flex flex-col gap-0.5 pb-0.5">
-                <div className="flex justify-evenly  gap-0.5">
+            <div className="flex flex-col gap-1">
+                <div className="flex justify-evenly gap-1">
                     {attributeTypes.map((type) => (
-                        <button
+                        <TabButton
                             key={type.value}
-                            type="button"
-                            className={cls('w-full p-1 text-[11px]', {
-                                ['bg-white bg-opacity-5 opacity-30']: attributeType !== type.value,
-                            })}
+                            active={attributeType === type.value}
                             onClick={() => setAttributeType(type.value)}
                         >
                             <div>{type.label}</div>
-                            <div className="text-[7px] font-light">[ {getCombatPower(attributeType, 'total')} ]</div>
-                        </button>
+                            <div className="text-[8px] font-light opacity-50">
+                                [ {getCombatPower(attributeType, 'total')} ]
+                            </div>
+                        </TabButton>
                     ))}
                 </div>
-                <div className="flex justify-evenly gap-0.5">
+                <div className="flex justify-evenly gap-1">
                     {attributeCategories.map((category) => (
-                        <button
+                        <TabButton
                             key={category.value}
-                            type="button"
-                            className={cls('w-full p-1 text-[9px]', {
-                                'bg-white bg-opacity-5 opacity-30': attributeCategory === category.value,
-                            })}
+                            active={attributeCategory === category.value}
                             onClick={() => setAttributeCategory(category.value)}
                         >
-                            <div>{category.label[lang]}</div>
-                            <div className="text-[6px] font-light">
+                            <div className="text-[10px]">{category.label[lang]}</div>
+                            <div className="text-[8px] font-light opacity-50">
                                 [ {getCombatPower(attributeType, attributeCategory)} ]
                             </div>
-                        </button>
+                        </TabButton>
                     ))}
                 </div>
             </div>
-            <form>
-                {attributeType === 'attack' &&
-                    Object.entries(attackAttributes).map(([key, { description }]) => (
-                        <Input
-                            key={key}
-                            type="number"
-                            name={key}
-                            label={description[lang]}
-                            onChange={handleChange}
-                            value={attackGeneral?.[key as keyof AttackAttributes]}
-                            min={0}
-                        />
-                    ))}
-            </form>
-            <form>
-                {attributeType === 'defense' &&
-                    Object.entries(defenseAttributes).map(([key, { description }]) => (
-                        <Input
-                            key={key}
-                            type="number"
-                            name={key}
-                            label={description[lang]}
-                            onChange={handleChange}
-                            value={defenseGeneral?.[key as keyof DefenseAttributes]}
-                            min={0}
-                        />
-                    ))}
-            </form>
+            <div className="pl-0.5">
+                <form className="flex flex-col gap-0.5">
+                    {attributeType === 'attack' &&
+                        Object.entries(attackAttributes).map(([key, { description }]) => (
+                            <Input
+                                key={key}
+                                type="number"
+                                name={key}
+                                label={description[lang]}
+                                onChange={handleChange}
+                                value={attackGeneral?.[key as keyof AttackAttributes]}
+                                min={0}
+                            />
+                        ))}
+                </form>
+                <form className="flex flex-col gap-[1px]">
+                    {attributeType === 'defense' &&
+                        Object.entries(defenseAttributes).map(([key, { description }]) => (
+                            <Input
+                                key={key}
+                                type="number"
+                                name={key}
+                                label={description[lang]}
+                                onChange={handleChange}
+                                value={defenseGeneral?.[key as keyof DefenseAttributes]}
+                                min={0}
+                            />
+                        ))}
+                </form>
+            </div>
         </div>
     )
 }

@@ -1,3 +1,5 @@
+import { Locale } from '@/i18n.config'
+
 type BattleStyle = {
     description: Record<'pt' | 'en', string>
     acronym: Record<'pt' | 'en', string>
@@ -83,11 +85,12 @@ export const battleStyles: Record<BattleStyles, BattleStyle> = {
     },
 }
 
-export const battleStyleItems = Object.entries(battleStyles).map(([key, item]) => ({
-    value: key,
-    acronym: item.acronym.pt,
-    label: item.description.pt,
-}))
+export const getBattleStyles = (lang: Locale) =>
+    Object.entries(battleStyles).map(([key, item]) => ({
+        value: key,
+        acronym: item.acronym[lang],
+        label: item.acronym[lang] + ` - ` + item.description[lang],
+    }))
 
 export const magicBasedBattleStyles = [
     BattleStyles.Wizard,

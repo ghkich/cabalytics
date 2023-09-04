@@ -1,11 +1,14 @@
 {
   "navigation": {
-    "about": "Sobre",
+    "about": "Cabalytics",
+    "about_sub": "Sobre",
     "damage_calculator": "Calculadora de Danos",
-    "collection_appraiser": "Avaliador de Coleção"
+    "damage_calculator_sub": "v0.85 - Beta",
+    "collection_appraiser": "Avaliador de Coleção",
+    "collection_appraiser_sub": "Em desenvolvimento"
   },
   "placeholders": {
-    "battle_style": "Selecione um Estilo de Luta"
+    "battle_style": "Selecione um Estilo de Luta..."
   },
   "attribute_types": {
     "attack": "ATK",

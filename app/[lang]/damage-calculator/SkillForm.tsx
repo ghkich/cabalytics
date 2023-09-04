@@ -22,5 +22,5 @@ export const SkillForm = () => {
         })
     }, [setSkill])
 
-    return <div>Skill</div>
+    return <div></div>
 }

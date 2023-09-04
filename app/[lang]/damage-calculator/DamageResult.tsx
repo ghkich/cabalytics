@@ -6,8 +6,9 @@ export const DamageResult = () => {
     const { damage } = useDamageCalculator()
 
     return (
-        <div className="flex gap-2">
+        <div className="flex h-full w-full justify-center gap-3 bg-neutral-800 bg-opacity-20 px-4 py-10">
             <div className="text-yellow-400">{damage.normal?.toFixed()}</div>
+            <div className="opacity-20">/</div>
             <div className="text-blue-400">{damage.critical?.toFixed()}</div>
         </div>
     )

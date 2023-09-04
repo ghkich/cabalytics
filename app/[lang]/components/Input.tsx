@@ -13,8 +13,8 @@ type Props = {
 
 export const Input = ({ onChange, name, label, placeholder, value, type, disabled, min }: Props) => {
     return (
-        <div className="w-ful flex items-center gap-1 border-b border-neutral-800 text-[10px]">
-            <label htmlFor={name} className="w-full whitespace-nowrap text-gray-500">
+        <div className="group flex w-full items-center gap-1 text-xs">
+            <label htmlFor={name} className="w-full whitespace-nowrap text-neutral-500 group-hover:text-neutral-200">
                 {label}
             </label>
             <div>
@@ -26,7 +26,7 @@ export const Input = ({ onChange, name, label, placeholder, value, type, disable
                     placeholder={placeholder}
                     value={value}
                     onChange={onChange}
-                    className="w-[60px] bg-neutral-950 px-1 py-0.5 text-right text-neutral-400 outline-none [&::-webkit-inner-spin-button]:ml-1"
+                    className="w-[80px] bg-neutral-800 bg-opacity-30 px-2 py-1 text-right text-neutral-500 outline-none group-hover:bg-opacity-50 group-hover:text-neutral-200 [&::-webkit-inner-spin-button]:ml-1"
                     disabled={disabled}
                     min={min}
                 />

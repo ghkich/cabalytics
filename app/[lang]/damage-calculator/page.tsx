@@ -10,14 +10,14 @@ export default async function DamageCalculator() {
         <div className="">
             <DamageCalculatorProvider>
                 <div className="flex">
-                    <div className="min-w-[180px]">
+                    <div className="min-w-[240px]">
                         <AttackerForm />
                     </div>
                     <div className="flex w-full flex-col items-center px-2">
                         <SkillForm />
                         <DamageResult />
                     </div>
-                    <div className="min-w-[180px]">
+                    <div className="min-w-[240px]">
                         <DefenderForm />
                     </div>
                 </div>

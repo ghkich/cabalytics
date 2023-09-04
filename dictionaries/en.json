@@ -1,11 +1,14 @@
 {
   "navigation": {
-    "about": "About",
+    "about": "Cabalytics",
+    "about_sub": "About",
     "damage_calculator": "Damage Calculator",
-    "collection_appraiser": "Collection Appraiser"
+    "damage_calculator_sub": "v0.85 - Beta",
+    "collection_appraiser": "Collection Appraiser",
+    "collection_appraiser_sub": "Under development"
   },
   "placeholders": {
-    "battle_style": "Choose a Battle Style"
+    "battle_style": "Choose a Battle Style..."
   },
   "attribute_types": {
     "attack": "ATK",
