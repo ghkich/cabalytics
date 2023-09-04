@@ -1,41 +1,12 @@
 import { NextResponse } from 'next/server'
+import { Attacker } from '@/app/[lang]/damage-calculator/AttackerForm'
+import { Defender } from '@/app/[lang]/damage-calculator/DefenderForm'
+import { Skill } from '@/app/[lang]/damage-calculator/SkillForm'
 
 export type CalculateDamageRequest = {
-    attacker: {
-        criticalEffectiveness: number
-        attack: number
-        criticalDamage: number
-        criticalRate: number
-        skillAmp: number
-        penetration: number
-        addDamage: number
-        finalDamageUp: number
-        ignoreDamageReduction: number
-        ignoreResistCriticalDamage: number
-        ignoreResistCriticalRate: number
-        ignoreResistSkillAmp: number
-        normalDamageUp: number
-        cancelIgnorePenetration: number
-    }
-    defender: {
-        penetrationArmorFactor: number
-        baselineArmor: number
-        defense: number
-        damageReduction: number
-        resistCriticalRate: number
-        resistCriticalDamage: number
-        resistSkillAmp: number
-        ignorePenetration: number
-        cancelIgnoreDamageReduction: number
-        finalDamageDown: number
-    }
-    skill: {
-        skillAmp: number
-        addAttack: number
-        criticalDamage: number
-        defenseReduction: number
-        penetration: number
-    }
+    attacker: Attacker
+    defender: Defender
+    skill: Skill
 }
 
 export async function POST(request: Request) {
@@ -56,7 +27,10 @@ export async function POST(request: Request) {
     finalDefense -= penetration * defender.penetrationArmorFactor
     finalDefense = Math.max(finalDefense, 0)
 
-    const attackReduction = Math.max(1 - finalDefense / (defender.defense + defender.baselineArmor - skill.addAttack / 85), 0)
+    const attackReduction = Math.max(
+        1 - finalDefense / (defender.defense + defender.baselineArmor - skill.addAttack / 85),
+        0
+    )
 
     const damage = { normal: 0, critical: 0 }
 

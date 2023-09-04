@@ -4,6 +4,8 @@ import { Input } from '@/app/[lang]/components/Input'
 import { battleStyleItems, BattleStyles } from '@/app/types/battleStyles'
 import { Select } from '@/app/[lang]/components/Select'
 import { cls } from '@/lib/utils'
+import useTranslations from '@/lib/useTranslations'
+import { useLanguage } from '@/app/[lang]/language-provider'
 
 const initialAttackAttributes: AttackAttributes = {
     attack: 0,
@@ -58,18 +60,51 @@ export type CharacterFormData = {
     }
 }
 
-const attributeTypes = ['attack', 'defense'] as const
-type AttributeType = (typeof attributeTypes)[number]
-const attributeCategories = ['general', 'pvp', 'pve'] as const
-type AttributeCategory = (typeof attributeCategories)[number]
+type AttributeTypeValue = 'attack' | 'defense'
+const attributeTypes: { value: AttributeTypeValue; label: string }[] = [
+    {
+        value: 'attack',
+        label: 'ATK',
+    },
+    {
+        value: 'defense',
+        label: 'DEF',
+    },
+]
+type AttributeCategoryValue = 'general' | 'pvp' | 'pve'
+const attributeCategories: { value: AttributeCategoryValue; label: { pt: string; en: string } }[] = [
+    {
+        value: 'general',
+        label: {
+            pt: 'Geral',
+            en: 'General',
+        },
+    },
+    {
+        value: 'pvp',
+        label: {
+            pt: 'PVP',
+            en: 'PVP',
+        },
+    },
+    {
+        value: 'pve',
+        label: {
+            pt: 'PVE',
+            en: 'PVE',
+        },
+    },
+]
 
 type Props = {
     onChange: (character: CharacterFormData) => void
 }
 export const CharacterForm = ({ onChange }: Props) => {
+    const { t } = useTranslations()
+    const lang = useLanguage()
     const [battleStyle, setBattleStyle] = useState<BattleStyles>()
-    const [attributeType, setAttributeType] = useState<AttributeType>('attack')
-    const [attributeCategory, setAttributeCategory] = useState<AttributeCategory>('general')
+    const [attributeType, setAttributeType] = useState<AttributeTypeValue>('attack')
+    const [attributeCategory, setAttributeCategory] = useState<AttributeCategoryValue>('general')
     const [attackGeneral, setAttackGeneral] = useState<AttackAttributes>(initialAttackAttributes)
     const [attackPvP, setAttackPvP] = useState<AttackAttributes>(initialAttackAttributes)
     const [defenseGeneral, setDefenseGeneral] = useState<DefenseAttributes>(initialDefenseAttributes)
@@ -108,7 +143,7 @@ export const CharacterForm = ({ onChange }: Props) => {
         <div className="">
             <Select
                 name="battle-style"
-                label="Estilo de Luta"
+                label={t('placeholders.battle_style')}
                 items={battleStyleItems}
                 onChange={(e) => {
                     setBattleStyle(e.target.value as BattleStyles)
@@ -119,28 +154,28 @@ export const CharacterForm = ({ onChange }: Props) => {
                 <div className="flex justify-evenly  gap-0.5">
                     {attributeTypes.map((type) => (
                         <button
-                            key={type}
+                            key={type.value}
                             type="button"
                             className={cls('w-full p-1 text-[11px]', {
-                                ['bg-white bg-opacity-5 opacity-30']: attributeType !== type,
+                                ['bg-white bg-opacity-5 opacity-30']: attributeType !== type.value,
                             })}
-                            onClick={() => setAttributeType(type)}
+                            onClick={() => setAttributeType(type.value)}
                         >
-                            {type}
+                            {type.label}
                         </button>
                     ))}
                 </div>
                 <div className="flex justify-evenly gap-0.5">
                     {attributeCategories.map((category) => (
                         <button
-                            key={category}
+                            key={category.value}
                             type="button"
                             className={cls('w-full p-1 text-[9px]', {
-                                'bg-white bg-opacity-5 opacity-30': attributeCategory === category,
+                                'bg-white bg-opacity-5 opacity-30': attributeCategory === category.value,
                             })}
-                            onClick={() => setAttributeCategory(category)}
+                            onClick={() => setAttributeCategory(category.value)}
                         >
-                            {category}
+                            {category.label[lang]}
                         </button>
                     ))}
                 </div>
@@ -152,7 +187,7 @@ export const CharacterForm = ({ onChange }: Props) => {
                             key={key}
                             type="number"
                             name={key}
-                            label={description.pt}
+                            label={description[lang]}
                             onChange={handleChange}
                             value={attackGeneral?.[key as keyof AttackAttributes]}
                             min={0}
@@ -166,7 +201,7 @@ export const CharacterForm = ({ onChange }: Props) => {
                             key={key}
                             type="number"
                             name={key}
-                            label={description.pt}
+                            label={description[lang]}
                             onChange={handleChange}
                             value={defenseGeneral?.[key as keyof DefenseAttributes]}
                             min={0}
