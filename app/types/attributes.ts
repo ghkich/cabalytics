@@ -60,7 +60,7 @@ export const attackAttributes: Record<keyof AttackAttributes, Attribute> = {
         score: 750,
     },
     criticalDamage: {
-        description: { pt: 'Dano Crítico', en: 'Critical Damage' },
+        description: { pt: 'Dano Crítico', en: 'Critical DMG' },
         score: 177,
     },
     swordSkillAmp: {
@@ -96,15 +96,15 @@ export const attackAttributes: Record<keyof AttackAttributes, Attribute> = {
         score: 1604,
     },
     ignoreDamageReduction: {
-        description: { pt: 'Ign. Redução de Dano', en: 'Ignore Damage Reduction' },
+        description: { pt: 'Ign. Redução de Dano', en: 'Ign. DMG Reduction' },
         score: 16.8,
     },
     ignoreResistCriticalRate: {
-        description: { pt: 'Ign. Res. à Taxa Crítica', en: 'Ignore Resist Critical Rate' },
+        description: { pt: 'Ign. Res. à Taxa Crítica', en: 'Ign. Resist Critical Rate' },
         score: 574,
     },
     ignoreResistCriticalDamage: {
-        description: { pt: 'Ign. Res. ao Dano Crítico', en: 'Ignore Resist Critical Damage' },
+        description: { pt: 'Ign. Res. ao Dano Crítico', en: 'Ign. Resist Critical DMG' },
         score: 142.5,
     },
     ignoreResistSkillAmp: {
@@ -116,7 +116,7 @@ export const attackAttributes: Record<keyof AttackAttributes, Attribute> = {
         score: 85,
     },
     cancelIgnorePenetration: {
-        description: { pt: 'Canc. Ign. Perfuração', en: 'Cancel Ignore Penetration' },
+        description: { pt: 'Canc. Ign. Perfuração', en: 'Cancel Ign. Penetration' },
         score: 47.8,
     },
 }
@@ -166,7 +166,7 @@ export const defenseAttributes: Record<keyof DefenseAttributes, Attribute> = {
         score: 5.3,
     },
     cancelIgnoreDamageReduction: {
-        description: { pt: 'Canc. Ign. Red. de Dano', en: 'Cancel Ignore Damage Reduction' },
+        description: { pt: 'Canc. Ign. Red. de Dano', en: 'Canc. Ign. DMG Reduction' },
         score: 19.9,
     },
     cancelIgnoreEvasion: {

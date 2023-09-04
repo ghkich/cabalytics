@@ -2,8 +2,6 @@
 import React from 'react'
 import { useDamageCalculator } from '@/app/[lang]/damage-calculator/damage-calculator-provider'
 
-type Props = {}
-
 export const DamageResult = () => {
     const { damage } = useDamageCalculator()
 

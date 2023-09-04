@@ -3,5 +3,20 @@
     "about": "About",
     "damage_calculator": "Damage Calculator",
     "collection_appraiser": "Collection Appraiser"
+  },
+  "placeholders": {
+    "battle_style": "Choose a Battle Style"
+  },
+  "attribute_types": {
+    "attack": "ATK",
+    "defense": "DEF"
+  },
+  "attribute_categories": {
+    "general": "General",
+    "pvp": "PVP",
+    "pve": "PVE"
+  },
+  "attributes": {
+    "attack": "Attack"
   }
 }
