@@ -24,7 +24,7 @@ export default function RootLayout({ children, params }: { children: React.React
         <html lang={params.lang}>
             <LanguageProvider language={params.lang}>
                 <body className={roboto.className}>
-                    <header className="border-b border-white border-opacity-5 bg-neutral-900 bg-opacity-60 font-light">
+                    <header className="border-b border-neutral-800 border-opacity-50 bg-neutral-900 bg-opacity-60 font-light">
                         <div className="mx-auto flex max-w-3xl items-center gap-3 p-3">
                             <h1 className={cls(exo2.className, 'mt-[-3px] text-xs text-neutral-400')}>Cabalytics</h1>
                             <span className="opacity-5">|</span>

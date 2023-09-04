@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { getDictionary, translate } from '@/lib/dictionary'
 import { useLanguage } from '@/app/[lang]/language-provider'
 
-const useTranslations = () => {
+const useTranslation = () => {
     const lang = useLanguage()
     const [dictionary, setDictionary] = useState({})
 
@@ -18,9 +18,10 @@ const useTranslations = () => {
     }, [lang])
 
     return {
+        lang,
         t: (key: string, params?: { [key: string]: string | number }) => translate(key, dictionary, params),
         dictionary,
     }
 }
 
-export default useTranslations
+export default useTranslation

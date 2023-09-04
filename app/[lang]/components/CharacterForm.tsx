@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { AttackAttributes, attackAttributes, defenseAttributes, DefenseAttributes } from '@/app/types/attributes'
 import { Input } from '@/app/[lang]/components/Input'
-import { battleStyleItems, BattleStyles } from '@/app/types/battleStyles'
+import { battleStyleItems, BattleStyles, magicBasedBattleStyles } from '@/app/types/battleStyles'
 import { Select } from '@/app/[lang]/components/Select'
 import { cls } from '@/lib/utils'
-import useTranslations from '@/lib/useTranslations'
-import { useLanguage } from '@/app/[lang]/language-provider'
+import useTranslation from '@/lib/useTranslation'
+import useFormatLocale from '@/lib/useFormatLocale'
 
 const initialAttackAttributes: AttackAttributes = {
     attack: 0,
@@ -96,18 +96,76 @@ const attributeCategories: { value: AttributeCategoryValue; label: { pt: string;
     },
 ]
 
+export type CombatPower = {
+    attackAbility: {
+        general: number
+        pvp: number
+        pve: number
+    }
+    defenseAbility: {
+        general: number
+        pvp: number
+        pve: number
+    }
+}
+const sumAttackAttributes = (attributes: AttackAttributes, isMagicBased: boolean) => {
+    return Object.entries(attributes).reduce((acc, [key, value]) => {
+        const attributeKey = key as keyof AttackAttributes
+        let attributeScore = attackAttributes[attributeKey].score
+        if (isMagicBased && attributeKey === 'attack') attributeScore = 0
+        if (!isMagicBased && attributeKey === 'magicAttack') attributeScore = 0
+        if (isMagicBased && attributeKey === 'swordSkillAmp') attributeScore = 0
+        if (!isMagicBased && attributeKey === 'magicSkillAmp') attributeScore = 0
+        return acc + value * attributeScore
+    }, 0)
+}
+
+const sumDefenseAttributes = (attributes: DefenseAttributes) => {
+    return Object.entries(attributes).reduce((acc, [key, value]) => {
+        const attributeKey = key as keyof DefenseAttributes
+        let attributeScore = defenseAttributes[attributeKey].score
+        return acc + value * attributeScore
+    }, 0)
+}
+
 type Props = {
     onChange: (character: CharacterFormData) => void
 }
+
 export const CharacterForm = ({ onChange }: Props) => {
-    const { t } = useTranslations()
-    const lang = useLanguage()
+    const { lang, t } = useTranslation()
+    const { formatNumber } = useFormatLocale()
     const [battleStyle, setBattleStyle] = useState<BattleStyles>()
     const [attributeType, setAttributeType] = useState<AttributeTypeValue>('attack')
     const [attributeCategory, setAttributeCategory] = useState<AttributeCategoryValue>('general')
     const [attackGeneral, setAttackGeneral] = useState<AttackAttributes>(initialAttackAttributes)
     const [attackPvP, setAttackPvP] = useState<AttackAttributes>(initialAttackAttributes)
     const [defenseGeneral, setDefenseGeneral] = useState<DefenseAttributes>(initialDefenseAttributes)
+
+    const isMagicBased = !!(battleStyle && magicBasedBattleStyles.includes(battleStyle))
+    const attackGeneralCombatPower = React.useMemo(
+        () => sumAttackAttributes(attackGeneral, isMagicBased),
+        [attackGeneral, isMagicBased]
+    )
+    const defenseGeneralCombatPower = React.useMemo(() => sumDefenseAttributes(defenseGeneral), [defenseGeneral])
+
+    const getCombatPower = (type: AttributeTypeValue | 'total', category?: AttributeCategoryValue | 'total') => {
+        if (type === 'total') {
+            return formatNumber(attackGeneralCombatPower + defenseGeneralCombatPower)
+        }
+        if (type === 'attack' && category === 'general') {
+            return formatNumber(attackGeneralCombatPower)
+        }
+        if (type === 'attack' && category === 'total') {
+            return formatNumber(attackGeneralCombatPower)
+        }
+        if (type === 'defense' && category === 'general') {
+            return formatNumber(defenseGeneralCombatPower)
+        }
+        if (type === 'defense' && category === 'total') {
+            return formatNumber(defenseGeneralCombatPower)
+        }
+    }
 
     const handleChange = React.useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
@@ -148,8 +206,11 @@ export const CharacterForm = ({ onChange }: Props) => {
                 onChange={(e) => {
                     setBattleStyle(e.target.value as BattleStyles)
                 }}
-                className="pb-1"
             />
+            <div className="py-1 text-center text-[8px] font-light leading-tight text-neutral-500">
+                <div className="">Combat Power</div>
+                <div className="text-[10px] text-neutral-200">{getCombatPower('total')}</div>
+            </div>
             <div className="flex flex-col gap-0.5 pb-0.5">
                 <div className="flex justify-evenly  gap-0.5">
                     {attributeTypes.map((type) => (
@@ -161,7 +222,8 @@ export const CharacterForm = ({ onChange }: Props) => {
                             })}
                             onClick={() => setAttributeType(type.value)}
                         >
-                            {type.label}
+                            <div>{type.label}</div>
+                            <div className="text-[7px] font-light">[ {getCombatPower(attributeType, 'total')} ]</div>
                         </button>
                     ))}
                 </div>
@@ -175,7 +237,10 @@ export const CharacterForm = ({ onChange }: Props) => {
                             })}
                             onClick={() => setAttributeCategory(category.value)}
                         >
-                            {category.label[lang]}
+                            <div>{category.label[lang]}</div>
+                            <div className="text-[6px] font-light">
+                                [ {getCombatPower(attributeType, attributeCategory)} ]
+                            </div>
                         </button>
                     ))}
                 </div>

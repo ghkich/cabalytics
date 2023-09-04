@@ -33,6 +33,7 @@ const getFinalAttributeValue = (
     if (damageMode === 'pve') return generalAttribute + pveAttribute
     return generalAttribute + pvpAttribute
 }
+
 export const AttackerForm = () => {
     const { setAttacker } = useDamageCalculator()
 

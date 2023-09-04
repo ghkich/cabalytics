@@ -89,4 +89,9 @@ export const battleStyleItems = Object.entries(battleStyles).map(([key, item]) =
     label: item.description.pt,
 }))
 
-export const magicBasedBattleStyles = [BattleStyles.Wizard, BattleStyles.ForceArcher]
+export const magicBasedBattleStyles = [
+    BattleStyles.Wizard,
+    BattleStyles.ForceArcher,
+    BattleStyles.ForceGunner,
+    BattleStyles.DarkMage,
+]

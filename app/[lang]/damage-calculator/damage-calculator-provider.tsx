@@ -1,8 +1,8 @@
 'use client'
 import React, { createContext, useEffect } from 'react'
-import { Skill } from '@/app/api/calculate-damage/route'
 import { Attacker } from '@/app/[lang]/damage-calculator/AttackerForm'
 import { Defender } from '@/app/[lang]/damage-calculator/DefenderForm'
+import { Skill } from '@/app/[lang]/damage-calculator/SkillForm'
 
 export type DamageMode = 'pvp' | 'pve'
 
@@ -27,10 +27,10 @@ const initialState: DamageCalculatorContext = {
         normal: 0,
         critical: 0,
     },
-    setDamage: () => {},
     setAttacker: () => {},
     setDefender: () => {},
     setSkill: () => {},
+    setDamage: () => {},
 }
 
 const DamageCalculatorContext = createContext<DamageCalculatorContext>(initialState)
@@ -52,7 +52,16 @@ export const DamageCalculatorProvider = ({ children }: { children: React.ReactNo
 
     return (
         <DamageCalculatorContext.Provider
-            value={{ attacker, setAttacker, defender, setDefender, skill, setSkill, damage, setDamage }}
+            value={{
+                attacker,
+                setAttacker,
+                defender,
+                setDefender,
+                skill,
+                setSkill,
+                damage,
+                setDamage,
+            }}
         >
             {children}
         </DamageCalculatorContext.Provider>
