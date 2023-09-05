@@ -51,7 +51,7 @@ export const DefenderForm = () => {
                 finalDamageDown: getFinalAttributeValue(character, 'finalDamageDown'),
             })
         },
-        [setDefender]
+        [setDefender, attacker?.battleStyle]
     )
 
     return (
