@@ -19,6 +19,7 @@ export enum BattleStyles {
     ForceGunner = 'ForceGunner',
     DarkMage = 'DarkMage',
 }
+
 export const battleStyles: Record<BattleStyles, BattleStyle> = {
     [BattleStyles.ForceArcher]: {
         description: { pt: 'Arqueiro Arcano', en: 'Force Archer' },

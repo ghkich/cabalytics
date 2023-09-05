@@ -9,7 +9,7 @@ import { LanguageProvider } from '@/app/[lang]/language-provider'
 import Link from 'next/link'
 
 const exo2 = Exo_2({ subsets: ['latin'] })
-const roboto = Roboto({ subsets: ['latin'], weight: ['100', '400', '700'] })
+const roboto = Roboto({ subsets: ['latin'], weight: ['300', '400', '700'] })
 
 export const metadata: Metadata = {
     title: 'Cabalytics',
