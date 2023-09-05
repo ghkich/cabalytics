@@ -1,12 +1,13 @@
 import React from 'react'
 import { cls } from '@/lib/utils'
+import { BattleStyles } from '@/app/types/battleStyles'
 
 type Props = {
     name: string
     label: string
     items: { value: string; label: string }[]
     onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
-    value?: number
+    value?: BattleStyles
     disabled?: boolean
     className?: string
 }

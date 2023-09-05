@@ -7,43 +7,84 @@ import useTranslation from '@/lib/useTranslation'
 import useFormatLocale from '@/lib/useFormatLocale'
 import { TabButton } from '@/app/[lang]/components/TabButton'
 
-const initialAttackAttributes: AttackAttributes = {
-    attack: 0,
-    magicAttack: 0,
-    attackRate: 0,
-    criticalRate: 0,
-    criticalDamage: 0,
-    swordSkillAmp: 0,
-    magicSkillAmp: 0,
-    accuracy: 0,
-    penetration: 0,
+const starrkAttackAttributes: AttackAttributes = {
+    attack: 1614,
+    magicAttack: 2896,
+    attackRate: 5396,
+    criticalRate: 67,
+    criticalDamage: 274 + 4,
+    swordSkillAmp: 131 + 3,
+    magicSkillAmp: 241 + 3,
+    accuracy: 1566,
+    penetration: 834,
     minimumDamage: 0,
-    addDamage: 0,
-    ignoreEvasion: 0,
-    finalDamageUp: 0,
-    ignoreDamageReduction: 0,
-    ignoreResistCriticalRate: 0,
-    ignoreResistCriticalDamage: 0,
-    ignoreResistSkillAmp: 0,
-    normalDamageUp: 0,
-    cancelIgnorePenetration: 0,
+    addDamage: 68,
+    ignoreEvasion: 782,
+    finalDamageUp: 6,
+    ignoreDamageReduction: 173,
+    ignoreResistCriticalRate: 12,
+    ignoreResistCriticalDamage: 96,
+    ignoreResistSkillAmp: 13,
+    normalDamageUp: 51,
+    cancelIgnorePenetration: 72,
+}
+
+const starrkDefenseAttributes: DefenseAttributes = {
+    hp: 10000,
+    defense: 5243 + 2,
+    defenseRate: 8205,
+    evasion: 1478,
+    damageReduction: 741,
+    resistCriticalRate: 24,
+    resistCriticalDamage: 195,
+    resistMagicSkillAmp: 68 + 31,
+    resistSwordSkillAmp: 68 + 13,
+    ignorePenetration: 473,
+    ignoreAccuracy: 965,
+    cancelIgnoreDamageReduction: 36,
+    cancelIgnoreEvasion: 5,
+    finalDamageDown: 7,
+}
+
+const initialAttackAttributes: AttackAttributes = {
+    // attack: 0,
+    // magicAttack: 0,
+    // attackRate: 0,
+    // criticalRate: 0,
+    // criticalDamage: 0,
+    // swordSkillAmp: 0,
+    // magicSkillAmp: 0,
+    // accuracy: 0,
+    // penetration: 0,
+    // minimumDamage: 0,
+    // addDamage: 0,
+    // ignoreEvasion: 0,
+    // finalDamageUp: 0,
+    // ignoreDamageReduction: 0,
+    // ignoreResistCriticalRate: 0,
+    // ignoreResistCriticalDamage: 0,
+    // ignoreResistSkillAmp: 0,
+    // normalDamageUp: 0,
+    // cancelIgnorePenetration: 0,
+    ...starrkAttackAttributes,
 }
 
 const initialDefenseAttributes: DefenseAttributes = {
-    hp: 0,
-    defense: 0,
-    defenseRate: 0,
-    evasion: 0,
-    damageReduction: 0,
-    resistCriticalRate: 0,
-    resistCriticalDamage: 0,
-    resistMagicSkillAmp: 0,
-    resistSwordSkillAmp: 0,
-    ignoreAccuracy: 0,
-    ignorePenetration: 0,
-    cancelIgnoreDamageReduction: 0,
-    cancelIgnoreEvasion: 0,
-    finalDamageDown: 0,
+    // hp: 0,
+    // defense: 0,
+    // defenseRate: 0,
+    // evasion: 0,
+    // damageReduction: 0,
+    // resistCriticalRate: 0,
+    // resistCriticalDamage: 0,
+    // resistMagicSkillAmp: 0,
+    // resistSwordSkillAmp: 0,
+    // ignoreAccuracy: 0,
+    // ignorePenetration: 0,
+    // cancelIgnoreDamageReduction: 0,
+    // cancelIgnoreEvasion: 0,
+    // finalDamageDown: 0,
+    ...starrkDefenseAttributes,
 }
 
 export type CharacterFormData = {
@@ -135,14 +176,14 @@ type Props = {
 export const CharacterForm = ({ onChange }: Props) => {
     const { lang, t } = useTranslation()
     const { formatNumber } = useFormatLocale()
-    const [battleStyle, setBattleStyle] = useState<BattleStyles>()
+    const [battleStyle, setBattleStyle] = useState<BattleStyles>(BattleStyles.ForceArcher)
     const [attributeType, setAttributeType] = useState<AttributeTypeValue>('attack')
     const [attributeCategory, setAttributeCategory] = useState<AttributeCategoryValue>('general')
     const [attackGeneral, setAttackGeneral] = useState<AttackAttributes>(initialAttackAttributes)
     const [attackPvP, setAttackPvP] = useState<AttackAttributes>(initialAttackAttributes)
     const [defenseGeneral, setDefenseGeneral] = useState<DefenseAttributes>(initialDefenseAttributes)
 
-    const isMagicBased = !!(battleStyle && magicBasedBattleStyles.includes(battleStyle))
+    const isMagicBased = battleStyle && magicBasedBattleStyles.includes(battleStyle)
     const attackGeneralCombatPower = React.useMemo(
         () => sumAttackAttributes(attackGeneral, isMagicBased),
         [attackGeneral, isMagicBased]
@@ -203,6 +244,7 @@ export const CharacterForm = ({ onChange }: Props) => {
                 name="battle-style"
                 label={t('placeholders.battle_style')}
                 items={getBattleStyles(lang)}
+                value={battleStyle}
                 onChange={(e) => {
                     setBattleStyle(e.target.value as BattleStyles)
                 }}

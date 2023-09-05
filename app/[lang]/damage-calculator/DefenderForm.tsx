@@ -40,15 +40,16 @@ export const DefenderForm = () => {
                 baselineArmor: battleStyles[character.battleStyle].baselineArmor,
                 defense: getFinalAttributeValue(character, 'defense'),
                 damageReduction: getFinalAttributeValue(character, 'damageReduction'),
-                resistCriticalRate: getFinalAttributeValue(character, 'resistCriticalRate'),
-                resistCriticalDamage: getFinalAttributeValue(character, 'resistCriticalDamage'),
-                resistSkillAmp: getFinalAttributeValue(
-                    character,
-                    isAttackerMagicBased ? 'resistMagicSkillAmp' : 'resistSwordSkillAmp'
-                ),
+                resistCriticalRate: getFinalAttributeValue(character, 'resistCriticalRate') / 100,
+                resistCriticalDamage: getFinalAttributeValue(character, 'resistCriticalDamage') / 100,
+                resistSkillAmp:
+                    getFinalAttributeValue(
+                        character,
+                        isAttackerMagicBased ? 'resistMagicSkillAmp' : 'resistSwordSkillAmp'
+                    ) / 100,
                 ignorePenetration: getFinalAttributeValue(character, 'ignorePenetration'),
                 cancelIgnoreDamageReduction: getFinalAttributeValue(character, 'cancelIgnoreDamageReduction'),
-                finalDamageDown: getFinalAttributeValue(character, 'finalDamageDown'),
+                finalDamageDown: getFinalAttributeValue(character, 'finalDamageDown') / 100,
             })
         },
         [setDefender, attacker?.battleStyle]
