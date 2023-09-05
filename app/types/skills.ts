@@ -20,8 +20,7 @@ const generateSkill = (namePt: string, nameEn: string, stats: SkillStats) => ({
     ...stats,
 })
 
-// export const skills: Record<BattleStyles, Skill[]> = {
-export const skills: Record<any, Skill[]> = {
+export const skills: Record<BattleStyles, Skill[]> = {
     [BattleStyles.ForceArcher]: [
         generateSkill('Lança da Terra', 'Earth Arrow', { skillAmp: 0.95, addAttack: 143 }),
         generateSkill('Lança da Água', 'Water Arrow', { skillAmp: 0.85, addAttack: 173 }),
@@ -42,4 +41,10 @@ export const skills: Record<any, Skill[]> = {
         generateSkill('Desbalancear', 'Unbalance', { skillAmp: 0, addAttack: 136 }),
         generateSkill('Abalo Sísmico', 'Earthquake', { skillAmp: 0.8, addAttack: 1786 }),
     ],
+    [BattleStyles.Blader]: [],
+    [BattleStyles.ForceBlader]: [],
+    [BattleStyles.ForceShielder]: [],
+    [BattleStyles.Gladiator]: [],
+    [BattleStyles.ForceGunner]: [],
+    [BattleStyles.DarkMage]: [],
 }
