@@ -182,6 +182,7 @@ export const CharacterForm = ({ onChange }: Props) => {
             }
 
             if (attributeType === 'defense' && attributeCategory === 'general') {
+                console.log(value)
                 setDefenseGeneral((prev) => ({ ...prev, [name]: value }))
                 return
             }
@@ -256,7 +257,7 @@ export const CharacterForm = ({ onChange }: Props) => {
                             />
                         ))}
                 </form>
-                <form className="flex flex-col gap-[1px]">
+                <form className="flex flex-col gap-0.5">
                     {attributeType === 'defense' &&
                         Object.entries(defenseAttributes).map(([key, { description }]) => (
                             <Input

@@ -22,19 +22,19 @@ const getFinalAttributeValue = (
     attribute: keyof DefenseAttributes,
     damageMode?: DamageMode
 ) => {
-    const generalAttribute = defender?.defenseAttributes?.general?.[attribute] || 0
-    const pvpAttribute = defender?.defenseAttributes?.pvp?.[attribute] || 0
-    const pveAttribute = defender?.defenseAttributes?.pve?.[attribute] || 0
-    if (damageMode === 'pve') return generalAttribute + pveAttribute
-    return generalAttribute + pvpAttribute
+    const generalAttribute = defender?.defenseAttributes?.general?.[attribute] ?? 0
+    const pvpAttribute = defender?.defenseAttributes?.pvp?.[attribute] ?? 0
+    const pveAttribute = defender?.defenseAttributes?.pve?.[attribute] ?? 0
+    if (damageMode === 'pve') return Number(generalAttribute) + Number(pveAttribute)
+    return Number(generalAttribute) + Number(pvpAttribute)
 }
 export const DefenderForm = () => {
-    const { setDefender } = useDamageCalculator()
+    const { attacker, setDefender } = useDamageCalculator()
 
     const handleChange = React.useCallback(
         (character: CharacterFormData) => {
-            if (!character.battleStyle) return
-            const isAttackerMagicBased = magicBasedBattleStyles.includes(character.battleStyle)
+            if (!character.battleStyle || !attacker?.battleStyle) return
+            const isAttackerMagicBased = magicBasedBattleStyles.includes(attacker.battleStyle)
             setDefender({
                 penetrationArmorFactor: battleStyles[character.battleStyle].penetrationArmorFactor,
                 baselineArmor: battleStyles[character.battleStyle].baselineArmor,

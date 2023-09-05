@@ -3,7 +3,6 @@ import { DamageResult } from '@/app/[lang]/damage-calculator/DamageResult'
 import { DamageCalculatorProvider } from '@/app/[lang]/damage-calculator/damage-calculator-provider'
 import { AttackerForm } from '@/app/[lang]/damage-calculator/AttackerForm'
 import { DefenderForm } from '@/app/[lang]/damage-calculator/DefenderForm'
-import { SkillForm } from '@/app/[lang]/damage-calculator/SkillForm'
 
 export default async function DamageCalculator() {
     return (
@@ -14,7 +13,6 @@ export default async function DamageCalculator() {
                         <AttackerForm />
                     </div>
                     <div className="flex w-full flex-col items-center px-2">
-                        <SkillForm />
                         <DamageResult />
                     </div>
                     <div className="min-w-[240px]">

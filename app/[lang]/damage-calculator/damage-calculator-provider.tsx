@@ -1,54 +1,32 @@
 'use client'
-import React, { createContext, useEffect } from 'react'
+import React, { createContext } from 'react'
 import { Attacker } from '@/app/[lang]/damage-calculator/AttackerForm'
 import { Defender } from '@/app/[lang]/damage-calculator/DefenderForm'
-import { Skill } from '@/app/[lang]/damage-calculator/SkillForm'
+import { Damage } from '@/app/api/calculate-damage/route'
 
 export type DamageMode = 'pvp' | 'pve'
-
-export type DamageResult = {
-    normal: number
-    critical: number
-}
+export type SkillsDamage = Record<string, Damage>
 
 export type DamageCalculatorContext = {
     attacker?: Attacker
     setAttacker: (attacker: Attacker) => void
     defender?: Defender
     setDefender: (defender: Defender) => void
-    skill?: Skill
-    setSkill: (skill: Skill) => void
-    damage: DamageResult
-    setDamage: (damage: DamageResult) => void
+    skillsDamage?: Record<string, Damage>
+    setSkillsDamage: React.Dispatch<React.SetStateAction<SkillsDamage>>
 }
 
 const initialState: DamageCalculatorContext = {
-    damage: {
-        normal: 0,
-        critical: 0,
-    },
     setAttacker: () => {},
     setDefender: () => {},
-    setSkill: () => {},
-    setDamage: () => {},
+    setSkillsDamage: () => {},
 }
 
 const DamageCalculatorContext = createContext<DamageCalculatorContext>(initialState)
-
 export const DamageCalculatorProvider = ({ children }: { children: React.ReactNode }) => {
     const [attacker, setAttacker] = React.useState<Attacker>()
     const [defender, setDefender] = React.useState<Defender>()
-    const [skill, setSkill] = React.useState<Skill>()
-    const [damage, setDamage] = React.useState({ normal: 0, critical: 0 })
-
-    useEffect(() => {
-        if (!attacker || !defender || !skill) return
-        fetch('/api/calculate-damage', { method: 'POST', body: JSON.stringify({ attacker, defender, skill }) })
-            .then((res) => res.json())
-            .then((data) => {
-                setDamage(data)
-            })
-    }, [attacker, defender, skill])
+    const [skillsDamage, setSkillsDamage] = React.useState<SkillsDamage>({})
 
     return (
         <DamageCalculatorContext.Provider
@@ -57,10 +35,8 @@ export const DamageCalculatorProvider = ({ children }: { children: React.ReactNo
                 setAttacker,
                 defender,
                 setDefender,
-                skill,
-                setSkill,
-                damage,
-                setDamage,
+                skillsDamage,
+                setSkillsDamage,
             }}
         >
             {children}
