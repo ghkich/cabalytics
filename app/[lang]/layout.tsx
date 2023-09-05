@@ -25,18 +25,26 @@ export default function RootLayout({ children, params }: { children: React.React
         <html lang={params.lang}>
             <LanguageProvider language={params.lang}>
                 <body className={inter.className}>
-                    <header className="border-b border-neutral-800 border-opacity-50 bg-neutral-900 font-light">
-                        <div className="mx-auto flex max-w-5xl items-center gap-5 px-3 py-3.5">
-                            <Link
-                                href={`/${params.lang}`}
-                                className="font-light leading-snug opacity-50 transition-opacity duration-200 hover:opacity-80"
-                            >
-                                <h1 className={cls(exo2.className, 'mt-[-2px] text-sm text-neutral-200 ')}>
+                    <header className="border-b border-neutral-800 border-opacity-50 bg-neutral-900">
+                        <div className="mx-auto flex max-w-5xl items-center gap-5 px-5 py-4">
+                            <Link href={`/${params.lang}`} className="group translate-y-[-1px] leading-snug">
+                                <h1
+                                    className={cls(
+                                        exo2.className,
+                                        ' text-neutral-400 transition-colors duration-200 group-hover:text-sky-300'
+                                    )}
+                                >
                                     Cabalytics
                                 </h1>
-                                <div className="text-[10px] text-neutral-400 opacity-50">by Starrk</div>
+                                <div className="text-[11px] text-neutral-600 transition-colors duration-200 group-hover:text-neutral-500">
+                                    by Starrk
+                                </div>
                             </Link>
-                            <div className="ml-1.5 h-6 w-[1px] -skew-x-12 bg-neutral-700 bg-opacity-50"></div>
+                            <div className="flex items-center">
+                                <div className="ml-1 h-5 w-[1px] bg-neutral-800 bg-opacity-75"></div>
+                                <div className="ml-1 h-6 w-[1px] bg-neutral-800"></div>
+                                <div className="ml-1 h-7 w-[1px] bg-neutral-700"></div>
+                            </div>
                             <Navigation lang={params.lang} />
                         </div>
                     </header>
