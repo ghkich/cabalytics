@@ -182,7 +182,6 @@ export const CharacterForm = ({ onChange }: Props) => {
             }
 
             if (attributeType === 'defense' && attributeCategory === 'general') {
-                console.log(value)
                 setDefenseGeneral((prev) => ({ ...prev, [name]: value }))
                 return
             }

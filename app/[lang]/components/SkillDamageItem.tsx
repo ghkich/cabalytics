@@ -20,7 +20,6 @@ export const SkillDamageItem = ({ skill, onClick, selected }: Props) => {
 
     useEffect(() => {
         if (!attacker || !defender || !skill) return
-        console.log('calculateSkillDamage', defender.defense)
         calculateSkillDamage({ attacker, defender, skill })?.then()
     }, [attacker, defender, skill, calculateSkillDamage])
 

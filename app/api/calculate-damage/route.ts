@@ -80,7 +80,5 @@ export async function POST(request: Request) {
 
     damage.average = damage.normal * (1 - attacker.criticalRate) + damage.critical * attacker.criticalRate
 
-    console.log(defender, damage)
-
     return NextResponse.json(damage)
 }

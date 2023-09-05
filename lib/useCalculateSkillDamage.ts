@@ -12,7 +12,6 @@ export const useCalculateSkillDamage = () => {
                 method: 'POST',
                 body: JSON.stringify({ attacker, defender, skill }),
             })
-            console.log(defender.defense)
             if (res.status === 400) {
                 setDamage({ normal: 0, average: 0, critical: 0 })
                 return { normal: 0, average: 0, critical: 0 }
