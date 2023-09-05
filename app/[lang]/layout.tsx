@@ -1,7 +1,7 @@
 import 'app/[lang]/globals.css'
 import type { Metadata } from 'next'
 import React from 'react'
-import { Exo_2, Roboto } from 'next/font/google'
+import { Exo_2, Inter } from 'next/font/google'
 import { Navigation } from '@/app/[lang]/components/Navigation'
 import { cls } from '@/lib/utils'
 import { i18n, Locale } from '@/i18n.config'
@@ -9,7 +9,7 @@ import { LanguageProvider } from '@/app/[lang]/language-provider'
 import Link from 'next/link'
 
 const exo2 = Exo_2({ subsets: ['latin'] })
-const roboto = Roboto({ subsets: ['latin'], weight: ['300', '400', '700'] })
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
     title: 'Cabalytics',
@@ -24,8 +24,8 @@ export default function RootLayout({ children, params }: { children: React.React
     return (
         <html lang={params.lang}>
             <LanguageProvider language={params.lang}>
-                <body className={roboto.className}>
-                    <header className="border-b border-neutral-800 border-opacity-50 bg-neutral-900 bg-opacity-60 font-light">
+                <body className={inter.className}>
+                    <header className="border-b border-neutral-800 border-opacity-50 bg-neutral-900 font-light">
                         <div className="mx-auto flex max-w-5xl items-center gap-5 px-3 py-3.5">
                             <Link
                                 href={`/${params.lang}`}
