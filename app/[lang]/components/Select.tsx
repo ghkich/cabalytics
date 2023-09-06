@@ -20,7 +20,7 @@ export const Select = ({ onChange, name, label, value, items, disabled, classNam
                 aria-label={label}
                 value={value}
                 onChange={onChange}
-                className="w-full cursor-pointer appearance-none bg-neutral-800 bg-opacity-40 p-2 text-center text-neutral-100 outline-none transition-colors duration-200 hover:bg-opacity-60 hover:text-white"
+                className="bg-neutral-850 hover:bg-neutral-825 w-full cursor-pointer appearance-none p-2 text-center text-neutral-300 outline-none transition-colors duration-200 hover:text-neutral-200"
                 disabled={disabled}
             >
                 <option value="">{label}</option>

@@ -12,9 +12,9 @@ export function TabButton({ active, onClick, children }: ButtonProps) {
         <button
             type="button"
             className={cls(
-                'w-full bg-neutral-800 bg-opacity-10 p-1 text-xs leading-normal text-neutral-600 transition-all duration-200 hover:bg-opacity-30 hover:text-neutral-300',
+                'hover:bg-neutral-850 bg-neutral-875 text-neutral-450 w-full p-1 text-xs leading-normal transition-colors duration-200 hover:text-neutral-200',
                 {
-                    ['bg-neutral-800 bg-opacity-50 text-neutral-200 hover:bg-opacity-50']: active,
+                    ['bg-neutral-825 hover:bg-neutral-825 text-neutral-300 hover:text-neutral-200']: active,
                 }
             )}
             onClick={onClick}

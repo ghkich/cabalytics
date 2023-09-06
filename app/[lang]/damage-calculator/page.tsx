@@ -8,11 +8,11 @@ export default async function DamageCalculator() {
     return (
         <div className="">
             <DamageCalculatorProvider>
-                <div className="flex">
+                <div className="flex flex-col gap-1.5 md:flex-row">
                     <div className="min-w-[240px]">
                         <AttackerForm />
                     </div>
-                    <div className="flex w-full flex-col items-center px-2">
+                    <div className="flex w-full flex-col items-center">
                         <DamageResult />
                     </div>
                     <div className="min-w-[240px]">

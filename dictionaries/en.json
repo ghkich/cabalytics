@@ -1,11 +1,8 @@
 {
   "navigation": {
-    "about": "Cabalytics",
-    "about_sub": "About",
+    "cabalytics": "Cabalytics",
     "damage_calculator": "Damage Calculator",
-    "damage_calculator_sub": "v0.85 - Beta",
-    "collection_appraiser": "Collection Appraiser",
-    "collection_appraiser_sub": "Under development"
+    "collection_appraiser": "Collection Appraiser"
   },
   "placeholders": {
     "battle_style": "Choose a Battle Style..."

@@ -180,7 +180,6 @@ export const CharacterForm = ({ onChange }: Props) => {
     const [attributeType, setAttributeType] = useState<AttributeTypeValue>('attack')
     const [attributeCategory, setAttributeCategory] = useState<AttributeCategoryValue>('general')
     const [attackGeneral, setAttackGeneral] = useState<AttackAttributes>(initialAttackAttributes)
-    const [attackPvP, setAttackPvP] = useState<AttackAttributes>(initialAttackAttributes)
     const [defenseGeneral, setDefenseGeneral] = useState<DefenseAttributes>(initialDefenseAttributes)
 
     const isMagicBased = battleStyle && magicBasedBattleStyles.includes(battleStyle)
@@ -217,11 +216,6 @@ export const CharacterForm = ({ onChange }: Props) => {
                 return
             }
 
-            if (attributeType === 'attack' && attributeCategory === 'pvp') {
-                setAttackPvP((prev) => ({ ...prev, [name]: value }))
-                return
-            }
-
             if (attributeType === 'defense' && attributeCategory === 'general') {
                 setDefenseGeneral((prev) => ({ ...prev, [name]: value }))
                 return
@@ -239,7 +233,7 @@ export const CharacterForm = ({ onChange }: Props) => {
     }, [battleStyle, attackGeneral, defenseGeneral, onChange])
 
     return (
-        <div className="flex flex-col gap-1 bg-neutral-800 bg-opacity-30 p-2">
+        <div className="flex flex-col gap-0.5">
             <Select
                 name="battle-style"
                 label={t('placeholders.battle_style')}
@@ -249,41 +243,39 @@ export const CharacterForm = ({ onChange }: Props) => {
                     setBattleStyle(e.target.value as BattleStyles)
                 }}
             />
-            <div className="bg-neutral-800 bg-opacity-10 p-1.5 text-center text-[10px] font-light text-neutral-500">
+            <div className="bg-neutral-910 text-neutral-450 p-1.5 text-center text-[10px] font-light">
                 <div className="">Combat Power</div>
-                <div className="text-xs text-yellow-200">{getCombatPower('total')}</div>
+                <div className="text-xs text-orange-200">{getCombatPower('total')}</div>
             </div>
-            <div className="flex flex-col gap-1">
-                <div className="flex justify-evenly gap-1">
-                    {attributeTypes.map((type) => (
-                        <TabButton
-                            key={type.value}
-                            active={attributeType === type.value}
-                            onClick={() => setAttributeType(type.value)}
-                        >
-                            <div>{type.label}</div>
-                            <div className="text-[8px] font-light opacity-50">
-                                [ {getCombatPower(attributeType, 'total')} ]
-                            </div>
-                        </TabButton>
-                    ))}
-                </div>
-                <div className="flex justify-evenly gap-1">
-                    {attributeCategories.map((category) => (
-                        <TabButton
-                            key={category.value}
-                            active={attributeCategory === category.value}
-                            onClick={() => setAttributeCategory(category.value)}
-                        >
-                            <div className="text-[10px]">{category.label[lang]}</div>
-                            <div className="text-[8px] font-light opacity-50">
-                                [ {getCombatPower(attributeType, attributeCategory)} ]
-                            </div>
-                        </TabButton>
-                    ))}
-                </div>
+            <div className="flex justify-evenly gap-0.5">
+                {attributeTypes.map((type) => (
+                    <TabButton
+                        key={type.value}
+                        active={attributeType === type.value}
+                        onClick={() => setAttributeType(type.value)}
+                    >
+                        <div className="text-[12px]">{type.label}</div>
+                        <div className="text-[9px] font-light text-neutral-500 text-opacity-75">
+                            {getCombatPower(attributeType, 'total')}
+                        </div>
+                    </TabButton>
+                ))}
             </div>
-            <div className="pl-0.5">
+            <div className="flex justify-evenly gap-0.5">
+                {attributeCategories.map((category) => (
+                    <TabButton
+                        key={category.value}
+                        active={attributeCategory === category.value}
+                        onClick={() => setAttributeCategory(category.value)}
+                    >
+                        <div className="text-[11px]">{category.label[lang]}</div>
+                        <div className="text-[9px] font-light text-neutral-500 text-opacity-75">
+                            {getCombatPower(attributeType, attributeCategory)}
+                        </div>
+                    </TabButton>
+                ))}
+            </div>
+            <div className="">
                 <form className="flex flex-col gap-0.5">
                     {attributeType === 'attack' &&
                         Object.entries(attackAttributes).map(([key, { description }]) => (

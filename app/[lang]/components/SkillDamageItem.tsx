@@ -1,12 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSquare, faSquareCheck } from '@fortawesome/sharp-light-svg-icons'
+import { faCircle, faCircleCheck } from '@fortawesome/sharp-light-svg-icons'
 import React, { useEffect } from 'react'
-import { DamageNumbers } from '@/app/[lang]/damage-calculator/DamageResult'
 import { Skill } from '@/app/types/skills'
 import { useLanguage } from '@/app/[lang]/language-provider'
 import { cls } from '@/lib/utils'
 import { useDamageCalculator } from '@/app/[lang]/damage-calculator/damage-calculator-provider'
 import { useCalculateSkillDamage } from '@/lib/useCalculateSkillDamage'
+import { DamageNumber } from '@/app/[lang]/components/DamageNumber'
 
 type Props = {
     skill: Skill
@@ -34,43 +34,41 @@ export const SkillDamageItem = ({ skill, onClick, selected }: Props) => {
         <label
             htmlFor="skill"
             className={cls(
-                `flex w-full cursor-pointer items-center bg-neutral-800 bg-opacity-30 text-neutral-500 transition-all duration-200 hover:bg-opacity-40 hover:text-neutral-400 active:bg-opacity-20`,
+                `bg-neutral-875 active:bg-neutral-910 hover:bg-neutral-850 flex w-full cursor-pointer items-center text-neutral-400 transition-colors duration-200 hover:text-neutral-400`,
                 {
-                    'bg-opacity-60 text-neutral-300 hover:bg-opacity-60 hover:text-neutral-300': selected,
+                    'bg-neutral-825 hover:bg-neutral-825 text-neutral-300 hover:text-neutral-200': selected,
                 }
             )}
             onClick={() => onClick(skill.id)}
         >
-            <div className="w-16 border-r border-neutral-800 text-center">
+            <div className="w-16 border-r border-neutral-700 border-opacity-50 text-center">
                 <FontAwesomeIcon
-                    icon={selected ? faSquareCheck : faSquare}
+                    icon={selected ? faCircleCheck : faCircle}
                     className={cls(`text-neutral-700`, {
-                        'text-sky-300': selected,
+                        'text-emerald-300': selected,
                     })}
                 />
             </div>
             <div className="flex w-full px-4 py-3">
                 <div className="w-full">
                     <h2 className="text-sm">{skill.name[lang]}</h2>
-                    <div className="text-[10px] opacity-25">
+                    <div className="text-[10px] text-neutral-500 text-opacity-75">
                         Amp {(skill.skillAmp * 100).toFixed()}% / Add +{skill.addAttack}
                     </div>
                 </div>
-                <div className="flex items-center gap-8">
-                    {/*<DamageNumbers*/}
-                    {/*    normal={'300'}*/}
-                    {/*    average={'400'}*/}
-                    {/*    critical={'500'}*/}
-                    {/*    className={cls('opacity-50', {*/}
-                    {/*        'opacity-75': selected,*/}
-                    {/*    })}*/}
-                    {/*/>*/}
-                    <DamageNumbers
-                        normal={damage.normal.toFixed(0)}
-                        average={damage.average.toFixed(0)}
-                        critical={damage.critical.toFixed(0)}
-                        className={cls('opacity-50', {
-                            'opacity-100': selected,
+                <div className="flex items-center gap-2">
+                    <DamageNumber
+                        header="Base"
+                        value={damage.normal.toFixed(0)}
+                        className={cls('text-neutral-500', {
+                            'text-orange-300 opacity-100': selected,
+                        })}
+                    />
+                    <DamageNumber
+                        header="Crítico"
+                        value={damage.critical.toFixed(0)}
+                        className={cls('text-neutral-500', {
+                            'text-sky-400': selected,
                         })}
                     />
                 </div>

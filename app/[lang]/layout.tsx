@@ -1,14 +1,11 @@
 import 'app/[lang]/globals.css'
 import type { Metadata } from 'next'
 import React from 'react'
-import { Exo_2, Inter } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import { Navigation } from '@/app/[lang]/components/Navigation'
-import { cls } from '@/lib/utils'
 import { i18n, Locale } from '@/i18n.config'
 import { LanguageProvider } from '@/app/[lang]/language-provider'
-import Link from 'next/link'
 
-const exo2 = Exo_2({ subsets: ['latin'] })
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -25,31 +22,14 @@ export default function RootLayout({ children, params }: { children: React.React
         <html lang={params.lang}>
             <LanguageProvider language={params.lang}>
                 <body className={inter.className}>
-                    <header className="border-b border-neutral-800 border-opacity-50 bg-neutral-900">
-                        <div className="mx-auto flex max-w-5xl items-center gap-5 px-5 py-4">
-                            <Link href={`/${params.lang}`} className="group translate-y-[-1px] leading-snug">
-                                <h1
-                                    className={cls(
-                                        exo2.className,
-                                        ' text-neutral-400 transition-colors duration-200 group-hover:text-sky-300'
-                                    )}
-                                >
-                                    Cabalytics
-                                </h1>
-                                <div className="text-[11px] text-neutral-600 transition-colors duration-200 group-hover:text-neutral-500">
-                                    by Starrk
-                                </div>
-                            </Link>
-                            <div className="flex items-center">
-                                <div className="ml-1 h-5 w-[1px] bg-neutral-800 bg-opacity-75"></div>
-                                <div className="ml-1 h-6 w-[1px] bg-neutral-800"></div>
-                                <div className="ml-1 h-7 w-[1px] bg-neutral-700"></div>
-                            </div>
+                    <header className="bg-neutral-910">
+                        <div className="mx-auto flex max-w-5xl items-center gap-5 px-3 lg:px-0">
                             <Navigation lang={params.lang} />
                         </div>
                     </header>
+                    <div className="bg-neutral-875 mt-0.5 h-3 w-full" />
                     <main className="">
-                        <div className="mx-auto max-w-5xl p-3">{children}</div>
+                        <div className="mx-auto max-w-5xl p-1.5">{children}</div>
                     </main>
                 </body>
             </LanguageProvider>

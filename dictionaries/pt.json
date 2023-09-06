@@ -1,11 +1,8 @@
 {
   "navigation": {
-    "about": "Cabalytics",
-    "about_sub": "Sobre",
+    "cabalytics": "Cabalytics",
     "damage_calculator": "Calculadora de Danos",
-    "damage_calculator_sub": "v0.85 - Beta",
-    "collection_appraiser": "Avaliador de Coleção",
-    "collection_appraiser_sub": "Em desenvolvimento"
+    "collection_appraiser": "Avaliador de Coleção"
   },
   "placeholders": {
     "battle_style": "Selecione um Estilo de Luta..."

@@ -12,9 +12,10 @@ export function ToggleButton({ active, onClick, children }: ButtonProps) {
         <button
             type="button"
             className={cls(
-                'bg-neutral-800 bg-opacity-20 px-4 py-1 text-xs leading-normal text-neutral-600 transition-all duration-200 hover:bg-opacity-30 hover:text-neutral-300',
+                'bg-neutral-850 text-neutral-450 border border-neutral-800 px-4 py-1.5 text-xs transition-colors duration-200 hover:text-neutral-300',
                 {
-                    ['bg-neutral-800 bg-opacity-50 text-sky-300 hover:bg-opacity-50 hover:text-neutral-50']: active,
+                    ['bg-neutral-825 border-emerald-100 border-opacity-5 text-emerald-300 hover:text-emerald-200']:
+                        active,
                 }
             )}
             onClick={onClick}
