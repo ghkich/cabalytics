@@ -17,7 +17,7 @@
     "pve": "PVE"
   },
   "damage": {
-    "average_dps": "Average DPS",
+    "average_dps": "Avg. DPS",
     "average": "Average",
     "normal": "Normal",
     "critical": "Critical"
