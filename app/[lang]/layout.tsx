@@ -27,7 +27,11 @@ export default function RootLayout({ children, params }: { children: React.React
                             <Navigation lang={params.lang} />
                         </div>
                     </header>
-                    <div className="bg-neutral-875 mt-0.5 h-3 w-full" />
+                    <div className="bg-neutral-825 mt-0.5 h-2 w-full">
+                        <div className="mx-auto h-2 w-full max-w-5xl px-1.5">
+                            <div className="h-2 w-full bg-neutral-800" />
+                        </div>
+                    </div>
                     <main className="">
                         <div className="mx-auto max-w-5xl p-1.5">{children}</div>
                     </main>
