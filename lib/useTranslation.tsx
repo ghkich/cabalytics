@@ -7,7 +7,7 @@ const useTranslation = () => {
     const lang = useLanguage()
     const [dictionary, setDictionary] = useState({})
     const ready = Object.keys(dictionary).length > 0
-    const placeholder = '----'
+    const placeholder = '---'
 
     useEffect(() => {
         getDictionary(lang)

@@ -17,7 +17,7 @@ type Props = {
 export const SkillDamageItem = ({ skill, onClick, selected, isComboActive }: Props) => {
     const { lang, t } = useTranslation()
     const { attacker, defender, setSkillsDamage } = useDamageCalculator()
-    const { damage, calculateSkillDamage } = useCalculateSkillDamage()
+    const { damage, isCalculating, calculateSkillDamage } = useCalculateSkillDamage()
 
     useEffect(() => {
         if (!attacker || !defender || !skill) return
@@ -25,6 +25,7 @@ export const SkillDamageItem = ({ skill, onClick, selected, isComboActive }: Pro
     }, [attacker, defender, skill, calculateSkillDamage])
 
     useEffect(() => {
+        if (!damage) return
         const averageDps = damage.average / skill.castingTime
         const averageDpsCombo = damage.average / skill.comboCastingTime
         setSkillsDamage((prev) => ({
@@ -78,17 +79,19 @@ export const SkillDamageItem = ({ skill, onClick, selected, isComboActive }: Pro
                 <div className="flex items-center gap-2">
                     <DamageNumber
                         header={t('damage.normal')}
-                        value={damage.normal.toFixed(0)}
+                        value={damage?.normal.toFixed(0)}
                         className={cls('text-neutral-500', {
                             'text-orange-300 opacity-100': selected,
                         })}
+                        loading={isCalculating}
                     />
                     <DamageNumber
                         header={t('damage.critical')}
-                        value={damage.critical.toFixed(0)}
+                        value={damage?.critical.toFixed(0)}
                         className={cls('text-neutral-500', {
                             'text-sky-400': selected,
                         })}
+                        loading={isCalculating}
                     />
                 </div>
             </div>
