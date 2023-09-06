@@ -6,6 +6,11 @@ import { Navigation } from '@/app/[lang]/components/Navigation'
 import { i18n, Locale } from '@/i18n.config'
 import { LanguageProvider } from '@/app/[lang]/language-provider'
 
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+
+config.autoAddCss = false
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
