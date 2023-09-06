@@ -70,8 +70,9 @@ export const SkillDamageItem = ({ skill, onClick, selected, isComboActive }: Pro
                                 {isComboActive ? skill.comboCastingTime : skill.castingTime}s
                             </span>{' '}
                         </div>
-                        <div>Amp {(skill.skillAmp * 100).toFixed()}%</div>
-                        <div>Atk +{skill.addAttack}</div>
+                        <div>
+                            [ {(skill.skillAmp * 100).toFixed()}% / +{skill.addAttack} ]
+                        </div>
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
