@@ -47,8 +47,8 @@ export const DamageResult = () => {
                     acc.normal += damage.normal
                     acc.average += damage.average
                     acc.critical += damage.critical
-                    acc.averageDps += damage.averageDps
-                    acc.averageDpsCombo += damage.averageDpsCombo
+                    acc.averageDps += damage.averageDps / selectedSkillIds.length
+                    acc.averageDpsCombo += damage.averageDpsCombo / selectedSkillIds.length
                 }
                 return acc
             },

@@ -36,7 +36,7 @@ export const skills: Record<BattleStyles, Skill[]> = {
             castingTime: 1.3,
             comboCastingTime: 1.05,
         }),
-        generateSkill('Lança do Fogo', 'Fire Arrow', {
+        generateSkill('Lança de Fogo', 'Fire Arrow', {
             skillAmp: 0.85,
             addAttack: 202,
             castingTime: 1.3,
