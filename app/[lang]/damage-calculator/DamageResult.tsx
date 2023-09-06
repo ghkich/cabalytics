@@ -36,7 +36,7 @@ export const DamageResult = () => {
     const { t } = useTranslation()
     const { attacker, skillsDamage } = useDamageCalculator()
     const [selectedSkillIds, setSelectedSkillIds] = useState<string[]>([])
-    const [comboActive, setComboActive] = useState(true)
+    const [isComboActive, setIsComboActive] = useState(true)
 
     const selectedSkillsDamage = React.useMemo(() => {
         if (!selectedSkillIds.length || !skillsDamage)
@@ -81,11 +81,11 @@ export const DamageResult = () => {
             </div>
             <div className="bg-neutral-910 flex w-full p-4">
                 <div className="flex w-full items-center gap-3">
-                    <ToggleButton active={comboActive} onClick={() => setComboActive((prev) => !prev)}>
-                        Combo {comboActive ? 'On' : 'Off'}
+                    <ToggleButton active={isComboActive} onClick={() => setIsComboActive((prev) => !prev)}>
+                        Combo {isComboActive ? 'On' : 'Off'}
                     </ToggleButton>
                     <div className="text-neutral-450 flex items-center gap-1 text-xs">
-                        <span className={cls('text-neutral-300', { ['text-emerald-300']: comboActive })}>
+                        <span className={cls('text-neutral-300', { ['text-emerald-300']: isComboActive })}>
                             {selectedSkillIds.length}
                         </span>{' '}
                         skills
@@ -95,11 +95,11 @@ export const DamageResult = () => {
                     <DamageNumber
                         header={t('damage.average_dps')}
                         value={
-                            comboActive
+                            isComboActive
                                 ? selectedSkillsDamage.averageDpsCombo.toFixed()
                                 : selectedSkillsDamage.averageDps.toFixed()
                         }
-                        className="text-purple-300"
+                        className="text-indigo-400"
                     />
                     <DamageNumber
                         header={t('damage.average')}
@@ -126,6 +126,7 @@ export const DamageResult = () => {
                             skill={skill}
                             onClick={handleSelectSkill}
                             selected={selectedSkillIds.includes(skill.id)}
+                            isComboActive={isComboActive}
                         />
                     ))}
             </div>

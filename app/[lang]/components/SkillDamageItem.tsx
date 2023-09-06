@@ -12,8 +12,9 @@ type Props = {
     skill: Skill
     onClick: (id: string) => void
     selected?: boolean
+    isComboActive?: boolean
 }
-export const SkillDamageItem = ({ skill, onClick, selected }: Props) => {
+export const SkillDamageItem = ({ skill, onClick, selected, isComboActive }: Props) => {
     const { lang, t } = useTranslation()
     const { attacker, defender, setSkillsDamage } = useDamageCalculator()
     const { damage, calculateSkillDamage } = useCalculateSkillDamage()
@@ -58,8 +59,19 @@ export const SkillDamageItem = ({ skill, onClick, selected }: Props) => {
             <div className="flex w-full px-4 py-3">
                 <div className="w-full">
                     <h2 className="text-[13px]">{skill.name[lang]}</h2>
-                    <div className="text-[10px] text-neutral-500 text-opacity-75">
-                        Amp {(skill.skillAmp * 100).toFixed()}% / Add +{skill.addAttack}
+                    <div className="flex gap-1.5 text-[10px] text-neutral-500 text-opacity-75">
+                        <div>
+                            Cast{' '}
+                            <span
+                                className={cls({
+                                    'text-indigo-300 text-opacity-75': selected,
+                                })}
+                            >
+                                {isComboActive ? skill.comboCastingTime : skill.castingTime}s
+                            </span>{' '}
+                        </div>
+                        <div>Amp {(skill.skillAmp * 100).toFixed()}%</div>
+                        <div>Atk +{skill.addAttack}</div>
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
