@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TabButton } from '@/app/[lang]/components/TabButton'
 import { skills } from '@/app/types/skills'
 import { SkillDamageItem } from '@/app/[lang]/components/SkillDamageItem'
@@ -56,6 +56,10 @@ export const DamageResult = () => {
         )
     }, [skillsDamage, selectedSkillIds])
 
+    useEffect(() => {
+        setSelectedSkillIds([])
+    }, [attacker?.battleStyle])
+
     const handleSelectSkill = React.useCallback((skillId: string) => {
         setSelectedSkillIds((selectedIds) => {
             if (selectedIds.includes(skillId)) return selectedIds.filter((selectedId) => selectedId !== skillId)
@@ -95,8 +99,13 @@ export const DamageResult = () => {
                                 ? selectedSkillsDamage.averageDpsCombo.toFixed()
                                 : selectedSkillsDamage.averageDps.toFixed()
                         }
+                        className="text-purple-300"
                     />
-                    <DamageNumber header={t('damage.average')} value={selectedSkillsDamage.average.toFixed()} />
+                    <DamageNumber
+                        header={t('damage.average')}
+                        value={selectedSkillsDamage.average.toFixed()}
+                        className="text-purple-400"
+                    />
                     <DamageNumber
                         header={t('damage.normal')}
                         value={selectedSkillsDamage.normal.toFixed()}
