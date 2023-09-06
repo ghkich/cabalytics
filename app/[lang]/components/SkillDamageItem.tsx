@@ -2,11 +2,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle, faCircleCheck } from '@fortawesome/sharp-light-svg-icons'
 import React, { useEffect } from 'react'
 import { Skill } from '@/app/types/skills'
-import { useLanguage } from '@/app/[lang]/language-provider'
 import { cls } from '@/lib/utils'
 import { useDamageCalculator } from '@/app/[lang]/damage-calculator/damage-calculator-provider'
 import { useCalculateSkillDamage } from '@/lib/useCalculateSkillDamage'
 import { DamageNumber } from '@/app/[lang]/components/DamageNumber'
+import useTranslation from '@/lib/useTranslation'
 
 type Props = {
     skill: Skill
@@ -14,7 +14,7 @@ type Props = {
     selected?: boolean
 }
 export const SkillDamageItem = ({ skill, onClick, selected }: Props) => {
-    const lang = useLanguage()
+    const { lang, t } = useTranslation()
     const { attacker, defender, setSkillsDamage } = useDamageCalculator()
     const { damage, calculateSkillDamage } = useCalculateSkillDamage()
 
@@ -44,28 +44,28 @@ export const SkillDamageItem = ({ skill, onClick, selected }: Props) => {
             <div className="w-16 border-r border-neutral-700 border-opacity-50 text-center">
                 <FontAwesomeIcon
                     icon={selected ? faCircleCheck : faCircle}
-                    className={cls(`text-neutral-700`, {
+                    className={cls(`text-sm text-neutral-700`, {
                         'text-emerald-300': selected,
                     })}
                 />
             </div>
             <div className="flex w-full px-4 py-3">
                 <div className="w-full">
-                    <h2 className="text-sm">{skill.name[lang]}</h2>
+                    <h2 className="text-[13px]">{skill.name[lang]}</h2>
                     <div className="text-[10px] text-neutral-500 text-opacity-75">
                         Amp {(skill.skillAmp * 100).toFixed()}% / Add +{skill.addAttack}
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
                     <DamageNumber
-                        header="Base"
+                        header={t('damage.normal')}
                         value={damage.normal.toFixed(0)}
                         className={cls('text-neutral-500', {
                             'text-orange-300 opacity-100': selected,
                         })}
                     />
                     <DamageNumber
-                        header="Crítico"
+                        header={t('damage.critical')}
                         value={damage.critical.toFixed(0)}
                         className={cls('text-neutral-500', {
                             'text-sky-400': selected,

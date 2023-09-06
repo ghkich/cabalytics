@@ -9,6 +9,7 @@ import { faAxeBattle, faCardsBlank, faSwords } from '@fortawesome/pro-duotone-sv
 import { useDamageCalculator } from '@/app/[lang]/damage-calculator/damage-calculator-provider'
 import { DamageNumber } from '@/app/[lang]/components/DamageNumber'
 import { cls } from '@/lib/utils'
+import useTranslation from '@/lib/useTranslation'
 
 const damageTabs = [
     {
@@ -32,6 +33,7 @@ const damageTabs = [
 ]
 
 export const DamageResult = () => {
+    const { t } = useTranslation()
     const { attacker, skillsDamage } = useDamageCalculator()
     const [selectedSkillIds, setSelectedSkillIds] = useState<string[]>([])
     const [comboActive, setComboActive] = useState(true)
@@ -83,15 +85,15 @@ export const DamageResult = () => {
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
-                    <DamageNumber header="DPS Médio" value={'500'} className="" />
-                    <DamageNumber header="Médio Total" value={'500'} className="" />
+                    <DamageNumber header={t('damage.average_dps')} value={'200'} />
+                    <DamageNumber header={t('damage.average')} value={'500'} />
                     <DamageNumber
-                        header="Base Total"
+                        header={t('damage.normal')}
                         value={selectedSkillsDamage.normal.toFixed()}
                         className="text-orange-300"
                     />
                     <DamageNumber
-                        header="Crítico Total"
+                        header={t('damage.critical')}
                         value={selectedSkillsDamage.critical.toFixed()}
                         className="text-sky-400"
                     />

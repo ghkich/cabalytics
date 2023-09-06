@@ -16,7 +16,10 @@
     "pvp": "PVP",
     "pve": "PVE"
   },
-  "attributes": {
-    "attack": "Attack"
+  "damage": {
+    "average_dps": "Average DPS",
+    "average": "Average",
+    "normal": "Normal",
+    "critical": "Critical"
   }
 }
