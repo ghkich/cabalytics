@@ -24,11 +24,17 @@ export const SkillDamageItem = ({ skill, onClick, selected }: Props) => {
     }, [attacker, defender, skill, calculateSkillDamage])
 
     useEffect(() => {
+        const averageDps = damage.average / skill.castingTime
+        const averageDpsCombo = damage.average / skill.comboCastingTime
         setSkillsDamage((prev) => ({
             ...prev,
-            [skill.id]: damage,
+            [skill.id]: {
+                ...damage,
+                averageDps,
+                averageDpsCombo,
+            },
         }))
-    }, [damage, setSkillsDamage, skill.id])
+    }, [damage, setSkillsDamage, skill.castingTime, skill.comboCastingTime, skill.id])
 
     return (
         <label

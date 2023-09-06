@@ -5,14 +5,20 @@ import { Defender } from '@/app/[lang]/damage-calculator/DefenderForm'
 import { Damage } from '@/app/api/calculate-damage/route'
 
 export type DamageMode = 'pvp' | 'pve'
-export type SkillsDamage = Record<string, Damage>
+
+export type DamageWithDPS = Damage & {
+    averageDps: number
+    averageDpsCombo: number
+}
+
+export type SkillsDamage = Record<string, DamageWithDPS>
 
 export type DamageCalculatorContext = {
     attacker?: Attacker
     setAttacker: (attacker: Attacker) => void
     defender?: Defender
     setDefender: (defender: Defender) => void
-    skillsDamage?: Record<string, Damage>
+    skillsDamage?: Record<string, DamageWithDPS>
     setSkillsDamage: React.Dispatch<React.SetStateAction<SkillsDamage>>
 }
 

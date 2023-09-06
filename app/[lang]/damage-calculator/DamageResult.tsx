@@ -39,17 +39,20 @@ export const DamageResult = () => {
     const [comboActive, setComboActive] = useState(true)
 
     const selectedSkillsDamage = React.useMemo(() => {
-        if (!selectedSkillIds.length || !skillsDamage) return { normal: 0, average: 0, critical: 0 }
+        if (!selectedSkillIds.length || !skillsDamage)
+            return { normal: 0, average: 0, critical: 0, averageDps: 0, averageDpsCombo: 0 }
         return Object.entries(skillsDamage).reduce(
             (acc, [skillId, damage]) => {
                 if (selectedSkillIds.includes(skillId)) {
                     acc.normal += damage.normal
                     acc.average += damage.average
                     acc.critical += damage.critical
+                    acc.averageDps += damage.averageDps
+                    acc.averageDpsCombo += damage.averageDpsCombo
                 }
                 return acc
             },
-            { normal: 0, average: 0, critical: 0 }
+            { normal: 0, average: 0, critical: 0, averageDps: 0, averageDpsCombo: 0 }
         )
     }, [skillsDamage, selectedSkillIds])
 
@@ -85,8 +88,15 @@ export const DamageResult = () => {
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
-                    <DamageNumber header={t('damage.average_dps')} value={'200'} />
-                    <DamageNumber header={t('damage.average')} value={'500'} />
+                    <DamageNumber
+                        header={t('damage.average_dps')}
+                        value={
+                            comboActive
+                                ? selectedSkillsDamage.averageDpsCombo.toFixed()
+                                : selectedSkillsDamage.averageDps.toFixed()
+                        }
+                    />
+                    <DamageNumber header={t('damage.average')} value={selectedSkillsDamage.average.toFixed()} />
                     <DamageNumber
                         header={t('damage.normal')}
                         value={selectedSkillsDamage.normal.toFixed()}
