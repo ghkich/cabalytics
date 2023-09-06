@@ -68,7 +68,7 @@ export const DamageResult = () => {
     }, [])
 
     return (
-        <div className="flex w-full flex-col gap-0.5">
+        <div className="@container flex w-full flex-col gap-0.5">
             <div className="flex w-full gap-0.5">
                 {damageTabs.map((mode) => (
                     <TabButton key={mode.id} active={mode.id === 'skills'}>
@@ -79,8 +79,8 @@ export const DamageResult = () => {
                     </TabButton>
                 ))}
             </div>
-            <div className="bg-neutral-910 flex w-full p-4">
-                <div className="flex w-full items-center gap-3">
+            <div className="bg-neutral-910 @[350px]:flex-row flex w-full flex-col items-center gap-3 p-4">
+                <div className="@[400px]:flex-row flex w-full flex-col items-center gap-3">
                     <ToggleButton active={isComboActive} onClick={() => setIsComboActive((prev) => !prev)}>
                         Combo {isComboActive ? 'On' : 'Off'}
                     </ToggleButton>

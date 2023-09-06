@@ -20,6 +20,7 @@
     "@fortawesome/sharp-light-svg-icons": "^6.4.2",
     "@fortawesome/sharp-regular-svg-icons": "^6.4.2",
     "@fortawesome/sharp-solid-svg-icons": "^6.4.2",
+    "@tailwindcss/container-queries": "^0.1.1",
     "@types/lodash.debounce": "^4.0.7",
     "@types/negotiator": "^0.6.1",
     "@types/node": "20.5.0",

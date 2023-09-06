@@ -11,7 +11,7 @@ export const DamageNumber = ({ header, value, className }: Props) => {
     return (
         <div
             className={cls(
-                'flex min-w-[60px] flex-col items-center font-light leading-normal text-neutral-400',
+                'flex min-w-[50px] flex-col items-center font-light leading-normal text-neutral-400',
                 className
             )}
         >
