@@ -6,6 +6,8 @@ import { useLanguage } from '@/app/[lang]/language-provider'
 const useTranslation = () => {
     const lang = useLanguage()
     const [dictionary, setDictionary] = useState({})
+    const ready = Object.keys(dictionary).length > 0
+    const placeholder = '----'
 
     useEffect(() => {
         getDictionary(lang)
@@ -19,7 +21,9 @@ const useTranslation = () => {
 
     return {
         lang,
-        t: (key: string, params?: { [key: string]: string | number }) => translate(key, dictionary, params),
+        ready,
+        t: (key: string, params?: { [key: string]: string | number }) =>
+            ready ? translate(key, dictionary, params) : placeholder,
         dictionary,
     }
 }
