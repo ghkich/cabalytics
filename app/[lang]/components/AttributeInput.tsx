@@ -50,7 +50,6 @@ export const AttributeInput = ({ onChange, name, label, value, min, max }: Props
                             'w-[78px] bg-transparent px-2 py-1 text-right text-neutral-400 outline-none group-hover:text-neutral-200',
                             getClassNameByAttributeName(name)
                         )}
-                        min={min}
                     />
                 </div>
             </div>

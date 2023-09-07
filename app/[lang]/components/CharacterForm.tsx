@@ -283,6 +283,12 @@ export const CharacterForm = ({ onChange }: Props) => {
                             const { min, max } = attackAttributes[typedKey]
                             const value = attackGeneral?.[typedKey]
 
+                            if (isMagicBased && typedKey === 'attack') return null
+                            if (!isMagicBased && typedKey === 'magicAttack') return null
+                            if (isMagicBased && typedKey === 'swordSkillAmp') return null
+                            if (!isMagicBased && typedKey === 'magicSkillAmp') return null
+                            if (isMagicBased && typedKey === 'minimumDamage') return null
+
                             return (
                                 <AttributeInput
                                     key={key}
