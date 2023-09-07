@@ -278,31 +278,43 @@ export const CharacterForm = ({ onChange }: Props) => {
             <div className="">
                 <form className="flex flex-col gap-0.5">
                     {attributeType === 'attack' &&
-                        Object.entries(attackAttributes).map(([key, { description }]) => (
-                            <AttributeInput
-                                key={key}
-                                type="number"
-                                name={key}
-                                label={description[lang]}
-                                onChange={handleChange}
-                                value={attackGeneral?.[key as keyof AttackAttributes]}
-                                min={0}
-                            />
-                        ))}
+                        Object.entries(attackAttributes).map(([key, { description }]) => {
+                            const typedKey = key as keyof AttackAttributes
+                            const { min, max } = attackAttributes[typedKey]
+                            const value = attackGeneral?.[typedKey]
+
+                            return (
+                                <AttributeInput
+                                    key={key}
+                                    name={key}
+                                    label={description[lang]}
+                                    onChange={handleChange}
+                                    value={value}
+                                    min={min}
+                                    max={max}
+                                />
+                            )
+                        })}
                 </form>
                 <form className="flex flex-col gap-0.5">
                     {attributeType === 'defense' &&
-                        Object.entries(defenseAttributes).map(([key, { description }]) => (
-                            <AttributeInput
-                                key={key}
-                                type="number"
-                                name={key}
-                                label={description[lang]}
-                                onChange={handleChange}
-                                value={defenseGeneral?.[key as keyof DefenseAttributes]}
-                                min={0}
-                            />
-                        ))}
+                        Object.entries(defenseAttributes).map(([key, { description }]) => {
+                            const typedKey = key as keyof DefenseAttributes
+                            const { min, max } = defenseAttributes[typedKey]
+                            const value = defenseGeneral?.[typedKey]
+
+                            return (
+                                <AttributeInput
+                                    key={key}
+                                    name={key}
+                                    label={description[lang]}
+                                    onChange={handleChange}
+                                    value={value}
+                                    min={min}
+                                    max={max}
+                                />
+                            )
+                        })}
                 </form>
             </div>
         </div>
