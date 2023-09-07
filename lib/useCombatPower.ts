@@ -1,6 +1,7 @@
 import { CharacterStats } from '@/app/[lang]/components/CharacterForm'
 import { attackAttributes, AttackAttributes, defenseAttributes, DefenseAttributes } from '@/app/types/attributes'
 import useFormatLocale from '@/lib/useFormatLocale'
+import React from 'react'
 
 export type CombatPower = {
     attack: {
@@ -40,12 +41,31 @@ const sumDefenseAttributes = (attributes: DefenseAttributes) => {
 
 export const useCombatPower = (characterStats: CharacterStats, isMagicBased: boolean): CombatPower => {
     const { formatNumber } = useFormatLocale()
-    const attackGeneralCombatPower = sumAttackAttributes(characterStats.attack.general, isMagicBased)
-    const attackPvPCombatPower = sumAttackAttributes(characterStats.attack.pvp, isMagicBased)
-    const attackPvECombatPower = sumAttackAttributes(characterStats.attack.pve, isMagicBased)
-    const defenseGeneralCombatPower = sumDefenseAttributes(characterStats.defense.general)
-    const defensePvPCombatPower = sumDefenseAttributes(characterStats.defense.pvp)
-    const defensePvECombatPower = sumDefenseAttributes(characterStats.defense.pve)
+
+    const attackGeneralCombatPower = React.useMemo(
+        () => sumAttackAttributes(characterStats.attack.general, isMagicBased),
+        [characterStats.attack.general, isMagicBased]
+    )
+    const attackPvPCombatPower = React.useMemo(
+        () => sumAttackAttributes(characterStats.attack.pvp, isMagicBased),
+        [characterStats.attack.pvp, isMagicBased]
+    )
+    const attackPvECombatPower = React.useMemo(
+        () => sumAttackAttributes(characterStats.attack.pve, isMagicBased),
+        [characterStats.attack.pve, isMagicBased]
+    )
+    const defenseGeneralCombatPower = React.useMemo(
+        () => sumDefenseAttributes(characterStats.defense.general),
+        [characterStats.defense.general]
+    )
+    const defensePvPCombatPower = React.useMemo(
+        () => sumDefenseAttributes(characterStats.defense.pvp),
+        [characterStats.defense.pvp]
+    )
+    const defensePvECombatPower = React.useMemo(
+        () => sumDefenseAttributes(characterStats.defense.pve),
+        [characterStats.defense.pve]
+    )
 
     const attackTotal = attackGeneralCombatPower + attackPvPCombatPower + attackPvECombatPower
     const defenseTotal = defenseGeneralCombatPower + defensePvPCombatPower + defensePvECombatPower

@@ -6,7 +6,7 @@ import { Select } from '@/app/[lang]/components/Select'
 import useTranslation from '@/lib/useTranslation'
 import { TabButton } from '@/app/[lang]/components/TabButton'
 import useMergeState from '@/lib/useMergeState'
-import { useCombatPower } from '@/lib/useCalculateCombatPower'
+import { useCombatPower } from '@/lib/useCombatPower'
 
 const initialAttackAttributes: AttackAttributes = {
     attack: 0,
@@ -111,7 +111,7 @@ export const CharacterForm = ({ onChange }: Props) => {
     const isMagicBased = !!(battleStyle && magicBasedBattleStyles.includes(battleStyle))
     const [attributeType, setAttributeType] = useState<AttributeTypeValue>('attack')
     const [attributeCategory, setAttributeCategory] = useState<AttributeCategoryValue>('general')
-    const [characterStats, setCharacterStats] = useMergeState<CharacterStats>({
+    const [characterStats, updateCharacterStats] = useMergeState<CharacterStats>({
         attack: {
             general: initialAttackAttributes,
             pvp: initialAttackAttributes,
@@ -129,13 +129,18 @@ export const CharacterForm = ({ onChange }: Props) => {
         (e: ChangeEvent<HTMLInputElement>) => {
             const { name, value } = e.target
             const partialStateUpdate = {
+                ...characterStats,
                 [attributeType]: {
-                    [attributeCategory]: { [name]: value },
+                    ...characterStats[attributeType],
+                    [attributeCategory]: {
+                        ...characterStats[attributeType][attributeCategory],
+                        [name]: value,
+                    },
                 },
             }
-            setCharacterStats(partialStateUpdate)
+            updateCharacterStats(partialStateUpdate)
         },
-        [attributeType, attributeCategory, setCharacterStats]
+        [characterStats, attributeType, attributeCategory, updateCharacterStats]
     )
 
     useEffect(() => {
