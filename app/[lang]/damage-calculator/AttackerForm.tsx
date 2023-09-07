@@ -28,9 +28,9 @@ const getFinalAttributeValue = (
     attribute: keyof AttackAttributes,
     damageMode?: DamageMode
 ) => {
-    const generalAttribute = attacker?.attackAttributes?.general?.[attribute] || 0
-    const pvpAttribute = attacker?.attackAttributes?.pvp?.[attribute] || 0
-    const pveAttribute = attacker?.attackAttributes?.pve?.[attribute] || 0
+    const generalAttribute = attacker?.stats.attack?.general?.[attribute] || 0
+    const pvpAttribute = attacker?.stats.attack?.pvp?.[attribute] || 0
+    const pveAttribute = attacker?.stats.attack?.pve?.[attribute] || 0
     if (damageMode === 'pve') return Number(generalAttribute) + Number(pveAttribute)
     return Number(generalAttribute) + Number(pvpAttribute)
 }

@@ -22,9 +22,9 @@ const getFinalAttributeValue = (
     attribute: keyof DefenseAttributes,
     damageMode?: DamageMode
 ) => {
-    const generalAttribute = defender?.defenseAttributes?.general?.[attribute] ?? 0
-    const pvpAttribute = defender?.defenseAttributes?.pvp?.[attribute] ?? 0
-    const pveAttribute = defender?.defenseAttributes?.pve?.[attribute] ?? 0
+    const generalAttribute = defender?.stats.defense?.general?.[attribute] ?? 0
+    const pvpAttribute = defender?.stats.defense?.pvp?.[attribute] ?? 0
+    const pveAttribute = defender?.stats.defense?.pve?.[attribute] ?? 0
     if (damageMode === 'pve') return Number(generalAttribute) + Number(pveAttribute)
     return Number(generalAttribute) + Number(pvpAttribute)
 }

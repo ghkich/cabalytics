@@ -23,6 +23,7 @@ export const RangeSlider = ({ id, name, min, max, value, onChange }: Props) => {
                 max={max}
                 value={value}
                 onChange={onChange}
+                step={1}
             />
         </div>
     )
