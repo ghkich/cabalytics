@@ -12,18 +12,15 @@ const getClassNameByAttributeName = (name: string) => {
 }
 
 type Props = {
-    type?: string
     name: string
     label: string
-    placeholder?: string
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     value?: number
-    disabled?: boolean
     min: number
     max: number
 }
 
-export const AttributeInput = ({ onChange, name, label, placeholder, value, type, disabled, min, max }: Props) => {
+export const AttributeInput = ({ onChange, name, label, value, min, max }: Props) => {
     const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const syntheticEvent = {
             ...e,
@@ -44,17 +41,15 @@ export const AttributeInput = ({ onChange, name, label, placeholder, value, type
                 <div>
                     <input
                         id={name}
-                        type={type}
+                        type="text"
                         name={name}
                         aria-label={label}
-                        placeholder={placeholder}
                         value={value}
                         onChange={onChange}
                         className={cls(
                             'w-[78px] bg-transparent px-2 py-1 text-right text-neutral-400 outline-none group-hover:text-neutral-200',
                             getClassNameByAttributeName(name)
                         )}
-                        disabled={disabled}
                         min={min}
                     />
                 </div>
