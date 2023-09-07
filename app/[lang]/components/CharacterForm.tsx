@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { AttackAttributes, attackAttributes, defenseAttributes, DefenseAttributes } from '@/app/types/attributes'
-import { Input } from '@/app/[lang]/components/Input'
+import { AttributeInput } from '@/app/[lang]/components/AttributeInput'
 import { BattleStyles, getBattleStyles, magicBasedBattleStyles } from '@/app/types/battleStyles'
 import { Select } from '@/app/[lang]/components/Select'
 import useTranslation from '@/lib/useTranslation'
@@ -279,7 +279,7 @@ export const CharacterForm = ({ onChange }: Props) => {
                 <form className="flex flex-col gap-0.5">
                     {attributeType === 'attack' &&
                         Object.entries(attackAttributes).map(([key, { description }]) => (
-                            <Input
+                            <AttributeInput
                                 key={key}
                                 type="number"
                                 name={key}
@@ -293,7 +293,7 @@ export const CharacterForm = ({ onChange }: Props) => {
                 <form className="flex flex-col gap-0.5">
                     {attributeType === 'defense' &&
                         Object.entries(defenseAttributes).map(([key, { description }]) => (
-                            <Input
+                            <AttributeInput
                                 key={key}
                                 type="number"
                                 name={key}

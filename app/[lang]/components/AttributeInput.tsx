@@ -21,7 +21,7 @@ type Props = {
     min?: number
 }
 
-export const Input = ({ onChange, name, label, placeholder, value, type, disabled, min }: Props) => {
+export const AttributeInput = ({ onChange, name, label, placeholder, value, type, disabled, min }: Props) => {
     return (
         <div className="group flex w-full items-center gap-1 bg-neutral-900 bg-opacity-75 pl-2 text-xs">
             <label htmlFor={name} className="text-neutral-450 w-full whitespace-nowrap group-hover:text-neutral-200">

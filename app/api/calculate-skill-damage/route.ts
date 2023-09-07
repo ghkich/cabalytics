@@ -3,18 +3,19 @@ import { Attacker } from '@/app/[lang]/damage-calculator/AttackerForm'
 import { Defender } from '@/app/[lang]/damage-calculator/DefenderForm'
 import { Skill } from '@/app/types/skills'
 
-export type CalculateDamageRequest = {
+export type CalculateSkillDamageRequest = {
     attacker: Attacker
     defender: Defender
     skill: Skill
 }
 
-export type Damage = {
+export type CalculateSkillDamageResponse = {
     normal: number
     average: number
     critical: number
 }
-const validateParams = (params: CalculateDamageRequest) => {
+
+const validateParams = (params: CalculateSkillDamageRequest) => {
     const { attacker, skill, defender } = params
 
     if (!attacker) return { isValid: false, missingParam: 'attacker' }
@@ -25,7 +26,7 @@ const validateParams = (params: CalculateDamageRequest) => {
 }
 
 export async function POST(request: Request) {
-    const params: CalculateDamageRequest = await request.json()
+    const params: CalculateSkillDamageRequest = await request.json()
     const { isValid, missingParam } = validateParams(params)
     if (!isValid) {
         return NextResponse.json({ message: `Missing ${missingParam}` }, { status: 400 })
@@ -52,7 +53,7 @@ export async function POST(request: Request) {
         0
     )
 
-    const damage: Damage = { normal: 0, average: 0, critical: 0 }
+    const damage: CalculateSkillDamageResponse = { normal: 0, average: 0, critical: 0 }
 
     damage.normal = attack * attackReduction
     damage.critical = damage.normal * (1 + criticalDamage) * attacker.criticalEffectiveness

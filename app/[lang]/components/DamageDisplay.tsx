@@ -10,7 +10,7 @@ type Props = {
     className?: string
 }
 
-export const DamageNumber = ({ header, value, loading, className }: Props) => {
+export const DamageDisplay = ({ header, value, loading, className }: Props) => {
     const placeholderOrValue =
         value === undefined ? <FontAwesomeIcon icon={faSpinnerThird} className="text-xs" spin /> : value
     return (

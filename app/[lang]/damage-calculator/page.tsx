@@ -1,5 +1,5 @@
 import React from 'react'
-import { DamageResult } from '@/app/[lang]/damage-calculator/DamageResult'
+import { DamageTabs } from '@/app/[lang]/damage-calculator/DamageTabs'
 import { DamageCalculatorProvider } from '@/app/[lang]/damage-calculator/damage-calculator-provider'
 import { AttackerForm } from '@/app/[lang]/damage-calculator/AttackerForm'
 import { DefenderForm } from '@/app/[lang]/damage-calculator/DefenderForm'
@@ -13,7 +13,7 @@ export default async function DamageCalculator() {
                         <AttackerForm />
                     </div>
                     <div className="flex w-full flex-col items-center">
-                        <DamageResult />
+                        <DamageTabs />
                     </div>
                     <div className="min-w-[240px]">
                         <DefenderForm />

@@ -2,37 +2,46 @@
 import React, { createContext } from 'react'
 import { Attacker } from '@/app/[lang]/damage-calculator/AttackerForm'
 import { Defender } from '@/app/[lang]/damage-calculator/DefenderForm'
-import { Damage } from '@/app/api/calculate-damage/route'
+import useMergeState from '@/lib/useMergeState'
 
 export type DamageMode = 'pvp' | 'pve'
-
-export type DamageWithDPS = Damage & {
+export type Damage = {
+    normal: number
+    average: number
+    critical: number
     averageDps: number
     averageDpsCombo: number
 }
 
-export type SkillsDamage = Record<string, DamageWithDPS>
+export type SkillsTabState = {
+    comboActive: boolean
+    selectedSkills: Record<string, Damage>
+}
 
 export type DamageCalculatorContext = {
     attacker?: Attacker
     setAttacker: (attacker: Attacker) => void
     defender?: Defender
     setDefender: (defender: Defender) => void
-    skillsDamage?: Record<string, DamageWithDPS>
-    setSkillsDamage: React.Dispatch<React.SetStateAction<SkillsDamage>>
+    skillsTab: SkillsTabState
+    updateSkillsTab: React.Dispatch<Partial<SkillsTabState>>
 }
 
 const initialState: DamageCalculatorContext = {
     setAttacker: () => {},
     setDefender: () => {},
-    setSkillsDamage: () => {},
+    skillsTab: {
+        comboActive: true,
+        selectedSkills: {},
+    },
+    updateSkillsTab: () => {},
 }
 
 const DamageCalculatorContext = createContext<DamageCalculatorContext>(initialState)
 export const DamageCalculatorProvider = ({ children }: { children: React.ReactNode }) => {
     const [attacker, setAttacker] = React.useState<Attacker>()
     const [defender, setDefender] = React.useState<Defender>()
-    const [skillsDamage, setSkillsDamage] = React.useState<SkillsDamage>({})
+    const [skillsTab, updateSkillsTab] = useMergeState<SkillsTabState>(initialState.skillsTab)
 
     return (
         <DamageCalculatorContext.Provider
@@ -41,8 +50,8 @@ export const DamageCalculatorProvider = ({ children }: { children: React.ReactNo
                 setAttacker,
                 defender,
                 setDefender,
-                skillsDamage,
-                setSkillsDamage,
+                skillsTab,
+                updateSkillsTab,
             }}
         >
             {children}

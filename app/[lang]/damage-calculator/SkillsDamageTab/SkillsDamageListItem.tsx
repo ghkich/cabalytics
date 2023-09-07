@@ -3,40 +3,40 @@ import { faCircle, faCircleCheck } from '@fortawesome/sharp-light-svg-icons'
 import React, { useEffect } from 'react'
 import { Skill } from '@/app/types/skills'
 import { cls } from '@/lib/utils'
-import { useDamageCalculator } from '@/app/[lang]/damage-calculator/damage-calculator-provider'
+import { Damage, useDamageCalculator } from '@/app/[lang]/damage-calculator/damage-calculator-provider'
 import { useCalculateSkillDamage } from '@/lib/useCalculateSkillDamage'
-import { DamageNumber } from '@/app/[lang]/components/DamageNumber'
+import { DamageDisplay } from '@/app/[lang]/components/DamageDisplay'
 import useTranslation from '@/lib/useTranslation'
+
+export type SkillDamage = {
+    skillId: string
+    damage: Damage
+}
 
 type Props = {
     skill: Skill
-    onClick: (id: string) => void
+    onClick: (skillDamage: SkillDamage) => void
     selected?: boolean
     isComboActive?: boolean
 }
-export const SkillDamageItem = ({ skill, onClick, selected, isComboActive }: Props) => {
+
+export const SkillsDamageListItem = ({ skill, onClick, selected, isComboActive }: Props) => {
     const { lang, t } = useTranslation()
-    const { attacker, defender, setSkillsDamage } = useDamageCalculator()
-    const { damage, isCalculating, calculateSkillDamage } = useCalculateSkillDamage()
+    const { attacker, defender } = useDamageCalculator()
+    const { damage, isCalculating, calculateDamage } = useCalculateSkillDamage()
 
     useEffect(() => {
         if (!attacker || !defender || !skill) return
-        calculateSkillDamage({ attacker, defender, skill })?.then()
-    }, [attacker, defender, skill, calculateSkillDamage])
+        calculateDamage({ attacker, defender, skill })?.then()
+    }, [attacker, defender, skill, calculateDamage])
 
-    useEffect(() => {
-        if (!damage) return
-        const averageDps = damage.average / skill.castingTime
-        const averageDpsCombo = damage.average / skill.comboCastingTime
-        setSkillsDamage((prev) => ({
-            ...prev,
-            [skill.id]: {
-                ...damage,
-                averageDps,
-                averageDpsCombo,
-            },
-        }))
-    }, [damage, setSkillsDamage, skill.castingTime, skill.comboCastingTime, skill.id])
+    const damageWithDps = {
+        normal: damage?.normal || 0,
+        average: damage?.average || 0,
+        critical: damage?.critical || 0,
+        averageDps: (damage?.average || 0) / skill.castingTime,
+        averageDpsCombo: (damage?.average || 0) / skill.comboCastingTime,
+    }
 
     return (
         <label
@@ -47,7 +47,7 @@ export const SkillDamageItem = ({ skill, onClick, selected, isComboActive }: Pro
                     'bg-neutral-825 hover:bg-neutral-825 text-neutral-300 hover:text-neutral-200': selected,
                 }
             )}
-            onClick={() => onClick(skill.id)}
+            onClick={() => onClick({ skillId: skill.id, damage: damageWithDps })}
         >
             <div className="w-16 border-r border-neutral-700 border-opacity-50 text-center">
                 <FontAwesomeIcon
@@ -69,7 +69,7 @@ export const SkillDamageItem = ({ skill, onClick, selected, isComboActive }: Pro
                                 })}
                             >
                                 {isComboActive ? skill.comboCastingTime : skill.castingTime}s
-                            </span>{' '}
+                            </span>
                         </div>
                         <div>
                             [ {(skill.skillAmp * 100).toFixed()}% / +{skill.addAttack} ]
@@ -77,7 +77,7 @@ export const SkillDamageItem = ({ skill, onClick, selected, isComboActive }: Pro
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
-                    <DamageNumber
+                    <DamageDisplay
                         header={t('damage.normal')}
                         value={damage?.normal.toFixed(0)}
                         className={cls('text-neutral-500', {
@@ -85,7 +85,7 @@ export const SkillDamageItem = ({ skill, onClick, selected, isComboActive }: Pro
                         })}
                         loading={isCalculating}
                     />
-                    <DamageNumber
+                    <DamageDisplay
                         header={t('damage.critical')}
                         value={damage?.critical.toFixed(0)}
                         className={cls('text-neutral-500', {
