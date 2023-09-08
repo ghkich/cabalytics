@@ -7,42 +7,40 @@ import { useDamageCalculator } from '@/app/[lang]/damage-calculator/damage-calcu
 
 export const SkillsDamageHeader = () => {
     const { t } = useTranslation()
-    const { attacker, skillsTab, updateSkillsTab } = useDamageCalculator()
+    const { attacker, skillsTab, skillsTabDispatch } = useDamageCalculator()
 
-    const selectedSkillsCount = Object.keys(skillsTab.selectedSkills).length
-    const selectedSkillsDamage = React.useMemo(() => {
-        if (!skillsTab.selectedSkills || selectedSkillsCount === 0) {
-            return { normal: 0, average: 0, critical: 0, averageDps: 0, averageDpsCombo: 0 }
-        }
-        return Object.values(skillsTab.selectedSkills).reduce(
-            (acc, damage) => {
-                acc.normal += damage.normal
-                acc.average += damage.average
-                acc.critical += damage.critical
-                acc.averageDps += damage.averageDps / selectedSkillsCount
-                acc.averageDpsCombo += damage.averageDpsCombo / selectedSkillsCount
+    const skillsDamageTotal = React.useMemo(() => {
+        return skillsTab.selectedSkills.reduce(
+            (acc, skillId) => {
+                const skillDamage = skillsTab.skillsDamage[skillId]
+                if (!skillDamage) return acc
+                acc.normal += skillDamage.normal
+                acc.average += skillDamage.average
+                acc.critical += skillDamage.critical
+                acc.averageDps += skillDamage.averageDps / skillsTab.selectedSkills.length
+                acc.averageDpsCombo += skillDamage.averageDpsCombo / skillsTab.selectedSkills.length
                 return acc
             },
             { normal: 0, average: 0, critical: 0, averageDps: 0, averageDpsCombo: 0 }
         )
-    }, [selectedSkillsCount, skillsTab.selectedSkills])
+    }, [skillsTab.selectedSkills, skillsTab.skillsDamage])
 
     useEffect(() => {
-        updateSkillsTab({ selectedSkills: {} })
-    }, [attacker?.battleStyle, updateSkillsTab])
+        skillsTabDispatch({ type: 'UPDATE_SELECTED_SKILLS', payload: [] })
+    }, [attacker?.battleStyle, skillsTabDispatch])
 
     return (
         <div className="bg-neutral-910 @[350px]:flex-row flex w-full flex-col items-center gap-3 p-4">
             <div className="@[400px]:flex-row flex w-full flex-col items-center gap-3">
                 <ToggleButton
                     active={skillsTab.comboActive}
-                    onClick={() => updateSkillsTab({ comboActive: !skillsTab.comboActive })}
+                    onClick={() => skillsTabDispatch({ type: 'TOGGLE_COMBO_ACTIVE' })}
                 >
                     Combo {skillsTab.comboActive ? 'On' : 'Off'}
                 </ToggleButton>
                 <div className="text-neutral-450 flex items-center gap-1 text-xs">
                     <span className={cls('text-neutral-300', { ['text-emerald-300']: skillsTab.comboActive })}>
-                        {selectedSkillsCount}
+                        {skillsTab.selectedSkills.length}
                     </span>{' '}
                     skills
                 </div>
@@ -52,24 +50,24 @@ export const SkillsDamageHeader = () => {
                     header={t('damage.average_dps')}
                     value={
                         skillsTab.comboActive
-                            ? selectedSkillsDamage.averageDpsCombo.toFixed()
-                            : selectedSkillsDamage.averageDps.toFixed()
+                            ? skillsDamageTotal.averageDpsCombo.toFixed()
+                            : skillsDamageTotal.averageDps.toFixed()
                     }
                     className="text-indigo-400"
                 />
                 <DamageDisplay
                     header={t('damage.average')}
-                    value={selectedSkillsDamage.average.toFixed()}
+                    value={skillsDamageTotal.average.toFixed()}
                     className="text-purple-400"
                 />
                 <DamageDisplay
                     header={t('damage.normal')}
-                    value={selectedSkillsDamage.normal.toFixed()}
+                    value={skillsDamageTotal.normal.toFixed()}
                     className="text-orange-300"
                 />
                 <DamageDisplay
                     header={t('damage.critical')}
-                    value={selectedSkillsDamage.critical.toFixed()}
+                    value={skillsDamageTotal.critical.toFixed()}
                     className="text-sky-400"
                 />
             </div>

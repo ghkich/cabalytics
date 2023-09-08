@@ -1,25 +1,20 @@
 import React from 'react'
 import { SkillsDamageHeader } from '@/app/[lang]/damage-calculator/SkillsDamageTab/SkillsDamageHeader'
 import { skills } from '@/app/types/skills'
-import { SkillDamage, SkillsDamageListItem } from '@/app/[lang]/damage-calculator/SkillsDamageTab/SkillsDamageListItem'
+import { SkillsDamageListItem } from '@/app/[lang]/damage-calculator/SkillsDamageTab/SkillsDamageListItem'
 import { useDamageCalculator } from '@/app/[lang]/damage-calculator/damage-calculator-provider'
 
 export default function SkillsDamageTab() {
-    const { attacker, skillsTab, updateSkillsTab } = useDamageCalculator()
+    const { attacker, skillsTab, skillsTabDispatch } = useDamageCalculator()
 
     const handleSelectSkill = React.useCallback(
-        (skillDamage: SkillDamage) => {
-            const updatedSelectedSkills = { ...skillsTab.selectedSkills }
-            if (updatedSelectedSkills[skillDamage.skillId]) {
-                delete updatedSelectedSkills[skillDamage.skillId]
-            } else {
-                updatedSelectedSkills[skillDamage.skillId] = skillDamage.damage
-            }
-            updateSkillsTab({
-                selectedSkills: updatedSelectedSkills,
-            })
+        (skillId: string) => {
+            const newSelectedSkills = skillsTab.selectedSkills.includes(skillId)
+                ? skillsTab.selectedSkills.filter((id) => id !== skillId)
+                : [...skillsTab.selectedSkills, skillId]
+            skillsTabDispatch({ type: 'UPDATE_SELECTED_SKILLS', payload: newSelectedSkills })
         },
-        [skillsTab.selectedSkills, updateSkillsTab]
+        [skillsTab.selectedSkills, skillsTabDispatch]
     )
 
     return (
@@ -32,7 +27,7 @@ export default function SkillsDamageTab() {
                             key={skill.id}
                             skill={skill}
                             onClick={handleSelectSkill}
-                            selected={!!skillsTab.selectedSkills[skill.id]}
+                            selected={skillsTab.selectedSkills.includes(skill.id)}
                             isComboActive={skillsTab.comboActive}
                         />
                     ))}

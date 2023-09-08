@@ -3,26 +3,21 @@ import { faCircle, faCircleCheck } from '@fortawesome/sharp-light-svg-icons'
 import React, { useEffect } from 'react'
 import { Skill } from '@/app/types/skills'
 import { cls } from '@/lib/utils'
-import { Damage, useDamageCalculator } from '@/app/[lang]/damage-calculator/damage-calculator-provider'
+import { useDamageCalculator } from '@/app/[lang]/damage-calculator/damage-calculator-provider'
 import { useCalculateSkillDamage } from '@/lib/useCalculateSkillDamage'
 import { DamageDisplay } from '@/app/[lang]/components/DamageDisplay'
 import useTranslation from '@/lib/useTranslation'
 
-export type SkillDamage = {
-    skillId: string
-    damage: Damage
-}
-
 type Props = {
     skill: Skill
-    onClick: (skillDamage: SkillDamage) => void
+    onClick: (skillId: string) => void
     selected?: boolean
     isComboActive?: boolean
 }
 
 export const SkillsDamageListItem = ({ skill, onClick, selected, isComboActive }: Props) => {
     const { lang, t } = useTranslation()
-    const { attacker, defender } = useDamageCalculator()
+    const { attacker, defender, skillsTabDispatch } = useDamageCalculator()
     const { damage, isCalculating, calculateDamage } = useCalculateSkillDamage()
 
     useEffect(() => {
@@ -30,13 +25,17 @@ export const SkillsDamageListItem = ({ skill, onClick, selected, isComboActive }
         calculateDamage({ attacker, defender, skill })?.then()
     }, [attacker, defender, skill, calculateDamage])
 
-    const damageWithDps = {
-        normal: damage?.normal || 0,
-        average: damage?.average || 0,
-        critical: damage?.critical || 0,
-        averageDps: (damage?.average || 0) / skill.castingTime,
-        averageDpsCombo: (damage?.average || 0) / skill.comboCastingTime,
-    }
+    React.useEffect(() => {
+        if (!damage) return
+        const skillDamage = {
+            normal: damage.normal,
+            average: damage.average,
+            critical: damage.critical,
+            averageDps: damage.average / skill.castingTime,
+            averageDpsCombo: damage.average / skill.comboCastingTime,
+        }
+        skillsTabDispatch({ type: 'UPDATE_SKILLS_DAMAGE', payload: { [skill.id]: skillDamage } })
+    }, [damage, skill, skillsTabDispatch])
 
     return (
         <div
@@ -48,7 +47,7 @@ export const SkillsDamageListItem = ({ skill, onClick, selected, isComboActive }
                     'bg-neutral-825 hover:bg-neutral-825 text-neutral-300 hover:text-neutral-200': selected,
                 }
             )}
-            onClick={() => onClick({ skillId: skill.id, damage: damageWithDps })}
+            onClick={() => onClick(skill.id)}
         >
             <div className="w-16 border-r border-neutral-700 border-opacity-50 text-center">
                 <FontAwesomeIcon
