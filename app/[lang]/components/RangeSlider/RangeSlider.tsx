@@ -4,6 +4,7 @@ import { cls } from '@/lib/utils'
 
 type Props = {
     id: string
+    tabIndex?: number
     name: string
     min: number
     max: number
@@ -11,10 +12,11 @@ type Props = {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export const RangeSlider = ({ id, name, min, max, value, onChange }: Props) => {
+export const RangeSlider = ({ id, tabIndex, name, min, max, value, onChange }: Props) => {
     return (
         <div className={cls(styles.container)}>
             <input
+                tabIndex={tabIndex}
                 className="absolute w-full"
                 type="range"
                 id={id}

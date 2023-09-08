@@ -3,7 +3,7 @@ import React from 'react'
 import { CharacterForm, CharacterFormData } from '@/app/[lang]/components/CharacterForm'
 import { DamageMode, useDamageCalculator } from '@/app/[lang]/damage-calculator/damage-calculator-provider'
 import { DefenseAttributes } from '@/app/types/attributes'
-import { battleStyles, magicBasedBattleStyles } from '@/app/types/battleStyles'
+import { BattleStyles, battleStyles, magicBasedBattleStyles } from '@/app/types/battleStyles'
 
 export type Defender = {
     penetrationArmorFactor: number
@@ -57,7 +57,7 @@ export const DefenderForm = () => {
 
     return (
         <div>
-            <CharacterForm onChange={handleChange} />
+            <CharacterForm initialBattleStyle={BattleStyles.Warrior} onChange={handleChange} />
         </div>
     )
 }

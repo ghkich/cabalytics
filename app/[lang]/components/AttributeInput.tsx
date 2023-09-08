@@ -72,6 +72,7 @@ export const AttributeInput = ({ onChange, name, label, value, min, max }: Props
                 </div>
                 <div>
                     <button
+                        tabIndex={-1}
                         type="button"
                         className="bg-neutral-850 absolute right-0 top-0 z-10 flex h-6 w-5 items-center justify-center text-neutral-200 opacity-0 transition-all duration-200 group-hover:opacity-100"
                         onClick={() => handleChange(undefined, 1)}
@@ -79,6 +80,7 @@ export const AttributeInput = ({ onChange, name, label, value, min, max }: Props
                         <FontAwesomeIcon icon={faCaretUp} />
                     </button>
                     <button
+                        tabIndex={-1}
                         type="button"
                         className="bg-neutral-850 absolute bottom-0 right-0 z-10 flex h-6 w-5 items-center justify-center text-neutral-200 opacity-0 transition-all duration-200 group-hover:opacity-100"
                         onClick={() => handleChange(undefined, -1)}
@@ -89,6 +91,7 @@ export const AttributeInput = ({ onChange, name, label, value, min, max }: Props
             </div>
             <div className="absolute bottom-0 left-1 right-20 top-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                 <RangeSlider
+                    tabIndex={-1}
                     id={`${name}-slider`}
                     name={`${name}-slider`}
                     min={min}

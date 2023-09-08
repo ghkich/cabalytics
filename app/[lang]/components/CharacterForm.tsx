@@ -102,12 +102,13 @@ const attributeCategories: { value: AttributeCategoryValue; label: { pt: string;
 ]
 
 type Props = {
+    initialBattleStyle?: BattleStyles
     onChange: (character: CharacterFormData) => void
 }
 
-export const CharacterForm = ({ onChange }: Props) => {
+export const CharacterForm = ({ initialBattleStyle, onChange }: Props) => {
     const { lang, t } = useTranslation()
-    const [battleStyle, setBattleStyle] = useState<BattleStyles>()
+    const [battleStyle, setBattleStyle] = useState<BattleStyles | undefined>(initialBattleStyle)
     const isMagicBased = !!(battleStyle && magicBasedBattleStyles.includes(battleStyle))
     const [attributeType, setAttributeType] = useState<AttributeTypeValue>('attack')
     const [attributeCategory, setAttributeCategory] = useState<AttributeCategoryValue>('general')
