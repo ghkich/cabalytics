@@ -39,8 +39,9 @@ export const SkillsDamageListItem = ({ skill, onClick, selected, isComboActive }
     }
 
     return (
-        <label
-            htmlFor="skill"
+        <div
+            role="checkbox"
+            aria-checked={selected}
             className={cls(
                 `bg-neutral-875 active:bg-neutral-910 hover:bg-neutral-850 flex w-full cursor-pointer items-center text-neutral-400 transition-colors duration-200 hover:text-neutral-400`,
                 {
@@ -95,6 +96,6 @@ export const SkillsDamageListItem = ({ skill, onClick, selected, isComboActive }
                     />
                 </div>
             </div>
-        </label>
+        </div>
     )
 }
