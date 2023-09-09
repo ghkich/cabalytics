@@ -1,7 +1,6 @@
 'use client'
 import React from 'react'
 import { TabButton } from '@/app/[lang]/components/TabButton'
-import { skills } from '@/app/data/skills'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAxeBattle, faCardsBlank, faSwords } from '@fortawesome/pro-duotone-svg-icons'
 import { cls } from '@/lib/utils'

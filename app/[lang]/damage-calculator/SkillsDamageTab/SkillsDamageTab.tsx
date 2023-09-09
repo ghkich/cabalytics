@@ -21,8 +21,8 @@ export default function SkillsDamageTab() {
         <>
             <SkillsDamageHeader />
             <div className="flex w-full flex-col gap-0.5 bg-neutral-800 bg-opacity-10">
-                {attacker?.battleStyle &&
-                    skills[attacker.battleStyle]?.map((skill) => (
+                {attacker?.battleStyleType &&
+                    skills[attacker.battleStyleType]?.map((skill) => (
                         <SkillsDamageListItem
                             key={skill.id}
                             skill={skill}

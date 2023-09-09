@@ -27,7 +27,7 @@ export const SkillsDamageHeader = () => {
 
     useEffect(() => {
         skillsTabDispatch({ type: 'UPDATE_SELECTED_SKILLS', payload: [] })
-    }, [attacker?.battleStyle, skillsTabDispatch])
+    }, [attacker?.battleStyleType, skillsTabDispatch])
 
     return (
         <div className="bg-neutral-910 @[350px]:flex-row flex w-full flex-col items-center gap-3 p-4">
