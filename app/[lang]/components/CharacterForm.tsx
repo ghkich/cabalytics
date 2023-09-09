@@ -164,10 +164,25 @@ export const CharacterForm = ({ type, onChange }: Props) => {
     return (
         <div className="flex flex-col gap-0.5">
             <div className="flex w-full gap-0.5">
+                <div className="flex gap-0.5 text-center text-xs text-neutral-500">
+                    <button
+                        type="button"
+                        className={cls('bg-neutral-825 w-8 py-0.5', {
+                            'text-emerald-400': type === 'attacker',
+                            'text-red-400': type === 'defender',
+                        })}
+                    >
+                        1
+                    </button>
+                    <button type="button" className="bg-neutral-875 w-8">
+                        2
+                    </button>
+                </div>
                 <div
                     className={cls(
-                        'text-neutral-450 flex w-full items-center justify-center bg-neutral-900 py-1 text-center text-[10px] uppercase',
+                        'bg-neutral-875 text-neutral-450 flex w-full items-center justify-center py-2 text-center text-[10px] uppercase transition-all duration-200',
                         {
+                            ['text-[11px]']: !selectedBattleStyleType,
                             ['text-emerald-400']: type === 'attacker' && !selectedBattleStyleType,
                             ['text-red-400']: type === 'defender' && !selectedBattleStyleType,
                         }
@@ -176,21 +191,10 @@ export const CharacterForm = ({ type, onChange }: Props) => {
                     <h1>{t(`terms.${type}`)}</h1>
                 </div>
                 <div className="flex gap-0.5 text-center text-xs text-neutral-500">
-                    <button
-                        type="button"
-                        className={cls('w-8 bg-neutral-900 py-0.5', {
-                            'bg-neutral-825 text-neutral-400': true,
-                        })}
-                    >
-                        1
-                    </button>
-                    <button type="button" className="w-8 bg-neutral-900">
-                        2
-                    </button>
-                    <button type="button" className="w-8 bg-neutral-900">
+                    <button type="button" className="bg-neutral-875 w-8">
                         3
                     </button>
-                    <button type="button" className="w-8 bg-neutral-900">
+                    <button type="button" className="bg-neutral-875 w-8">
                         4
                     </button>
                 </div>
@@ -201,8 +205,9 @@ export const CharacterForm = ({ type, onChange }: Props) => {
                         <button
                             type="button"
                             onClick={() => setShowBattleStyleSelector((prev) => !prev)}
-                            className="bg-neutral-875 hover:bg-neutral-825 relative flex h-12 w-12 shrink-0 items-center justify-center transition-colors duration-200 active:bg-neutral-900"
+                            className="bg-neutral-875 hover:bg-neutral-825 relative flex h-12 w-[66px] shrink-0 items-center justify-center overflow-hidden transition-colors duration-200 active:bg-neutral-900"
                         >
+                            <div className="absolute h-8 w-8 rounded-full bg-neutral-100 bg-opacity-5 blur"></div>
                             {battleStyles.map((battleStyle) => {
                                 return (
                                     <Image
@@ -222,11 +227,10 @@ export const CharacterForm = ({ type, onChange }: Props) => {
                     <div className="bg-neutral-910 flex w-full flex-col justify-center px-2 py-1">
                         {selectedBattleStyleType ? (
                             <div className="flex items-center justify-between">
-                                <div>
+                                <div className="w-full text-center">
                                     <div className="text-[10px] font-light">Combat Power</div>
                                     <div className="text-[11px] font-light text-orange-200">{combatPower.total}</div>
                                 </div>
-                                <div className="pr-3"></div>
                             </div>
                         ) : (
                             <div className="text-center text-[10px] font-light text-neutral-400">
@@ -234,6 +238,7 @@ export const CharacterForm = ({ type, onChange }: Props) => {
                             </div>
                         )}
                     </div>
+                    {selectedBattleStyleType && <div className="w-[66px] shrink-0 bg-neutral-900"></div>}
                 </div>
                 <div
                     className={cls('transition-max-height max-h-0 overflow-hidden duration-300 ease-in-out', {
