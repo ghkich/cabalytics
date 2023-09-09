@@ -146,13 +146,17 @@ type Props = {
     onChange: (character: CharacterFormData) => void
 }
 
+const getAccentColorByType = (type: 'attacker' | 'defender') => (type === 'attacker' ? 'emerald' : 'red')
+
 export const CharacterForm = ({ type, onChange }: Props) => {
     const { t, lang } = useTranslation()
     const [selectedBattleStyleType, setSelectedBattleStyleType] = useState<BattleStyleTypes | undefined>(
         type === 'attacker' ? undefined : undefined
     )
     const [showBattleStyleSelector, setShowBattleStyleSelector] = useState(!selectedBattleStyleType)
-    const [attributeType, setAttributeType] = useState<AttributeTypeValue>(type === 'attacker' ? 'attack' : 'defense')
+    const [selectedAttributeType, setSelectedAttributeType] = useState<AttributeTypeValue>(
+        type === 'attacker' ? 'attack' : 'defense'
+    )
     const [attributeCategory, setAttributeCategory] = useState<AttributeCategoryValue>('general')
     const [characterStats, updateCharacterStats] = useMergeState<CharacterStats>({
         attack: {
@@ -175,17 +179,17 @@ export const CharacterForm = ({ type, onChange }: Props) => {
             const { name, value } = e.target
             const partialStateUpdate = {
                 ...characterStats,
-                [attributeType]: {
-                    ...characterStats[attributeType],
+                [selectedAttributeType]: {
+                    ...characterStats[selectedAttributeType],
                     [attributeCategory]: {
-                        ...characterStats[attributeType][attributeCategory],
+                        ...characterStats[selectedAttributeType][attributeCategory],
                         [name]: value,
                     },
                 },
             }
             updateCharacterStats(partialStateUpdate)
         },
-        [characterStats, attributeType, attributeCategory, updateCharacterStats]
+        [characterStats, selectedAttributeType, attributeCategory, updateCharacterStats]
     )
 
     const handleBattleStyleChange = (battleStyleType: BattleStyleTypes) => {
@@ -206,10 +210,7 @@ export const CharacterForm = ({ type, onChange }: Props) => {
                 <div className="flex gap-0.5 text-center text-xs text-neutral-500">
                     <button
                         type="button"
-                        className={cls('bg-neutral-825 w-8 py-0.5', {
-                            'text-emerald-400': type === 'attacker',
-                            'text-red-400': type === 'defender',
-                        })}
+                        className={cls('bg-neutral-825 w-8 py-0.5', `text-${getAccentColorByType(type)}-400`)}
                     >
                         1
                     </button>
@@ -221,9 +222,7 @@ export const CharacterForm = ({ type, onChange }: Props) => {
                     className={cls(
                         'bg-neutral-875 text-neutral-450 flex w-full items-center justify-center py-2 text-center text-[10px] uppercase transition-all duration-200',
                         {
-                            ['text-[11px]']: !selectedBattleStyleType,
-                            ['text-emerald-400']: type === 'attacker' && !selectedBattleStyleType,
-                            ['text-red-400']: type === 'defender' && !selectedBattleStyleType,
+                            [`text-[11px] text-${getAccentColorByType(type)}-400`]: !selectedBattleStyleType,
                         }
                     )}
                 >
@@ -291,7 +290,7 @@ export const CharacterForm = ({ type, onChange }: Props) => {
                                 className={cls(
                                     'hover:bg-neutral-825 bg-neutral-875 mt-0.5 flex cursor-pointer flex-col items-center justify-center gap-1 px-0.5 py-2  text-neutral-400 transition-all duration-200 hover:opacity-100',
                                     {
-                                        'bg-neutral-825 text-neutral-400 opacity-100':
+                                        [`bg-neutral-825 text-${getAccentColorByType(type)}-400 opacity-100`]:
                                             selectedBattleStyleType === battleStyle.type,
                                     }
                                 )}
@@ -318,15 +317,16 @@ export const CharacterForm = ({ type, onChange }: Props) => {
                 })}
             >
                 <div className="flex justify-evenly gap-0.5">
-                    {attributeTypes.map((type) => (
+                    {attributeTypes.map((attributeType) => (
                         <TabButton
-                            key={type.value}
-                            active={attributeType === type.value}
-                            onClick={() => setAttributeType(type.value)}
+                            key={attributeType.value}
+                            active={selectedAttributeType === attributeType.value}
+                            accentColor={getAccentColorByType(type)}
+                            onClick={() => setSelectedAttributeType(attributeType.value)}
                         >
-                            <div className="text-[12px]">{type.label}</div>
+                            <div className="text-[12px]">{attributeType.label}</div>
                             <div className="text-[9px] font-light text-neutral-500 text-opacity-75">
-                                {combatPower[type.value].total}
+                                {combatPower[attributeType.value].total}
                             </div>
                         </TabButton>
                     ))}
@@ -336,17 +336,18 @@ export const CharacterForm = ({ type, onChange }: Props) => {
                         <TabButton
                             key={category.value}
                             active={attributeCategory === category.value}
+                            accentColor={getAccentColorByType(type)}
                             onClick={() => setAttributeCategory(category.value)}
                         >
                             <div className="text-[11px]">{category.label[lang]}</div>
                             <div className="text-[9px] font-light text-neutral-500 text-opacity-75">
-                                {combatPower[attributeType][category.value]}
+                                {combatPower[selectedAttributeType][category.value]}
                             </div>
                         </TabButton>
                     ))}
                 </div>
                 <div className="">
-                    {attributeType === 'attack' && (
+                    {selectedAttributeType === 'attack' && (
                         <form className="flex flex-col gap-0.5">
                             {Object.entries(attackAttributes).map(([key, { description }]) => {
                                 const typedKey = key as keyof AttackAttributes
@@ -373,7 +374,7 @@ export const CharacterForm = ({ type, onChange }: Props) => {
                             })}
                         </form>
                     )}
-                    {attributeType === 'defense' && (
+                    {selectedAttributeType === 'defense' && (
                         <form className="flex flex-col gap-0.5">
                             {Object.entries(defenseAttributes).map(([key, { description }]) => {
                                 const typedKey = key as keyof DefenseAttributes
