@@ -13,9 +13,11 @@ type Props = {
     onClick: (skillId: string) => void
     selected?: boolean
     isComboActive?: boolean
+    className?: string
+    style?: React.CSSProperties
 }
 
-export const SkillsDamageListItem = ({ skill, onClick, selected, isComboActive }: Props) => {
+export const SkillsDamageListItem = ({ skill, onClick, selected, isComboActive, className, style }: Props) => {
     const { lang, t } = useTranslation()
     const { attacker, defender, skillsTabDispatch } = useDamageCalculator()
     const { damage, isCalculating, calculateDamage } = useCalculateSkillDamage()
@@ -41,13 +43,15 @@ export const SkillsDamageListItem = ({ skill, onClick, selected, isComboActive }
         <div
             role="checkbox"
             aria-checked={selected}
+            onClick={() => onClick(skill.id)}
             className={cls(
-                `bg-neutral-875 active:bg-neutral-910 hover:bg-neutral-850 flex w-full cursor-pointer items-center text-neutral-400 transition-colors duration-200 hover:text-neutral-400`,
+                `bg-neutral-875 active:bg-neutral-910 animate- hover:bg-neutral-850 flex w-full cursor-pointer items-center text-neutral-400 transition-colors duration-200 hover:text-neutral-400`,
                 {
                     'bg-neutral-825 hover:bg-neutral-825 text-neutral-300 hover:text-neutral-200': selected,
-                }
+                },
+                className
             )}
-            onClick={() => onClick(skill.id)}
+            style={style}
         >
             <div className="w-16 border-r border-neutral-700 border-opacity-50 text-center">
                 <FontAwesomeIcon

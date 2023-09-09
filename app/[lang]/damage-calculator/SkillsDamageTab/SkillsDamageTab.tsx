@@ -22,15 +22,19 @@ export default function SkillsDamageTab() {
             <SkillsDamageHeader />
             <div className="flex w-full flex-col gap-0.5 bg-neutral-800 bg-opacity-10">
                 {attacker?.battleStyleType &&
-                    skills[attacker.battleStyleType]?.map((skill) => (
-                        <SkillsDamageListItem
-                            key={skill.id}
-                            skill={skill}
-                            onClick={handleSelectSkill}
-                            selected={skillsTab.selectedSkills.includes(skill.id)}
-                            isComboActive={skillsTab.comboActive}
-                        />
-                    ))}
+                    skills[attacker.battleStyleType]?.map((skill, index) => {
+                        return (
+                            <SkillsDamageListItem
+                                key={skill.id}
+                                skill={skill}
+                                onClick={handleSelectSkill}
+                                selected={skillsTab.selectedSkills.includes(skill.id)}
+                                isComboActive={skillsTab.comboActive}
+                                className={`animate-scale-fade-in`}
+                                style={{ animationDelay: `${index * 30}ms` }}
+                            />
+                        )
+                    })}
             </div>
         </>
     )

@@ -8,7 +8,14 @@ const config: Config = {
     ],
     theme: {
         extend: {
+            keyframes: {
+                'scale-fade-in': {
+                    '0%': { transform: 'translateY(50px) scale(0.75)', opacity: '0' },
+                    '100%': { transform: 'translateY(0) scale(1)', opacity: '1' },
+                },
+            },
             animation: {
+                'scale-fade-in': 'scale-fade-in 300ms ease-out forwards',
                 'spin-selection': 'spin 500ms ease-out forwards',
             },
             colors: {
