@@ -1,9 +1,11 @@
 import React from 'react'
 import { cls } from '@/lib/utils'
 
+// bg-red-400 | bg-emerald-400
+
 export type ButtonProps = {
     active?: boolean
-    accentColor?: 'emerald' | 'red' | 'blue' | 'yellow' | 'purple' | 'pink' | 'indigo' | 'green' | 'gray' | 'white'
+    accentColor?: 'emerald' | 'red'
     onClick?: () => void
     children: React.ReactNode
 }
