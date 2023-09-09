@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAxeBattle, faCardsBlank, faSwords } from '@fortawesome/pro-duotone-svg-icons'
 import { cls } from '@/lib/utils'
 import SkillsDamageTab from '@/app/[lang]/damage-calculator/SkillsDamageTab/SkillsDamageTab'
+import { useDamageCalculator } from '@/app/[lang]/damage-calculator/damage-calculator-provider'
 
 const damageTabs = [
     {
@@ -17,19 +18,24 @@ const damageTabs = [
         id: 'bm2',
         label: 'BM2',
         icon: faAxeBattle,
-        className: 'text-sky-400',
+        className: 'text-neutral-500',
     },
     {
         id: 'bm3',
         label: 'BM3',
         icon: faSwords,
-        className: 'text-red-400',
+        className: 'text-neutral-500',
     },
 ]
 
 export const DamageTabs = () => {
+    const { attacker } = useDamageCalculator()
     return (
-        <div className="@container flex w-full flex-col gap-0.5">
+        <div
+            className={cls('@container flex w-full flex-col gap-0.5', {
+                ['pointer-events-none select-none opacity-50 grayscale']: !attacker,
+            })}
+        >
             <div className="flex w-full gap-0.5">
                 {damageTabs.map((mode) => (
                     <TabButton key={mode.id} active={mode.id === 'skills'}>

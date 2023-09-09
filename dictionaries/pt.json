@@ -16,6 +16,14 @@
     "pvp": "Pvp",
     "pve": "PVE"
   },
+  "terms": {
+    "attacker": "Atacante",
+    "defender": "Oponente",
+    "battle_style": "Estilo de Luta"
+  },
+  "phrases": {
+    "select_a": "Selecione um"
+  },
   "damage": {
     "average_dps": "DPS Méd.",
     "average": "Médio",

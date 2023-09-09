@@ -8,8 +8,6 @@ import useMergeState from '@/lib/useMergeState'
 import { useCombatPower } from '@/lib/useCombatPower'
 import Image from 'next/image'
 import { cls } from '@/lib/utils'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowDown } from '@fortawesome/sharp-light-svg-icons'
 
 const initialAttackAttributes: AttackAttributes = {
     attack: 0,
@@ -105,17 +103,17 @@ const attributeCategories: { value: AttributeCategoryValue; label: { pt: string;
 ]
 
 type Props = {
-    initialBattleStyleType?: BattleStyleTypes
+    type: 'attacker' | 'defender'
     onChange: (character: CharacterFormData) => void
 }
 
-export const CharacterForm = ({ initialBattleStyleType, onChange }: Props) => {
-    const { lang } = useTranslation()
+export const CharacterForm = ({ type, onChange }: Props) => {
+    const { t, lang } = useTranslation()
     const [selectedBattleStyleType, setSelectedBattleStyleType] = useState<BattleStyleTypes | undefined>(
-        initialBattleStyleType
+        type === 'attacker' ? undefined : undefined
     )
     const [showBattleStyleSelector, setShowBattleStyleSelector] = useState(!selectedBattleStyleType)
-    const [attributeType, setAttributeType] = useState<AttributeTypeValue>('attack')
+    const [attributeType, setAttributeType] = useState<AttributeTypeValue>(type === 'attacker' ? 'attack' : 'defense')
     const [attributeCategory, setAttributeCategory] = useState<AttributeCategoryValue>('general')
     const [characterStats, updateCharacterStats] = useMergeState<CharacterStats>({
         attack: {
@@ -166,8 +164,16 @@ export const CharacterForm = ({ initialBattleStyleType, onChange }: Props) => {
     return (
         <div className="flex flex-col gap-0.5">
             <div className="flex w-full gap-0.5">
-                <div className="flex w-full items-center justify-center bg-neutral-900 py-1 text-center text-[10px] uppercase text-neutral-600">
-                    <h1>Atacante</h1>
+                <div
+                    className={cls(
+                        'text-neutral-450 flex w-full items-center justify-center bg-neutral-900 py-1 text-center text-[10px] uppercase',
+                        {
+                            ['text-emerald-400']: type === 'attacker' && !selectedBattleStyleType,
+                            ['text-red-400']: type === 'defender' && !selectedBattleStyleType,
+                        }
+                    )}
+                >
+                    <h1>{t(`terms.${type}`)}</h1>
                 </div>
                 <div className="flex gap-0.5 text-center text-xs text-neutral-500">
                     <button
@@ -190,80 +196,83 @@ export const CharacterForm = ({ initialBattleStyleType, onChange }: Props) => {
                 </div>
             </div>
             <div className="flex flex-col">
-                <div className="text-neutral-450 flex gap-0.5 text-[10px] font-light">
-                    <button
-                        type="button"
-                        onClick={() => setShowBattleStyleSelector((prev) => !prev)}
-                        className="bg-neutral-875 hover:bg-neutral-825 relative flex h-12 w-12 shrink-0 items-center justify-center transition-colors duration-200 active:bg-neutral-900"
-                    >
-                        {battleStyles.map((battleStyle) => {
-                            return (
-                                <Image
-                                    key={`${battleStyle.type}-${selectedBattleStyleType}`}
-                                    src={battleStyle.icon}
-                                    alt={battleStyle.description}
-                                    loading="eager"
-                                    className={cls('animate-spin-selection absolute opacity-0', {
-                                        'opacity-100': selectedBattleStyleType === battleStyle.type,
-                                    })}
-                                    width={32}
-                                />
-                            )
-                        })}
-                        {!selectedBattleStyleType && (
-                            <FontAwesomeIcon
-                                icon={faArrowDown}
-                                className={cls('mb-[-10px] animate-bounce text-xl text-neutral-600', {
-                                    'text-emerald-300': selectedBattleStyleType,
-                                })}
-                            />
-                        )}
-                    </button>
+                <div className="text-neutral-450 flex h-12 gap-0.5">
+                    {selectedBattleStyleType && (
+                        <button
+                            type="button"
+                            onClick={() => setShowBattleStyleSelector((prev) => !prev)}
+                            className="bg-neutral-875 hover:bg-neutral-825 relative flex h-12 w-12 shrink-0 items-center justify-center transition-colors duration-200 active:bg-neutral-900"
+                        >
+                            {battleStyles.map((battleStyle) => {
+                                return (
+                                    <Image
+                                        key={`${battleStyle.type}-${selectedBattleStyleType}`}
+                                        src={battleStyle.icon}
+                                        alt={battleStyle.description}
+                                        loading="eager"
+                                        className={cls('animate-spin-selection absolute opacity-0', {
+                                            'opacity-100': selectedBattleStyleType === battleStyle.type,
+                                        })}
+                                        width={32}
+                                    />
+                                )
+                            })}
+                        </button>
+                    )}
                     <div className="bg-neutral-910 flex w-full flex-col justify-center px-2 py-1">
                         {selectedBattleStyleType ? (
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <div className="">Combat Power</div>
+                                    <div className="text-[10px] font-light">Combat Power</div>
                                     <div className="text-[11px] font-light text-orange-200">{combatPower.total}</div>
                                 </div>
                                 <div className="pr-3"></div>
                             </div>
                         ) : (
-                            <div className="font-light text-neutral-500">
-                                Selecione o <b className="text-neutral-450 font-normal">estilo de luta</b> do atacante
+                            <div className="text-center text-[10px] font-light text-neutral-400">
+                                {t(`phrases.select_a`)} <b className="font-semibold">{t(`terms.battle_style`)}</b>
                             </div>
                         )}
                     </div>
                 </div>
                 <div
-                    className={cls(
-                        'transition-max-height grid max-h-0 grid-cols-9 gap-0.5 overflow-hidden duration-500 ease-in-out',
-                        {
-                            'max-h-[30px]': showBattleStyleSelector,
-                        }
-                    )}
+                    className={cls('transition-max-height max-h-0 overflow-hidden duration-300 ease-in-out', {
+                        'max-h-[120px]': showBattleStyleSelector,
+                    })}
                 >
-                    {battleStyles.map((battleStyle) => (
-                        <div
-                            key={`select-battle-style-${battleStyle.type}`}
-                            className={cls(
-                                'hover:bg-neutral-850 mt-0.5 flex cursor-pointer items-center justify-center bg-neutral-900 px-0.5 py-1 transition-all duration-200 hover:opacity-100',
-                                {
-                                    'bg-neutral-825 opacity-100': selectedBattleStyleType === battleStyle.type,
-                                }
-                            )}
-                            onClick={() => handleBattleStyleChange(battleStyle.type)}
-                        >
-                            <Image
-                                src={battleStyle.icon}
-                                alt={battleStyle.description}
-                                className="opacity-90 transition-all duration-200"
-                            />
-                        </div>
-                    ))}
+                    <div className="grid grid-cols-3 gap-x-0.5">
+                        {battleStyles.map((battleStyle) => (
+                            <div
+                                key={`select-battle-style-${battleStyle.type}`}
+                                className={cls(
+                                    'hover:bg-neutral-825 bg-neutral-875 mt-0.5 flex cursor-pointer flex-col items-center justify-center gap-1 px-0.5 py-2  text-neutral-400 transition-all duration-200 hover:opacity-100',
+                                    {
+                                        'bg-neutral-825 text-neutral-400 opacity-100':
+                                            selectedBattleStyleType === battleStyle.type,
+                                    }
+                                )}
+                                onClick={() => handleBattleStyleChange(battleStyle.type)}
+                            >
+                                <div className="flex items-center gap-2">
+                                    <Image
+                                        src={battleStyle.icon}
+                                        alt={battleStyle.description}
+                                        className="opacity-90 transition-all duration-200"
+                                        width={20}
+                                    />
+                                    <div className="text-xs">{battleStyle.acronym}</div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="mt-0.5 h-1 w-full bg-neutral-900"></div>
                 </div>
             </div>
-            <div className="flex flex-col gap-0.5">
+            <div
+                className={cls('flex flex-col gap-0.5 opacity-100 transition-opacity duration-500', {
+                    ['pointer-events-none select-none opacity-20']: showBattleStyleSelector,
+                })}
+            >
                 <div className="flex justify-evenly gap-0.5">
                     {attributeTypes.map((type) => (
                         <TabButton

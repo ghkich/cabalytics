@@ -1,7 +1,7 @@
 import { cls } from '@/lib/utils'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpinnerThird } from '@fortawesome/sharp-light-svg-icons'
+import { faGripDots } from '@fortawesome/sharp-solid-svg-icons'
 
 type Props = {
     header?: string
@@ -12,7 +12,7 @@ type Props = {
 
 export const DamageDisplay = ({ header, value, loading, className }: Props) => {
     const placeholderOrValue =
-        value === undefined ? <FontAwesomeIcon icon={faSpinnerThird} className="text-xs" spin /> : value
+        value === undefined ? <FontAwesomeIcon icon={faGripDots} className="animate-pulse text-[10px]" /> : value
     return (
         <div
             className={cls(

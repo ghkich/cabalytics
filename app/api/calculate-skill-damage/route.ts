@@ -36,12 +36,12 @@ export async function POST(request: Request) {
     const penetration = Math.max(attacker.penetration + (skill?.penetration || 0), 0)
     const ignoreDamageReduction = Math.max(attacker.ignoreDamageReduction - defender.cancelIgnoreDamageReduction, 0)
     const damageReduction = Math.max(defender.damageReduction - ignoreDamageReduction, 0)
-    const resistSkillAmp = Math.max(defender.resistSkillAmp - attacker.ignoreResistSkillAmp, 0)
-    const skillAmp = Math.max(attacker.skillAmp + skill.skillAmp - resistSkillAmp, 0)
+    const resistSkillAmp = Math.max(defender.effectiveResistSkillAmp - attacker.ignoreResistSkillAmp, 0)
+    const skillAmp = Math.max(attacker.effectiveSkillAmp + skill.skillAmp - resistSkillAmp, 0)
     const resistCriticalDamage = Math.max(defender.resistCriticalDamage - attacker.ignoreResistCriticalDamage, 0)
     const criticalDamage = Math.max(attacker.criticalDamage + (skill?.criticalDamage || 0) - resistCriticalDamage, 0.25)
 
-    const attack = attacker.attack * (1 + skillAmp)
+    const attack = attacker.effectiveAttack * (1 + skillAmp)
 
     let finalDefense = defender.defense - (skill?.defenseReduction || 0)
     finalDefense += ignorePenetration * defender.penetrationArmorFactor

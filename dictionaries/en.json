@@ -16,6 +16,14 @@
     "pvp": "PVP",
     "pve": "PVE"
   },
+  "terms": {
+    "attacker": "Attacker",
+    "defender": "Opponent",
+    "battle_style": "Battle Style"
+  },
+  "phrases": {
+    "select_a": "Select a"
+  },
   "damage": {
     "average_dps": "Avg. DPS",
     "average": "Average",

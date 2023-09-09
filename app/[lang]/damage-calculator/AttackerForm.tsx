@@ -7,21 +7,10 @@ import { battleStylesData, BattleStyleTypes } from '@/app/data/battleStyles'
 
 export type Attacker = {
     battleStyleType: BattleStyleTypes
+    effectiveAttack: number
+    effectiveSkillAmp: number
     criticalEffectiveness: number
-    attack: number
-    criticalDamage: number
-    criticalRate: number
-    skillAmp: number
-    penetration: number
-    addDamage: number
-    finalDamageUp: number
-    ignoreDamageReduction: number
-    ignoreResistCriticalDamage: number
-    ignoreResistCriticalRate: number
-    ignoreResistSkillAmp: number
-    normalDamageUp: number
-    cancelIgnorePenetration: number
-}
+} & Omit<AttackAttributes, 'swordSkillAmp' | 'magicSkillAmp' | 'attack' | 'magicAttack'>
 
 const getFinalAttributeValue = (
     attacker: CharacterFormData,
@@ -45,10 +34,10 @@ export const AttackerForm = () => {
             setAttacker({
                 battleStyleType: character.battleStyleType,
                 criticalEffectiveness: battleStylesData[character.battleStyleType].criticalEffectiveness,
-                attack: getFinalAttributeValue(character, isAttackerMagicBased ? 'magicAttack' : 'attack'),
+                effectiveAttack: getFinalAttributeValue(character, isAttackerMagicBased ? 'magicAttack' : 'attack'),
                 criticalDamage: getFinalAttributeValue(character, 'criticalDamage') / 100,
                 criticalRate: getFinalAttributeValue(character, 'criticalRate') / 100,
-                skillAmp:
+                effectiveSkillAmp:
                     getFinalAttributeValue(character, isAttackerMagicBased ? 'magicSkillAmp' : 'swordSkillAmp') / 100,
                 penetration: getFinalAttributeValue(character, 'penetration'),
                 addDamage: getFinalAttributeValue(character, 'addDamage'),
@@ -59,6 +48,10 @@ export const AttackerForm = () => {
                 ignoreResistSkillAmp: getFinalAttributeValue(character, 'ignoreResistSkillAmp') / 100,
                 normalDamageUp: getFinalAttributeValue(character, 'normalDamageUp') / 100,
                 cancelIgnorePenetration: getFinalAttributeValue(character, 'cancelIgnorePenetration'),
+                attackRate: getFinalAttributeValue(character, 'attackRate') / 100,
+                accuracy: getFinalAttributeValue(character, 'accuracy') / 100,
+                minimumDamage: getFinalAttributeValue(character, 'minimumDamage'),
+                ignoreEvasion: getFinalAttributeValue(character, 'ignoreEvasion'),
             })
         },
         [setAttacker]
@@ -66,7 +59,7 @@ export const AttackerForm = () => {
 
     return (
         <div>
-            <CharacterForm onChange={handleChange} />
+            <CharacterForm type="attacker" onChange={handleChange} />
         </div>
     )
 }

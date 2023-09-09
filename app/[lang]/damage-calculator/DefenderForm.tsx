@@ -3,20 +3,14 @@ import React from 'react'
 import { CharacterForm, CharacterFormData } from '@/app/[lang]/components/CharacterForm'
 import { DamageMode, useDamageCalculator } from '@/app/[lang]/damage-calculator/damage-calculator-provider'
 import { DefenseAttributes } from '@/app/data/attributes'
-import { battleStylesData, BattleStyleTypes } from '@/app/data/battleStyles'
+import { battleStylesData } from '@/app/data/battleStyles'
 
 export type Defender = {
     penetrationArmorFactor: number
     baselineArmor: number
-    defense: number
-    damageReduction: number
-    resistCriticalRate: number
-    resistCriticalDamage: number
-    resistSkillAmp: number
-    ignorePenetration: number
-    cancelIgnoreDamageReduction: number
-    finalDamageDown: number
-}
+    effectiveResistSkillAmp: number
+} & Omit<DefenseAttributes, 'resistSkillAmp' | 'resistMagicSkillAmp' | 'resistSwordSkillAmp'>
+
 const getFinalAttributeValue = (
     defender: CharacterFormData,
     attribute: keyof DefenseAttributes,
@@ -38,17 +32,22 @@ export const DefenderForm = () => {
             setDefender({
                 penetrationArmorFactor: battleStylesData[character.battleStyleType].penetrationArmorFactor,
                 baselineArmor: battleStylesData[character.battleStyleType].baselineArmor,
+                hp: getFinalAttributeValue(character, 'hp'),
                 defense: getFinalAttributeValue(character, 'defense'),
+                defenseRate: getFinalAttributeValue(character, 'defenseRate') / 100,
+                evasion: getFinalAttributeValue(character, 'evasion') / 100,
                 damageReduction: getFinalAttributeValue(character, 'damageReduction'),
                 resistCriticalRate: getFinalAttributeValue(character, 'resistCriticalRate') / 100,
                 resistCriticalDamage: getFinalAttributeValue(character, 'resistCriticalDamage') / 100,
-                resistSkillAmp:
+                effectiveResistSkillAmp:
                     getFinalAttributeValue(
                         character,
                         isAttackerMagicBased ? 'resistMagicSkillAmp' : 'resistSwordSkillAmp'
                     ) / 100,
                 ignorePenetration: getFinalAttributeValue(character, 'ignorePenetration'),
+                ignoreAccuracy: getFinalAttributeValue(character, 'ignoreAccuracy'),
                 cancelIgnoreDamageReduction: getFinalAttributeValue(character, 'cancelIgnoreDamageReduction'),
+                cancelIgnoreEvasion: getFinalAttributeValue(character, 'cancelIgnoreEvasion'),
                 finalDamageDown: getFinalAttributeValue(character, 'finalDamageDown') / 100,
             })
         },
@@ -57,7 +56,7 @@ export const DefenderForm = () => {
 
     return (
         <div>
-            <CharacterForm initialBattleStyleType={BattleStyleTypes.Warrior} onChange={handleChange} />
+            <CharacterForm type="defender" onChange={handleChange} />
         </div>
     )
 }
