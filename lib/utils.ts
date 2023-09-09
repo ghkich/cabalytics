@@ -5,23 +5,12 @@ export function cls(...args: ClassValue[]) {
     return twMerge(clsx(args))
 }
 
-export const debounceAsync = <T, Args extends any[]>(func: (...args: Args) => Promise<T>, delay: number) => {
-    let timeoutId: NodeJS.Timeout | null = null
+export type AccentColor = 'emerald' | 'red'
 
-    return (...args: Args): Promise<T> => {
-        return new Promise((resolve, reject) => {
-            if (timeoutId) {
-                clearTimeout(timeoutId)
-            }
+export const getAccentColorByType = (type: 'attacker' | 'defender'): AccentColor =>
+    type === 'attacker' ? 'emerald' : 'red'
 
-            timeoutId = setTimeout(async () => {
-                try {
-                    const result = await func(...args)
-                    resolve(result)
-                } catch (error) {
-                    reject(error)
-                }
-            }, delay)
-        })
-    }
+export const getTwColorClassNameByAccent = (accentColor?: AccentColor) => {
+    if (!accentColor) return 'text-neutral-400'
+    return accentColor === 'emerald' ? 'text-emerald-400' : 'text-red-400'
 }

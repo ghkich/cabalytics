@@ -34,7 +34,7 @@ type BatteStyleData = {
     popularity: number
 }
 
-type BattleStyle = Omit<BatteStyleData, 'description' | 'acronym'> & {
+export type BattleStyle = Omit<BatteStyleData, 'description' | 'acronym'> & {
     id: string
     description: string
     acronym: string
