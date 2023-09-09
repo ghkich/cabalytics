@@ -1,12 +1,13 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { AttackAttributes, attackAttributes, defenseAttributes, DefenseAttributes } from '@/app/types/attributes'
 import { AttributeInput } from '@/app/[lang]/components/AttributeInput'
-import { BattleStyles, getBattleStyles, magicBasedBattleStyles } from '@/app/types/battleStyles'
-import { Select } from '@/app/[lang]/components/Select'
+import { battleStyles, BattleStyles, magicBasedBattleStyles } from '@/app/types/battleStyles'
 import useTranslation from '@/lib/useTranslation'
 import { TabButton } from '@/app/[lang]/components/TabButton'
 import useMergeState from '@/lib/useMergeState'
 import { useCombatPower } from '@/lib/useCombatPower'
+import Image from 'next/image'
+import { cls } from '@/lib/utils'
 
 const initialAttackAttributes: AttackAttributes = {
     attack: 0,
@@ -107,8 +108,9 @@ type Props = {
 }
 
 export const CharacterForm = ({ initialBattleStyle, onChange }: Props) => {
-    const { lang, t } = useTranslation()
+    const { lang } = useTranslation()
     const [battleStyle, setBattleStyle] = useState<BattleStyles | undefined>(initialBattleStyle)
+    const [showBattleStyleSelector, setShowBattleStyleSelector] = useState(!battleStyle)
     const isMagicBased = !!(battleStyle && magicBasedBattleStyles.includes(battleStyle))
     const [attributeType, setAttributeType] = useState<AttributeTypeValue>('attack')
     const [attributeCategory, setAttributeCategory] = useState<AttributeCategoryValue>('general')
@@ -144,6 +146,11 @@ export const CharacterForm = ({ initialBattleStyle, onChange }: Props) => {
         [characterStats, attributeType, attributeCategory, updateCharacterStats]
     )
 
+    const handleBattleStyleChange = (battleStyle: BattleStyles) => {
+        setBattleStyle(battleStyle)
+        setShowBattleStyleSelector(false)
+    }
+
     useEffect(() => {
         onChange({
             battleStyle,
@@ -153,18 +160,55 @@ export const CharacterForm = ({ initialBattleStyle, onChange }: Props) => {
 
     return (
         <div className="flex flex-col gap-0.5">
-            <Select
-                name="battle-style"
-                label={t('placeholders.battle_style')}
-                items={getBattleStyles(lang)}
-                value={battleStyle}
-                onChange={(e) => {
-                    setBattleStyle(e.target.value as BattleStyles)
-                }}
-            />
-            <div className="bg-neutral-910 text-neutral-450 p-1.5 text-center text-[10px] font-light">
-                <div className="">Combat Power</div>
-                <div className="text-xs text-orange-200">{combatPower.total}</div>
+            <div className="flex flex-col">
+                <div className="text-neutral-450 flex gap-0.5 text-[10px] font-light">
+                    <button
+                        type="button"
+                        onClick={() => setShowBattleStyleSelector((prev) => !prev)}
+                        className="bg-neutral-875 hover:bg-neutral-825 flex h-12 w-12 shrink-0 items-center justify-center transition-colors duration-200 active:bg-neutral-900"
+                    >
+                        {battleStyle && (
+                            <Image
+                                key={battleStyle}
+                                src={battleStyles[battleStyle].icon}
+                                alt={battleStyles[battleStyle].description[lang]}
+                                className="animate-spin-selection"
+                                width={32}
+                            />
+                        )}
+                    </button>
+                    <div className="bg-neutral-910 flex w-full flex-col justify-center px-2 py-1">
+                        <div className="">Combat Power</div>
+                        <div className="text-[11px] font-light text-orange-200">{combatPower.total}</div>
+                    </div>
+                </div>
+                <div
+                    className={cls(
+                        'transition-max-height grid max-h-0 grid-cols-9 gap-0.5 overflow-hidden duration-500 ease-in-out',
+                        {
+                            'max-h-[30px]': showBattleStyleSelector,
+                        }
+                    )}
+                >
+                    {Object.entries(battleStyles).map(([key, style]) => (
+                        <div
+                            key={style.acronym[lang]}
+                            className={cls(
+                                'hover:bg-neutral-850 mt-0.5 flex cursor-pointer items-center justify-center bg-neutral-900 px-0.5 py-1 opacity-75 transition-all duration-200 hover:opacity-100',
+                                {
+                                    'bg-neutral-825 opacity-100': battleStyle === key,
+                                }
+                            )}
+                            onClick={() => handleBattleStyleChange(key as BattleStyles)}
+                        >
+                            <Image
+                                src={style.icon}
+                                alt={style.description[lang]}
+                                className="transition-all duration-200"
+                            />
+                        </div>
+                    ))}
+                </div>
             </div>
             <div className="flex justify-evenly gap-0.5">
                 {attributeTypes.map((type) => (

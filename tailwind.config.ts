@@ -8,6 +8,9 @@ const config: Config = {
     ],
     theme: {
         extend: {
+            animation: {
+                'spin-selection': 'spin 500ms ease-out forwards',
+            },
             colors: {
                 neutral: {
                     450: '#797979',
