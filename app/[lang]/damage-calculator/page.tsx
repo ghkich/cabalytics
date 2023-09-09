@@ -9,13 +9,13 @@ export default async function DamageCalculator() {
         <div className="">
             <DamageCalculatorProvider>
                 <div className="flex flex-col gap-1.5 md:flex-row">
-                    <div className="min-w-[240px]">
+                    <div className="animate-slide-in min-w-[240px]">
                         <AttackerForm />
                     </div>
-                    <div className="flex w-full flex-col items-center">
+                    <div className="animate-slide-in flex w-full flex-col items-center">
                         <DamageTabs />
                     </div>
-                    <div className="min-w-[240px]">
+                    <div className="animate-slide-in min-w-[240px]">
                         <DefenderForm />
                     </div>
                 </div>

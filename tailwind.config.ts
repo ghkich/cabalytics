@@ -9,12 +9,17 @@ const config: Config = {
     theme: {
         extend: {
             keyframes: {
+                'slide-in': {
+                    '0%': { transform: 'translateY(15px)', opacity: '0' },
+                    '100%': { transform: 'translateY(0)', opacity: '1' },
+                },
                 'scale-fade-in': {
                     '0%': { transform: 'translateY(50px) scale(0.75)', opacity: '0' },
                     '100%': { transform: 'translateY(0) scale(1)', opacity: '1' },
                 },
             },
             animation: {
+                'slide-in': 'slide-in 500ms ease-out forwards',
                 'scale-fade-in': 'scale-fade-in 300ms ease-out forwards',
                 'spin-selection': 'spin 500ms ease-out forwards',
             },
