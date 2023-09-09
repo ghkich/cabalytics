@@ -9,7 +9,7 @@ import { useCombatPower } from '@/lib/useCombatPower'
 import Image from 'next/image'
 import { cls } from '@/lib/utils'
 
-const initialAttackAttributes: AttackAttributes = {
+const zeroAttackAttributes: AttackAttributes = {
     attack: 0,
     magicAttack: 0,
     attackRate: 0,
@@ -31,7 +31,29 @@ const initialAttackAttributes: AttackAttributes = {
     cancelIgnorePenetration: 0,
 }
 
-const initialDefenseAttributes: DefenseAttributes = {
+const initialAttackAttributes: AttackAttributes = {
+    attack: 4000,
+    magicAttack: 4000,
+    attackRate: 6500,
+    criticalRate: 50,
+    criticalDamage: 200,
+    swordSkillAmp: 125,
+    magicSkillAmp: 125,
+    accuracy: 750,
+    penetration: 300,
+    minimumDamage: 0,
+    addDamage: 100,
+    ignoreEvasion: 450,
+    finalDamageUp: 0,
+    ignoreDamageReduction: 50,
+    ignoreResistCriticalRate: 5,
+    ignoreResistCriticalDamage: 10,
+    ignoreResistSkillAmp: 0,
+    normalDamageUp: 25,
+    cancelIgnorePenetration: 0,
+}
+
+const zeroDefenseAttributes: DefenseAttributes = {
     hp: 0,
     defense: 0,
     defenseRate: 0,
@@ -43,6 +65,23 @@ const initialDefenseAttributes: DefenseAttributes = {
     resistSwordSkillAmp: 0,
     ignorePenetration: 0,
     ignoreAccuracy: 0,
+    cancelIgnoreDamageReduction: 0,
+    cancelIgnoreEvasion: 0,
+    finalDamageDown: 0,
+}
+
+const initialDefenseAttributes: DefenseAttributes = {
+    hp: 7500,
+    defense: 3500,
+    defenseRate: 6500,
+    evasion: 1500,
+    damageReduction: 400,
+    resistCriticalRate: 20,
+    resistCriticalDamage: 100,
+    resistMagicSkillAmp: 50,
+    resistSwordSkillAmp: 50,
+    ignorePenetration: 200,
+    ignoreAccuracy: 600,
     cancelIgnoreDamageReduction: 0,
     cancelIgnoreEvasion: 0,
     finalDamageDown: 0,
@@ -118,13 +157,13 @@ export const CharacterForm = ({ type, onChange }: Props) => {
     const [characterStats, updateCharacterStats] = useMergeState<CharacterStats>({
         attack: {
             general: initialAttackAttributes,
-            pvp: initialAttackAttributes,
-            pve: initialAttackAttributes,
+            pvp: zeroAttackAttributes,
+            pve: zeroAttackAttributes,
         },
         defense: {
             general: initialDefenseAttributes,
-            pvp: initialDefenseAttributes,
-            pve: initialDefenseAttributes,
+            pvp: zeroDefenseAttributes,
+            pve: zeroDefenseAttributes,
         },
     })
     const battleStyles = getBattleStyles(lang)
