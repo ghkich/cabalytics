@@ -1,5 +1,5 @@
 import { CharacterStats } from '@/app/[lang]/components/CharacterForm'
-import { attackAttributes, AttackAttributes, defenseAttributes, DefenseAttributes } from '@/app/types/attributes'
+import { attackAttributes, AttackAttributes, defenseAttributes, DefenseAttributes } from '@/app/data/attributes'
 import useFormatLocale from '@/lib/useFormatLocale'
 import React from 'react'
 
@@ -19,7 +19,7 @@ export type CombatPower = {
     total: string
 }
 
-const sumAttackAttributes = (attributes: AttackAttributes, isMagicBased: boolean) => {
+const sumAttackAttributes = (attributes: AttackAttributes, isMagicBased?: boolean) => {
     return Object.entries(attributes).reduce((acc, [key, value]) => {
         const attributeKey = key as keyof AttackAttributes
         let attributeScore = attackAttributes[attributeKey].score
@@ -39,7 +39,7 @@ const sumDefenseAttributes = (attributes: DefenseAttributes) => {
     }, 0)
 }
 
-export const useCombatPower = (characterStats: CharacterStats, isMagicBased: boolean): CombatPower => {
+export const useCombatPower = (characterStats: CharacterStats, isMagicBased?: boolean): CombatPower => {
     const { formatNumber } = useFormatLocale()
 
     const attackGeneralCombatPower = React.useMemo(

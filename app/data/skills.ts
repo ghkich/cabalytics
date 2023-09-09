@@ -1,4 +1,4 @@
-import { BattleStyles } from '@/app/types/battleStyles'
+import { BattleStyleTypes } from '@/app/data/battleStyles'
 import { v4 as uuidv4 } from 'uuid'
 
 export type SkillStats = {
@@ -22,8 +22,8 @@ const generateSkill = (namePt: string, nameEn: string, stats: SkillStats) => ({
     ...stats,
 })
 
-export const skills: Record<BattleStyles, Skill[]> = {
-    [BattleStyles.ForceArcher]: [
+export const skills: Record<BattleStyleTypes, Skill[]> = {
+    [BattleStyleTypes.ForceArcher]: [
         generateSkill('Lança de Terra', 'Earth Arrow', {
             skillAmp: 0.95,
             addAttack: 143,
@@ -68,7 +68,7 @@ export const skills: Record<BattleStyles, Skill[]> = {
             comboCastingTime: 2.1,
         }),
     ],
-    [BattleStyles.Wizard]: [
+    [BattleStyleTypes.Wizard]: [
         generateSkill('Lança de Terra', 'Earth Arrow', {
             skillAmp: 0.85,
             addAttack: 129,
@@ -95,7 +95,7 @@ export const skills: Record<BattleStyles, Skill[]> = {
             comboCastingTime: 2,
         }),
     ],
-    [BattleStyles.Warrior]: [
+    [BattleStyleTypes.Warrior]: [
         generateSkill('Esmagador', 'Smash', { skillAmp: 1, addAttack: 2909, castingTime: 2.5, comboCastingTime: 2 }),
         generateSkill('Desbalancear', 'Unbalance', {
             skillAmp: 0,
@@ -110,10 +110,10 @@ export const skills: Record<BattleStyles, Skill[]> = {
             comboCastingTime: 2.25,
         }),
     ],
-    [BattleStyles.Blader]: [],
-    [BattleStyles.ForceBlader]: [],
-    [BattleStyles.ForceShielder]: [],
-    [BattleStyles.Gladiator]: [],
-    [BattleStyles.ForceGunner]: [],
-    [BattleStyles.DarkMage]: [],
+    [BattleStyleTypes.Blader]: [],
+    [BattleStyleTypes.ForceBlader]: [],
+    [BattleStyleTypes.ForceShielder]: [],
+    [BattleStyleTypes.Gladiator]: [],
+    [BattleStyleTypes.ForceGunner]: [],
+    [BattleStyleTypes.DarkMage]: [],
 }

@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { AttackAttributes, attackAttributes, defenseAttributes, DefenseAttributes } from '@/app/types/attributes'
+import { AttackAttributes, attackAttributes, defenseAttributes, DefenseAttributes } from '@/app/data/attributes'
 import { AttributeInput } from '@/app/[lang]/components/AttributeInput'
-import { battleStyles, BattleStyles, magicBasedBattleStyles } from '@/app/types/battleStyles'
+import { battleStylesData, BattleStyleTypes, getBattleStyles } from '@/app/data/battleStyles'
 import useTranslation from '@/lib/useTranslation'
 import { TabButton } from '@/app/[lang]/components/TabButton'
 import useMergeState from '@/lib/useMergeState'
@@ -64,7 +64,7 @@ export type CharacterStats = {
 }
 
 export type CharacterFormData = {
-    battleStyle?: BattleStyles
+    battleStyleType?: BattleStyleTypes
     stats: CharacterStats
 }
 
@@ -105,15 +105,16 @@ const attributeCategories: { value: AttributeCategoryValue; label: { pt: string;
 ]
 
 type Props = {
-    initialBattleStyle?: BattleStyles
+    initialBattleStyleType?: BattleStyleTypes
     onChange: (character: CharacterFormData) => void
 }
 
-export const CharacterForm = ({ initialBattleStyle, onChange }: Props) => {
+export const CharacterForm = ({ initialBattleStyleType, onChange }: Props) => {
     const { lang } = useTranslation()
-    const [battleStyle, setBattleStyle] = useState<BattleStyles | undefined>(initialBattleStyle)
-    const [showBattleStyleSelector, setShowBattleStyleSelector] = useState(!battleStyle)
-    const isMagicBased = !!(battleStyle && magicBasedBattleStyles.includes(battleStyle))
+    const [selectedBattleStyleType, setSelectedBattleStyleType] = useState<BattleStyleTypes | undefined>(
+        initialBattleStyleType
+    )
+    const [showBattleStyleSelector, setShowBattleStyleSelector] = useState(!selectedBattleStyleType)
     const [attributeType, setAttributeType] = useState<AttributeTypeValue>('attack')
     const [attributeCategory, setAttributeCategory] = useState<AttributeCategoryValue>('general')
     const [characterStats, updateCharacterStats] = useMergeState<CharacterStats>({
@@ -128,7 +129,9 @@ export const CharacterForm = ({ initialBattleStyle, onChange }: Props) => {
             pve: initialDefenseAttributes,
         },
     })
-    const combatPower = useCombatPower(characterStats, isMagicBased)
+    const battleStyles = getBattleStyles(lang)
+    const selectedBattleStyle = selectedBattleStyleType ? battleStylesData[selectedBattleStyleType] : undefined
+    const combatPower = useCombatPower(characterStats, selectedBattleStyle?.isMagicBased)
 
     const handleChange = React.useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
@@ -148,17 +151,17 @@ export const CharacterForm = ({ initialBattleStyle, onChange }: Props) => {
         [characterStats, attributeType, attributeCategory, updateCharacterStats]
     )
 
-    const handleBattleStyleChange = (battleStyle: BattleStyles) => {
-        setBattleStyle(battleStyle)
+    const handleBattleStyleChange = (battleStyleType: BattleStyleTypes) => {
+        setSelectedBattleStyleType(battleStyleType)
         setShowBattleStyleSelector(false)
     }
 
     useEffect(() => {
         onChange({
-            battleStyle,
+            battleStyleType: selectedBattleStyleType,
             stats: characterStats,
         })
-    }, [characterStats, battleStyle, onChange])
+    }, [characterStats, selectedBattleStyleType, onChange])
 
     return (
         <div className="flex flex-col gap-0.5">
@@ -193,31 +196,31 @@ export const CharacterForm = ({ initialBattleStyle, onChange }: Props) => {
                         onClick={() => setShowBattleStyleSelector((prev) => !prev)}
                         className="bg-neutral-875 hover:bg-neutral-825 relative flex h-12 w-12 shrink-0 items-center justify-center transition-colors duration-200 active:bg-neutral-900"
                     >
-                        {Object.entries(battleStyles).map(([key, style]) => {
+                        {battleStyles.map((battleStyle) => {
                             return (
                                 <Image
-                                    key={`${key}-${battleStyle}`}
-                                    src={style.icon}
-                                    alt={style.description[lang]}
+                                    key={`${battleStyle.type}-${selectedBattleStyleType}`}
+                                    src={battleStyle.icon}
+                                    alt={battleStyle.description}
                                     loading="eager"
                                     className={cls('animate-spin-selection absolute opacity-0', {
-                                        'opacity-100': battleStyle === key,
+                                        'opacity-100': selectedBattleStyleType === battleStyle.type,
                                     })}
                                     width={32}
                                 />
                             )
                         })}
-                        {!battleStyle && (
+                        {!selectedBattleStyleType && (
                             <FontAwesomeIcon
                                 icon={faArrowDown}
                                 className={cls('mb-[-10px] animate-bounce text-xl text-neutral-600', {
-                                    'text-emerald-300': battleStyle,
+                                    'text-emerald-300': selectedBattleStyleType,
                                 })}
                             />
                         )}
                     </button>
                     <div className="bg-neutral-910 flex w-full flex-col justify-center px-2 py-1">
-                        {battleStyle ? (
+                        {selectedBattleStyleType ? (
                             <div className="flex items-center justify-between">
                                 <div>
                                     <div className="">Combat Power</div>
@@ -240,20 +243,20 @@ export const CharacterForm = ({ initialBattleStyle, onChange }: Props) => {
                         }
                     )}
                 >
-                    {Object.entries(battleStyles).map(([key, style]) => (
+                    {battleStyles.map((battleStyle) => (
                         <div
-                            key={style.acronym[lang]}
+                            key={`select-battle-style-${battleStyle.type}`}
                             className={cls(
                                 'hover:bg-neutral-850 mt-0.5 flex cursor-pointer items-center justify-center bg-neutral-900 px-0.5 py-1 transition-all duration-200 hover:opacity-100',
                                 {
-                                    'bg-neutral-825 opacity-100': battleStyle === key,
+                                    'bg-neutral-825 opacity-100': selectedBattleStyleType === battleStyle.type,
                                 }
                             )}
-                            onClick={() => handleBattleStyleChange(key as BattleStyles)}
+                            onClick={() => handleBattleStyleChange(battleStyle.type)}
                         >
                             <Image
-                                src={style.icon}
-                                alt={style.description[lang]}
+                                src={battleStyle.icon}
+                                alt={battleStyle.description}
                                 className="opacity-90 transition-all duration-200"
                             />
                         </div>
@@ -297,11 +300,11 @@ export const CharacterForm = ({ initialBattleStyle, onChange }: Props) => {
                                 const { min, max } = attackAttributes[typedKey]
                                 const value = characterStats.attack[attributeCategory][typedKey]
 
-                                if (isMagicBased && typedKey === 'attack') return null
-                                if (!isMagicBased && typedKey === 'magicAttack') return null
-                                if (isMagicBased && typedKey === 'swordSkillAmp') return null
-                                if (!isMagicBased && typedKey === 'magicSkillAmp') return null
-                                if (isMagicBased && typedKey === 'minimumDamage') return null
+                                if (selectedBattleStyle?.isMagicBased && typedKey === 'attack') return null
+                                if (!selectedBattleStyle?.isMagicBased && typedKey === 'magicAttack') return null
+                                if (selectedBattleStyle?.isMagicBased && typedKey === 'swordSkillAmp') return null
+                                if (!selectedBattleStyle?.isMagicBased && typedKey === 'magicSkillAmp') return null
+                                if (selectedBattleStyle?.isMagicBased && typedKey === 'minimumDamage') return null
 
                                 return (
                                     <AttributeInput

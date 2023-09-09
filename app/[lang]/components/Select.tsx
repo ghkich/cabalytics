@@ -1,6 +1,6 @@
 import React from 'react'
 import { cls } from '@/lib/utils'
-import { BattleStyles } from '@/app/types/battleStyles'
+import { BattleStyles } from '@/app/data/battleStyles'
 
 type Props = {
     name: string

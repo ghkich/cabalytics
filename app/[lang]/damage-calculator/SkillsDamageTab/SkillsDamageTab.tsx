@@ -1,6 +1,6 @@
 import React from 'react'
 import { SkillsDamageHeader } from '@/app/[lang]/damage-calculator/SkillsDamageTab/SkillsDamageHeader'
-import { skills } from '@/app/types/skills'
+import { skills } from '@/app/data/skills'
 import { SkillsDamageListItem } from '@/app/[lang]/damage-calculator/SkillsDamageTab/SkillsDamageListItem'
 import { useDamageCalculator } from '@/app/[lang]/damage-calculator/damage-calculator-provider'
 

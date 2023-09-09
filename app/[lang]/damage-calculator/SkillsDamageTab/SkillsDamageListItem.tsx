@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle, faCircleCheck } from '@fortawesome/sharp-light-svg-icons'
 import React, { useEffect } from 'react'
-import { Skill } from '@/app/types/skills'
+import { Skill } from '@/app/data/skills'
 import { cls } from '@/lib/utils'
 import { useDamageCalculator } from '@/app/[lang]/damage-calculator/damage-calculator-provider'
 import { useCalculateSkillDamage } from '@/lib/useCalculateSkillDamage'

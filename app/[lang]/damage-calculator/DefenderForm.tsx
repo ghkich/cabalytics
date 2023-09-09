@@ -2,8 +2,8 @@
 import React from 'react'
 import { CharacterForm, CharacterFormData } from '@/app/[lang]/components/CharacterForm'
 import { DamageMode, useDamageCalculator } from '@/app/[lang]/damage-calculator/damage-calculator-provider'
-import { DefenseAttributes } from '@/app/types/attributes'
-import { BattleStyles, battleStyles, magicBasedBattleStyles } from '@/app/types/battleStyles'
+import { DefenseAttributes } from '@/app/data/attributes'
+import { battleStylesData, BattleStyleTypes } from '@/app/data/battleStyles'
 
 export type Defender = {
     penetrationArmorFactor: number
@@ -33,11 +33,11 @@ export const DefenderForm = () => {
 
     const handleChange = React.useCallback(
         (character: CharacterFormData) => {
-            if (!character.battleStyle || !attacker?.battleStyle) return
-            const isAttackerMagicBased = magicBasedBattleStyles.includes(attacker.battleStyle)
+            if (!character.battleStyleType || !attacker?.battleStyleType) return
+            const isAttackerMagicBased = battleStylesData[attacker.battleStyleType].isMagicBased
             setDefender({
-                penetrationArmorFactor: battleStyles[character.battleStyle].penetrationArmorFactor,
-                baselineArmor: battleStyles[character.battleStyle].baselineArmor,
+                penetrationArmorFactor: battleStylesData[character.battleStyleType].penetrationArmorFactor,
+                baselineArmor: battleStylesData[character.battleStyleType].baselineArmor,
                 defense: getFinalAttributeValue(character, 'defense'),
                 damageReduction: getFinalAttributeValue(character, 'damageReduction'),
                 resistCriticalRate: getFinalAttributeValue(character, 'resistCriticalRate') / 100,
@@ -52,12 +52,12 @@ export const DefenderForm = () => {
                 finalDamageDown: getFinalAttributeValue(character, 'finalDamageDown') / 100,
             })
         },
-        [setDefender, attacker?.battleStyle]
+        [setDefender, attacker?.battleStyleType]
     )
 
     return (
         <div>
-            <CharacterForm initialBattleStyle={BattleStyles.Warrior} onChange={handleChange} />
+            <CharacterForm initialBattleStyleType={BattleStyleTypes.Warrior} onChange={handleChange} />
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { Attacker } from '@/app/[lang]/damage-calculator/AttackerForm'
 import { Defender } from '@/app/[lang]/damage-calculator/DefenderForm'
-import { Skill } from '@/app/types/skills'
+import { Skill } from '@/app/data/skills'
 
 export type CalculateSkillDamageRequest = {
     attacker: Attacker

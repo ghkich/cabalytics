@@ -2,11 +2,11 @@
 import React from 'react'
 import { CharacterForm, CharacterFormData } from '@/app/[lang]/components/CharacterForm'
 import { DamageMode, useDamageCalculator } from '@/app/[lang]/damage-calculator/damage-calculator-provider'
-import { AttackAttributes } from '@/app/types/attributes'
-import { BattleStyles, battleStyles, magicBasedBattleStyles } from '@/app/types/battleStyles'
+import { AttackAttributes } from '@/app/data/attributes'
+import { battleStylesData, BattleStyleTypes } from '@/app/data/battleStyles'
 
 export type Attacker = {
-    battleStyle: BattleStyles
+    battleStyleType: BattleStyleTypes
     criticalEffectiveness: number
     attack: number
     criticalDamage: number
@@ -40,11 +40,11 @@ export const AttackerForm = () => {
 
     const handleChange = React.useCallback(
         (character: CharacterFormData) => {
-            if (!character.battleStyle) return
-            const isAttackerMagicBased = magicBasedBattleStyles.includes(character.battleStyle)
+            if (!character.battleStyleType) return
+            const isAttackerMagicBased = battleStylesData[character.battleStyleType].isMagicBased
             setAttacker({
-                battleStyle: character.battleStyle,
-                criticalEffectiveness: battleStyles[character.battleStyle].criticalEffectiveness,
+                battleStyleType: character.battleStyleType,
+                criticalEffectiveness: battleStylesData[character.battleStyleType].criticalEffectiveness,
                 attack: getFinalAttributeValue(character, isAttackerMagicBased ? 'magicAttack' : 'attack'),
                 criticalDamage: getFinalAttributeValue(character, 'criticalDamage') / 100,
                 criticalRate: getFinalAttributeValue(character, 'criticalRate') / 100,
