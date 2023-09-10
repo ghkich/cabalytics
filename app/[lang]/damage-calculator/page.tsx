@@ -1,25 +1,25 @@
+'use client'
 import React from 'react'
 import { DamageTabs } from '@/app/[lang]/damage-calculator/DamageTabs'
-import { DamageCalculatorProvider } from '@/app/[lang]/damage-calculator/damage-calculator-provider'
-import { AttackerForm } from '@/app/[lang]/damage-calculator/AttackerForm'
-import { DefenderForm } from '@/app/[lang]/damage-calculator/DefenderForm'
+import { CharacterBuildsProvider } from '@/app/[lang]/damage-calculator/CharacterForm/character-builds-provider'
+import { CharacterForm } from '@/app/[lang]/damage-calculator/CharacterForm/CharacterForm'
 
-export default async function DamageCalculator() {
+export default function DamageCalculator() {
     return (
         <div className="">
-            <DamageCalculatorProvider>
+            <CharacterBuildsProvider>
                 <div className="flex flex-col gap-1.5 md:flex-row">
                     <div className="animate-slide-in min-w-[240px]">
-                        <AttackerForm />
+                        <CharacterForm buildType="attacker" />
                     </div>
                     <div className="animate-slide-in flex w-full flex-col items-center">
                         <DamageTabs />
                     </div>
                     <div className="animate-slide-in min-w-[240px]">
-                        <DefenderForm />
+                        <CharacterForm buildType="defender" />
                     </div>
                 </div>
-            </DamageCalculatorProvider>
+            </CharacterBuildsProvider>
         </div>
     )
 }

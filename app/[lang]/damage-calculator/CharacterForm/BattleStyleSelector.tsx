@@ -6,7 +6,7 @@ import { BattleStyle, BattleStyleTypes } from '@/app/data/battleStyles'
 type BattleStyleSelectorProps = {
     battleStyles: BattleStyle[]
     selectedBattleStyleType?: BattleStyleTypes
-    accentColorClassName: string
+    activeColor: string
     isOpen: boolean
     onChange: (type: BattleStyleTypes) => void
 }
@@ -14,7 +14,7 @@ type BattleStyleSelectorProps = {
 const BattleStyleSelector: React.FC<BattleStyleSelectorProps> = ({
     battleStyles,
     selectedBattleStyleType,
-    accentColorClassName,
+    activeColor,
     onChange,
     isOpen,
 }) => {
@@ -26,12 +26,13 @@ const BattleStyleSelector: React.FC<BattleStyleSelectorProps> = ({
         >
             <div className="grid grid-cols-3 gap-x-0.5">
                 {battleStyles.map((battleStyle) => (
-                    <div
+                    <button
+                        type="button"
                         key={`select-battle-style-${battleStyle.type}`}
                         className={cls(
                             'hover:bg-neutral-825 bg-neutral-875 mt-0.5 flex cursor-pointer flex-col items-center justify-center gap-1 px-0.5 py-2  text-neutral-400 transition-all duration-200 hover:opacity-100',
                             {
-                                [`bg-neutral-825 ${accentColorClassName} opacity-100`]:
+                                [`bg-neutral-825 ${activeColor} opacity-100`]:
                                     selectedBattleStyleType === battleStyle.type,
                             }
                         )}
@@ -46,7 +47,7 @@ const BattleStyleSelector: React.FC<BattleStyleSelectorProps> = ({
                             />
                             <div className="text-xs">{battleStyle.acronym}</div>
                         </div>
-                    </div>
+                    </button>
                 ))}
             </div>
             <div className="mt-0.5 h-1 w-full bg-neutral-900"></div>

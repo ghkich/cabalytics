@@ -11,8 +11,12 @@ type Props = {
 }
 
 export const DamageDisplay = ({ header, value, loading, className }: Props) => {
-    const placeholderOrValue =
-        value === undefined ? <FontAwesomeIcon icon={faGripDots} className="animate-pulse text-[10px]" /> : value
+    const loadingOrValue =
+        value === undefined || loading ? (
+            <FontAwesomeIcon icon={faGripDots} className="animate-pulse text-[10px]" />
+        ) : (
+            value
+        )
     return (
         <div
             className={cls(
@@ -26,7 +30,7 @@ export const DamageDisplay = ({ header, value, loading, className }: Props) => {
                     'animate-pulse': value === undefined || loading,
                 })}
             >
-                {placeholderOrValue}
+                {loadingOrValue}
             </div>
         </div>
     )

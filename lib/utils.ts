@@ -5,12 +5,8 @@ export function cls(...args: ClassValue[]) {
     return twMerge(clsx(args))
 }
 
-export type AccentColor = 'emerald' | 'red'
+export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
-export const getAccentColorByType = (type: 'attacker' | 'defender'): AccentColor =>
-    type === 'attacker' ? 'emerald' : 'red'
-
-export const getTwColorClassNameByAccent = (accentColor?: AccentColor) => {
-    if (!accentColor) return 'text-neutral-400'
-    return accentColor === 'emerald' ? 'text-emerald-400' : 'text-red-400'
+export const getBuildTypeColor = (type: 'attacker' | 'defender') => {
+    return type === 'attacker' ? 'text-emerald-400' : 'text-red-400'
 }
