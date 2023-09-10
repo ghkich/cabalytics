@@ -10,7 +10,7 @@ export type Attacker = {
 } & Omit<AttackAttributes, 'swordSkillAmp' | 'magicSkillAmp' | 'attack' | 'magicAttack'>
 
 export type Defender = {
-    type?: 'player' | 'monster'
+    type: 'player' | 'monster'
     penetrationArmorFactor: number
     baselineArmor: number
     effectiveResistSkillAmp: number
@@ -45,8 +45,6 @@ export function calculateSkillsDamage(attacker: Attacker, defender: Defender, sk
     finalDefense += ignorePenetration * defender.penetrationArmorFactor
     finalDefense -= penetration * defender.penetrationArmorFactor
     finalDefense = Math.max(finalDefense, 0)
-
-    const defenderType = defender.type || 'player'
 
     // Calculate attack reduction
     const attackReduction = Math.max(

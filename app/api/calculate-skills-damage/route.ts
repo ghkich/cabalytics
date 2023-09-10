@@ -25,6 +25,7 @@ const validateParams = (params: CalculateSkillsDamageRequest) => {
     if (!attacker) return { isValid: false, missingParam: 'attacker' }
     if (!skills) return { isValid: false, missingParam: 'skills' }
     if (!defender) return { isValid: false, missingParam: 'defender' }
+    if (!defender.type) return { isValid: false, missingParam: 'defender.type' }
 
     return { isValid: true, missingParam: null }
 }

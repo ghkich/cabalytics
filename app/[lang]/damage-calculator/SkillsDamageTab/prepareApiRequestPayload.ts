@@ -65,6 +65,7 @@ export const prepareDefender = (defenseBuild?: CharacterBuild, attackBuild?: Cha
     if (!battleStyleType || !attackerBattleStyle) return
     const isAttackerMagicBased = battleStylesData[attackerBattleStyle].isMagicBased
     return {
+        type: 'player',
         penetrationArmorFactor: battleStylesData[battleStyleType].penetrationArmorFactor,
         baselineArmor: battleStylesData[battleStyleType].baselineArmor,
         hp: getFinalDefenseAttributeValue(buildStats, 'hp'),
