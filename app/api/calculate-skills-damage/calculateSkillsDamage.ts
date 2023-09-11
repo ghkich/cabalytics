@@ -34,7 +34,7 @@ export function calculateSkillsDamage(attacker: Attacker, defender: Defender, sk
     // Calculate critical damage factors
     const resistCriticalDamage = Math.max(defender.resistCriticalDamage - attacker.ignoreResistCriticalDamage, 0)
     const criticalDamage = Math.max(
-        attacker.criticalDamage + (skill.data.stats.criticalDamage || 0 / 100) - resistCriticalDamage,
+        attacker.criticalDamage + (skill.data.stats.criticalDamage || 0) / 100 - resistCriticalDamage,
         0.25
     )
 
