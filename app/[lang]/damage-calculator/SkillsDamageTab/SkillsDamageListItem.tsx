@@ -43,7 +43,7 @@ export const SkillsDamageListItem = ({
                 `bg-neutral-875 animate-slide-in-long active:bg-neutral-910 hover:bg-neutral-850 transition-max-height flex max-h-[60px] w-full cursor-pointer items-center text-neutral-400 transition-all duration-200 hover:text-neutral-400`,
                 {
                     'bg-neutral-825 hover:bg-neutral-825 text-neutral-300 hover:text-neutral-200': isSelected,
-                    ['max-h-0 !opacity-0']: isHidden && !isSelected,
+                    ['pointer-events-none max-h-0 !opacity-0']: isHidden && !isSelected,
                     ['mb-0.5']: !isHidden || isSelected,
                 },
                 className
