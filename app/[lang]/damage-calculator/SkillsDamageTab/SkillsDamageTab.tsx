@@ -7,18 +7,20 @@ import {
     prepareAttacker,
     prepareDefender,
 } from '@/app/[lang]/damage-calculator/SkillsDamageTab/prepareApiRequestPayload'
-import { battleStyleSkills, SkillRank, skillRanks } from '@/app/data/skills'
+import { battleStyleSkills, SkillRank, skillRanks, SkillRankType } from '@/app/data/skills'
 import { ToggleButton } from '@/app/[lang]/components/ToggleButton'
+import { useLanguage } from '@/app/[lang]/language-provider'
 
 export default function SkillsDamageTab() {
+    const lang = useLanguage()
     const { selectedAttackerBuild, selectedDefenderBuild } = useCharacterBuilds()
     const { skillsDamage, isCalculating, calculateSkillsDamage } = useCalculateSkillsDamage()
     const [isComboActive, setIsComboActive] = React.useState(true)
     const [selectedSkills, setSelectedSkills] = React.useState<string[]>([])
-    const [selectedSkillRanks, setSelectedSkillRanks] = React.useState<SkillRank[]>([
-        SkillRank.Regular,
-        SkillRank.Expert,
-        SkillRank.Transcender,
+    const [selectedSkillRankTypes, setSelectedSkillRankTypes] = React.useState<SkillRankType[]>([
+        SkillRankType.Regular,
+        SkillRankType.Expert,
+        SkillRankType.Transcender,
     ])
 
     const selectedBattleStyle = selectedAttackerBuild?.data.battleStyleType
@@ -39,9 +41,9 @@ export default function SkillsDamageTab() {
         [selectedSkills, setSelectedSkills]
     )
 
-    const handleToggleSkillRank = (skillRank: SkillRank) => {
+    const handleToggleSkillRankType = (skillRank: SkillRankType) => {
         console.log(skillRank)
-        setSelectedSkillRanks((prevSelectedRanks) => {
+        setSelectedSkillRankTypes((prevSelectedRanks) => {
             if (prevSelectedRanks.includes(skillRank)) {
                 return prevSelectedRanks.filter((r) => r !== skillRank)
             } else {
@@ -69,13 +71,13 @@ export default function SkillsDamageTab() {
             <div className="relative z-50 grid grid-cols-5 gap-[1px] bg-neutral-950">
                 {skillRanks.map((skillRank: SkillRank) => (
                     <ToggleButton
-                        key={skillRank}
-                        onClick={() => handleToggleSkillRank(skillRank)}
-                        isActive={selectedSkillRanks.includes(skillRank)}
-                        className="truncate border-none px-1"
+                        key={skillRank.type}
+                        onClick={() => handleToggleSkillRankType(skillRank.type)}
+                        isActive={selectedSkillRankTypes.includes(skillRank.type)}
+                        className="truncate border-none px-2 text-[11px]"
                         activeClassName="text-emerald-300"
                     >
-                        {SkillRank[skillRank]}
+                        {skillRank.description[lang]}
                     </ToggleButton>
                 ))}
             </div>
@@ -88,7 +90,7 @@ export default function SkillsDamageTab() {
                             onClick={handleSelectSkill}
                             isSelected={selectedSkills.includes(skill.id)}
                             isComboActive={isComboActive}
-                            isHidden={!selectedSkillRanks.includes(skill.data.rank)}
+                            isHidden={!selectedSkillRankTypes.includes(skill.data.rank)}
                             isCalculating={isCalculating}
                             damage={skillsDamage?.[skill.id]}
                             style={{ zIndex: selectedBattleStyleSkills.length - index }}

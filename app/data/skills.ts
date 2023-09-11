@@ -15,7 +15,7 @@ export type SkillStats = {
 export const skillTypes = ['attack', 'buff', 'debuff', 'passive'] as const
 export type SkillType = (typeof skillTypes)[number]
 
-export enum SkillRank {
+export enum SkillRankType {
     Novice = 'Novice',
     Apprentice = 'Apprentice',
     Regular = 'Regular',
@@ -28,23 +28,28 @@ export enum SkillRank {
     Transcender = 'Transcender',
 }
 
+export type SkillRank = {
+    type: SkillRankType
+    description: { pt: string; en: string }
+}
+
 export const skillRanks = [
-    SkillRank.Novice,
-    SkillRank.Apprentice,
-    SkillRank.Regular,
-    SkillRank.Expert,
-    SkillRank.AExpert,
-    SkillRank.Master,
-    SkillRank.AMaster,
-    SkillRank.GMaster,
-    SkillRank.Completer,
-    SkillRank.Transcender,
+    { type: SkillRankType.Novice, description: { pt: 'Novato', en: 'Novice' } },
+    { type: SkillRankType.Apprentice, description: { pt: 'Aprendiz', en: 'Apprentice' } },
+    { type: SkillRankType.Regular, description: { pt: 'Aspirante', en: 'Regular' } },
+    { type: SkillRankType.Expert, description: { pt: 'Especialista', en: 'Expert' } },
+    { type: SkillRankType.AExpert, description: { pt: 'Perito', en: 'A.Expert' } },
+    { type: SkillRankType.Master, description: { pt: 'Mestre', en: 'Master' } },
+    { type: SkillRankType.AMaster, description: { pt: 'M. Supremo', en: 'A.Master' } },
+    { type: SkillRankType.GMaster, description: { pt: 'Grão Mestre', en: 'G.Master' } },
+    { type: SkillRankType.Completer, description: { pt: 'Ancião', en: 'Completer' } },
+    { type: SkillRankType.Transcender, description: { pt: 'Transcendente', en: 'Transcender' } },
 ] as const
 
 export type SkillData = {
     name: { pt: string; en: string }
     type: SkillType
-    rank: SkillRank
+    rank: SkillRankType
     castingTime: number
     comboCastingTime: number
     coolDown: number
@@ -109,7 +114,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
         generateSkill({
             name: { pt: 'Disparo Crítico', en: 'Critical Shot' },
             type: 'attack',
-            rank: SkillRank.Novice,
+            rank: SkillRankType.Novice,
             castingTime: 1.3,
             comboCastingTime: 1.1,
             coolDown: 1.8,
@@ -122,7 +127,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
         generateSkill({
             name: { pt: 'Lança de Terra', en: 'Earth Lance' },
             type: 'attack',
-            rank: SkillRank.Regular,
+            rank: SkillRankType.Regular,
             castingTime: 1.3,
             comboCastingTime: 1.05,
             coolDown: 5.3,
@@ -134,7 +139,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
         generateSkill({
             name: { pt: "Lança d'Água", en: 'Water Lance' },
             type: 'attack',
-            rank: SkillRank.Regular,
+            rank: SkillRankType.Regular,
             castingTime: 1.3,
             comboCastingTime: 1.05,
             coolDown: 4.5,
@@ -146,7 +151,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
         generateSkill({
             name: { pt: 'Lança de Fogo', en: 'Fire Lance' },
             type: 'attack',
-            rank: SkillRank.Regular,
+            rank: SkillRankType.Regular,
             castingTime: 1.3,
             comboCastingTime: 1.05,
             coolDown: 4.9,
@@ -159,7 +164,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             {
                 name: { pt: 'Lança de Vento', en: 'Wind Lance' },
                 type: 'attack',
-                rank: SkillRank.Regular,
+                rank: SkillRankType.Regular,
                 castingTime: 1.3,
                 comboCastingTime: 1.05,
                 coolDown: 4.9,
@@ -174,7 +179,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             {
                 name: { pt: 'Lança Congelante', en: 'Freezing Lance' },
                 type: 'attack',
-                rank: SkillRank.Regular,
+                rank: SkillRankType.Regular,
                 castingTime: 1.3,
                 comboCastingTime: 1.05,
                 coolDown: 4.5,
@@ -189,7 +194,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             {
                 name: { pt: 'Lança Relampejante', en: 'Lightning Lance' },
                 type: 'attack',
-                rank: SkillRank.Regular,
+                rank: SkillRankType.Regular,
                 castingTime: 1.5,
                 comboCastingTime: 1.25,
                 coolDown: 5.8,
@@ -203,7 +208,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
         generateSkill({
             name: { pt: 'Canhão de Pedra', en: 'Earth Cannon' },
             type: 'attack',
-            rank: SkillRank.Expert,
+            rank: SkillRankType.Expert,
             castingTime: 1.5,
             comboCastingTime: 1.25,
             coolDown: 5.8,
@@ -215,7 +220,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
         generateSkill({
             name: { pt: "Canhão d'Água", en: 'Water Cannon' },
             type: 'attack',
-            rank: SkillRank.Expert,
+            rank: SkillRankType.Expert,
             castingTime: 1.5,
             comboCastingTime: 1.25,
             coolDown: 4.8,
@@ -227,7 +232,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
         generateSkill({
             name: { pt: 'Canhão de Fogo', en: 'Fire Cannon' },
             type: 'attack',
-            rank: SkillRank.Expert,
+            rank: SkillRankType.Expert,
             castingTime: 1.5,
             comboCastingTime: 1.25,
             coolDown: 5.3,
@@ -240,7 +245,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             {
                 name: { pt: 'Disparo Perfurante', en: 'Piercing Shot' },
                 type: 'attack',
-                rank: SkillRank.Master,
+                rank: SkillRankType.Master,
                 castingTime: 2.7,
                 comboCastingTime: 2.25,
                 coolDown: 3.2,
@@ -254,7 +259,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
         generateSkill({
             name: { pt: 'Distorção Gravitacional', en: 'Gravitational Distortion' },
             type: 'attack',
-            rank: SkillRank.GMaster,
+            rank: SkillRankType.GMaster,
             castingTime: 2.3,
             comboCastingTime: 1.5,
             coolDown: 4.7,
@@ -266,7 +271,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
         generateSkill({
             name: { pt: 'Estrela Cadente', en: 'Falling Star' },
             type: 'attack',
-            rank: SkillRank.Completer,
+            rank: SkillRankType.Completer,
             castingTime: 3,
             comboCastingTime: 3,
             coolDown: 5.5,
@@ -278,7 +283,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
         generateSkill({
             name: { pt: 'Floresta de Flechas', en: 'Arrows Forest' },
             type: 'attack',
-            rank: SkillRank.Transcender,
+            rank: SkillRankType.Transcender,
             castingTime: 2.4,
             comboCastingTime: 2.4,
             coolDown: 5.8,
@@ -290,7 +295,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
         generateSkill({
             name: { pt: 'Barragem de Flechas', en: 'Arrows Barrage' },
             type: 'attack',
-            rank: SkillRank.Transcender,
+            rank: SkillRankType.Transcender,
             castingTime: 2.2,
             comboCastingTime: 2.2,
             coolDown: 5.8,
@@ -302,7 +307,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
         generateSkill({
             name: { pt: 'Disparo Sônico', en: 'Sonic Shot' },
             type: 'attack',
-            rank: SkillRank.Transcender,
+            rank: SkillRankType.Transcender,
             castingTime: 2.5,
             comboCastingTime: 2.5,
             coolDown: 5.6,
@@ -314,7 +319,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
         generateSkill({
             name: { pt: 'Fragilizar Defesa', en: 'Fragilizar Defesa' },
             type: 'debuff',
-            rank: SkillRank.Expert,
+            rank: SkillRankType.Expert,
             castingTime: 0.7,
             comboCastingTime: 0.7,
             coolDown: 180,
@@ -328,7 +333,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
         generateSkill({
             name: { pt: 'Aguçar', en: 'Aguçar' },
             type: 'buff',
-            rank: SkillRank.AExpert,
+            rank: SkillRankType.AExpert,
             castingTime: 1,
             comboCastingTime: 1,
             coolDown: 1.9,
