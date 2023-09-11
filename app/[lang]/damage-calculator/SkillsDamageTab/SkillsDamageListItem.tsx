@@ -9,9 +9,10 @@ import useTranslation from '@/lib/useTranslation'
 type Props = {
     skill: Skill
     onClick: (skillId: string) => void
-    selected?: boolean
+    isSelected?: boolean
     isComboActive?: boolean
     isCalculating?: boolean
+    isHidden?: boolean
     damage?: {
         normal: number
         critical: number
@@ -23,9 +24,10 @@ type Props = {
 export const SkillsDamageListItem = ({
     skill,
     onClick,
-    selected,
+    isSelected,
     isComboActive,
     isCalculating,
+    isHidden = true,
     damage,
     className,
     style,
@@ -35,12 +37,14 @@ export const SkillsDamageListItem = ({
     return (
         <div
             role="checkbox"
-            aria-checked={selected}
+            aria-checked={isSelected}
             onClick={() => onClick(skill.id)}
             className={cls(
-                `bg-neutral-875 active:bg-neutral-910 animate- hover:bg-neutral-850 flex w-full cursor-pointer items-center text-neutral-400 transition-colors duration-200 hover:text-neutral-400`,
+                `bg-neutral-875 animate-slide-in-long active:bg-neutral-910 hover:bg-neutral-850 transition-max-height flex max-h-[60px] w-full cursor-pointer items-center text-neutral-400 transition-all duration-200 hover:text-neutral-400`,
                 {
-                    'bg-neutral-825 hover:bg-neutral-825 text-neutral-300 hover:text-neutral-200': selected,
+                    'bg-neutral-825 hover:bg-neutral-825 text-neutral-300 hover:text-neutral-200': isSelected,
+                    ['max-h-0 !opacity-0']: isHidden && !isSelected,
+                    ['mb-0.5']: !isHidden || isSelected,
                 },
                 className
             )}
@@ -48,9 +52,9 @@ export const SkillsDamageListItem = ({
         >
             <div className="w-16 border-r border-neutral-700 border-opacity-50 text-center">
                 <FontAwesomeIcon
-                    icon={selected ? faCircleCheck : faCircle}
+                    icon={isSelected ? faCircleCheck : faCircle}
                     className={cls(`text-sm text-neutral-700`, {
-                        'text-emerald-300': selected,
+                        'text-emerald-300': isSelected,
                     })}
                 />
             </div>
@@ -62,7 +66,7 @@ export const SkillsDamageListItem = ({
                             Cast{' '}
                             <span
                                 className={cls({
-                                    'text-indigo-300 text-opacity-75': selected,
+                                    'text-indigo-300 text-opacity-75': isSelected,
                                 })}
                             >
                                 {isComboActive ? skill.data.comboCastingTime : skill.data.castingTime}s
@@ -79,7 +83,7 @@ export const SkillsDamageListItem = ({
                         value={damage?.normal.toFixed(0)}
                         loading={isCalculating}
                         className={cls('text-neutral-500', {
-                            'text-orange-300 opacity-100': selected,
+                            'text-orange-300 opacity-100': isSelected,
                         })}
                     />
                     <DamageDisplay
@@ -87,7 +91,7 @@ export const SkillsDamageListItem = ({
                         value={damage?.critical.toFixed(0)}
                         loading={isCalculating}
                         className={cls('text-neutral-500', {
-                            'text-sky-400': selected,
+                            'text-sky-400': isSelected,
                         })}
                     />
                 </div>

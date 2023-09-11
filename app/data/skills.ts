@@ -16,17 +16,30 @@ export const skillTypes = ['attack', 'buff', 'debuff', 'passive'] as const
 export type SkillType = (typeof skillTypes)[number]
 
 export enum SkillRank {
-    Novice = 1,
-    Apprentice = 2,
-    Regular = 3,
-    Expert = 4,
-    AExpert = 5,
-    Master = 6,
-    AMaster = 7,
-    GMaster = 8,
-    Completer = 9,
-    Transcender = 10,
+    Novice = 'Novice',
+    Apprentice = 'Apprentice',
+    Regular = 'Regular',
+    Expert = 'Expert',
+    AExpert = 'AExpert',
+    Master = 'Master',
+    AMaster = 'AMaster',
+    GMaster = 'GMaster',
+    Completer = 'Completer',
+    Transcender = 'Transcender',
 }
+
+export const skillRanks = [
+    SkillRank.Novice,
+    SkillRank.Apprentice,
+    SkillRank.Regular,
+    SkillRank.Expert,
+    SkillRank.AExpert,
+    SkillRank.Master,
+    SkillRank.AMaster,
+    SkillRank.GMaster,
+    SkillRank.Completer,
+    SkillRank.Transcender,
+] as const
 
 export type SkillData = {
     name: { pt: string; en: string }
@@ -93,6 +106,19 @@ const generateSkill = (data: SkillData, disabled?: boolean) => ({
 
 export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
     [BattleStyleTypes.ForceArcher]: [
+        generateSkill({
+            name: { pt: 'Disparo Crítico', en: 'Critical Shot' },
+            type: 'attack',
+            rank: SkillRank.Novice,
+            castingTime: 1.3,
+            comboCastingTime: 1.1,
+            coolDown: 1.8,
+            stats: {
+                skillAmp: 25,
+                addAttack: 147,
+                criticalDamage: 100,
+            },
+        }),
         generateSkill({
             name: { pt: 'Lança de Terra', en: 'Earth Lance' },
             type: 'attack',
@@ -208,19 +234,6 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             stats: {
                 skillAmp: 95,
                 addAttack: 282,
-            },
-        }),
-        generateSkill({
-            name: { pt: 'Disparo Crítico', en: 'Critical Shot' },
-            type: 'attack',
-            rank: SkillRank.Novice,
-            castingTime: 1.3,
-            comboCastingTime: 1.1,
-            coolDown: 1.8,
-            stats: {
-                skillAmp: 25,
-                addAttack: 147,
-                criticalDamage: 100,
             },
         }),
         generateSkill(

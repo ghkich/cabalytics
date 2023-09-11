@@ -7,18 +7,26 @@ import {
     prepareAttacker,
     prepareDefender,
 } from '@/app/[lang]/damage-calculator/SkillsDamageTab/prepareApiRequestPayload'
-import { battleStyleSkills } from '@/app/data/skills'
+import { battleStyleSkills, SkillRank, skillRanks } from '@/app/data/skills'
+import { ToggleButton } from '@/app/[lang]/components/ToggleButton'
 
 export default function SkillsDamageTab() {
     const { selectedAttackerBuild, selectedDefenderBuild } = useCharacterBuilds()
     const { skillsDamage, isCalculating, calculateSkillsDamage } = useCalculateSkillsDamage()
     const [isComboActive, setIsComboActive] = React.useState(true)
     const [selectedSkills, setSelectedSkills] = React.useState<string[]>([])
+    const [selectedSkillRanks, setSelectedSkillRanks] = React.useState<SkillRank[]>([
+        SkillRank.Regular,
+        SkillRank.Expert,
+        SkillRank.Transcender,
+    ])
 
     const selectedBattleStyle = selectedAttackerBuild?.data.battleStyleType
     const selectedBattleStyleSkills = React.useMemo(() => {
         if (!selectedBattleStyle) return []
-        return battleStyleSkills[selectedBattleStyle].filter((skill) => skill.data.type === 'attack')
+        return battleStyleSkills[selectedBattleStyle].filter(
+            (skill) => skill.disabled !== true && skill.data.type === 'attack'
+        )
     }, [selectedBattleStyle])
 
     const handleSelectSkill = React.useCallback(
@@ -30,6 +38,17 @@ export default function SkillsDamageTab() {
         },
         [selectedSkills, setSelectedSkills]
     )
+
+    const handleToggleSkillRank = (skillRank: SkillRank) => {
+        console.log(skillRank)
+        setSelectedSkillRanks((prevSelectedRanks) => {
+            if (prevSelectedRanks.includes(skillRank)) {
+                return prevSelectedRanks.filter((r) => r !== skillRank)
+            } else {
+                return [...prevSelectedRanks, skillRank]
+            }
+        })
+    }
 
     useEffect(() => {
         const attacker = prepareAttacker(selectedAttackerBuild)
@@ -47,19 +66,32 @@ export default function SkillsDamageTab() {
                 isCalculating={isCalculating}
                 onToggleCombo={() => setIsComboActive((prev) => !prev)}
             />
-            <div className="flex w-full flex-col gap-0.5 bg-neutral-800 bg-opacity-10">
+            <div className="relative z-50 grid grid-cols-5 gap-[1px] bg-neutral-950">
+                {skillRanks.map((skillRank: SkillRank) => (
+                    <ToggleButton
+                        key={skillRank}
+                        onClick={() => handleToggleSkillRank(skillRank)}
+                        isActive={selectedSkillRanks.includes(skillRank)}
+                        className="truncate border-none px-1"
+                        activeColor="text-emerald-300"
+                    >
+                        {SkillRank[skillRank]}
+                    </ToggleButton>
+                ))}
+            </div>
+            <div className="flex w-full flex-col bg-neutral-800 bg-opacity-10">
                 {selectedBattleStyleSkills.map((skill, index) => {
                     return (
                         <SkillsDamageListItem
                             key={skill.id}
                             skill={skill}
                             onClick={handleSelectSkill}
-                            selected={selectedSkills.includes(skill.id)}
+                            isSelected={selectedSkills.includes(skill.id)}
                             isComboActive={isComboActive}
-                            damage={skillsDamage?.[skill.id]}
+                            isHidden={!selectedSkillRanks.includes(skill.data.rank)}
                             isCalculating={isCalculating}
-                            className={`animate-scale-fade-in`}
-                            style={{ animationDelay: `${index * 30}ms` }}
+                            damage={skillsDamage?.[skill.id]}
+                            style={{ zIndex: selectedBattleStyleSkills.length - index }}
                         />
                     )
                 })}

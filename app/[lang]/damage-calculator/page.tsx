@@ -9,13 +9,13 @@ export default function DamageCalculator() {
         <div className="">
             <CharacterBuildsProvider>
                 <div className="flex flex-col gap-1.5 md:flex-row">
-                    <div className="animate-slide-in min-w-[240px]">
+                    <div className="animate-slide-in-short min-w-[240px]">
                         <CharacterForm buildType="attacker" />
                     </div>
-                    <div className="animate-slide-in flex w-full flex-col items-center">
+                    <div className="animate-slide-in-short flex w-full flex-col items-center">
                         <DamageTabs />
                     </div>
-                    <div className="animate-slide-in min-w-[240px]">
+                    <div className="animate-slide-in-short min-w-[240px]">
                         <CharacterForm buildType="defender" />
                     </div>
                 </div>
