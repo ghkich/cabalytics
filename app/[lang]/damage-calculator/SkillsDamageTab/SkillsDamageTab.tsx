@@ -18,7 +18,7 @@ export default function SkillsDamageTab() {
     const selectedBattleStyle = selectedAttackerBuild?.data.battleStyleType
     const selectedBattleStyleSkills = React.useMemo(() => {
         if (!selectedBattleStyle) return []
-        return battleStyleSkills[selectedBattleStyle]
+        return battleStyleSkills[selectedBattleStyle].filter((skill) => skill.data.type === 'attack')
     }, [selectedBattleStyle])
 
     const handleSelectSkill = React.useCallback(
