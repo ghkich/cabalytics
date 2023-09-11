@@ -58,7 +58,7 @@ export const SkillsDamageHeader = ({
     return (
         <div className="bg-neutral-910 @[350px]:flex-row flex w-full flex-col items-center gap-3 p-4">
             <div className="@[400px]:flex-row flex w-full flex-col items-center gap-3">
-                <ToggleButton isActive={isComboActive} activeColor={'text-emerald-400'} onClick={onToggleCombo}>
+                <ToggleButton isActive={isComboActive} activeClassName={'text-emerald-400'} onClick={onToggleCombo}>
                     Combo {isComboActive ? 'On' : 'Off'}
                 </ToggleButton>
                 <div className="text-neutral-450 flex items-center gap-1 text-xs">

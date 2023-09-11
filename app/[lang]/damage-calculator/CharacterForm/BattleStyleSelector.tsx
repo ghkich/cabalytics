@@ -6,7 +6,7 @@ import { BattleStyle, BattleStyleTypes } from '@/app/data/battleStyles'
 type BattleStyleSelectorProps = {
     battleStyles: BattleStyle[]
     selectedBattleStyleType?: BattleStyleTypes
-    activeColor: string
+    activeClassName: string
     isOpen: boolean
     onChange: (type: BattleStyleTypes) => void
 }
@@ -14,7 +14,7 @@ type BattleStyleSelectorProps = {
 const BattleStyleSelector: React.FC<BattleStyleSelectorProps> = ({
     battleStyles,
     selectedBattleStyleType,
-    activeColor,
+    activeClassName,
     onChange,
     isOpen,
 }) => {
@@ -32,7 +32,7 @@ const BattleStyleSelector: React.FC<BattleStyleSelectorProps> = ({
                         className={cls(
                             'hover:bg-neutral-825 bg-neutral-875 mt-0.5 flex cursor-pointer flex-col items-center justify-center gap-1 px-0.5 py-2  text-neutral-400 transition-all duration-200 hover:opacity-100',
                             {
-                                [`bg-neutral-825 ${activeColor} opacity-100`]:
+                                [`bg-neutral-825 ${activeClassName} opacity-100`]:
                                     selectedBattleStyleType === battleStyle.type,
                             }
                         )}

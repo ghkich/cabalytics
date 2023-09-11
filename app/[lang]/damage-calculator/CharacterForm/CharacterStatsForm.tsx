@@ -97,7 +97,7 @@ export default function CharacterStatsForm({ buildType, disabled }: CharacterSta
                     <TabButton
                         key={attributeType.value}
                         isActive={selectedAttributeType === attributeType.value}
-                        activeColor={buildTypeColor}
+                        activeClassName={buildTypeColor}
                         onClick={() => setSelectedAttributeType(attributeType.value)}
                     >
                         <div className="text-[12px]">{attributeType.label}</div>
@@ -112,7 +112,7 @@ export default function CharacterStatsForm({ buildType, disabled }: CharacterSta
                     <TabButton
                         key={attributeCategory.value}
                         isActive={selectedAttributeCategory === attributeCategory.value}
-                        activeColor={buildTypeColor}
+                        activeClassName={buildTypeColor}
                         onClick={() => setSelectedAttributeCategory(attributeCategory.value)}
                     >
                         <div className="text-[11px]">{attributeCategory.label[lang]}</div>

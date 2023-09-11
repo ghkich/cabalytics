@@ -64,7 +64,7 @@ export const CharacterForm = ({ buildType }: Props) => {
                 <BattleStyleSelector
                     battleStyles={battleStyles}
                     selectedBattleStyleType={selectedBattleStyleType}
-                    activeColor={buildTypeColor}
+                    activeClassName={buildTypeColor}
                     isOpen={showBattleStyleSelector}
                     onChange={handleBattleStyleChange}
                 />

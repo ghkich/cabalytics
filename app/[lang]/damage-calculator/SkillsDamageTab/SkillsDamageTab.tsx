@@ -73,7 +73,7 @@ export default function SkillsDamageTab() {
                         onClick={() => handleToggleSkillRank(skillRank)}
                         isActive={selectedSkillRanks.includes(skillRank)}
                         className="truncate border-none px-1"
-                        activeColor="text-emerald-300"
+                        activeClassName="text-emerald-300"
                     >
                         {SkillRank[skillRank]}
                     </ToggleButton>

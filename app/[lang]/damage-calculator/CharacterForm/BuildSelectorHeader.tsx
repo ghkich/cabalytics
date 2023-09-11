@@ -32,7 +32,7 @@ const BuildSelectorHeader = ({ buildType }: Props) => {
                         key={build.id}
                         isActive={build.id === selectedBuild?.id}
                         onClick={() => handleSelectBuildId(build.id)}
-                        activeColor={buildTypeColor}
+                        activeClassName={buildTypeColor}
                         className="w-8"
                     >
                         {index + 1}
@@ -55,7 +55,7 @@ const BuildSelectorHeader = ({ buildType }: Props) => {
                         key={build.id}
                         isActive={build.id === selectedBuild?.id}
                         onClick={() => handleSelectBuildId(build.id)}
-                        activeColor={buildTypeColor}
+                        activeClassName={buildTypeColor}
                         className="w-8"
                     >
                         {index + middleIndex + 1}
