@@ -56,7 +56,7 @@ export const SkillsDamageListItem = ({
             </div>
             <div className="flex w-full px-4 py-3">
                 <div className="w-full">
-                    <h2 className="text-[13px]">{skill.name[lang]}</h2>
+                    <h2 className="text-[13px]">{skill.data.name[lang]}</h2>
                     <div className="flex gap-1.5 text-[10px] text-neutral-500 text-opacity-75">
                         <div>
                             Cast{' '}
@@ -65,11 +65,11 @@ export const SkillsDamageListItem = ({
                                     'text-indigo-300 text-opacity-75': selected,
                                 })}
                             >
-                                {isComboActive ? skill.comboCastingTime : skill.castingTime}s
+                                {isComboActive ? skill.data.comboCastingTime : skill.data.castingTime}s
                             </span>
                         </div>
                         <div>
-                            [ {(skill.skillAmp * 100).toFixed()}% / +{skill.addAttack} ]
+                            [ {skill.data.stats.skillAmp.toFixed()}% / +{skill.data.stats.addAttack} ]
                         </div>
                     </div>
                 </div>

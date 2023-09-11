@@ -21,7 +21,7 @@ const getDamageDivisor = (defenderType: Defender['type']) => (defenderType === '
 export function calculateSkillsDamage(attacker: Attacker, defender: Defender, skill: Skill) {
     // Calculate penetration factors
     const ignorePenetration = Math.max(defender.ignorePenetration - attacker.cancelIgnorePenetration, 0)
-    const penetration = Math.max(attacker.penetration + (skill.penetration || 0), 0)
+    const penetration = Math.max(attacker.penetration + (skill.data.stats.penetration || 0), 0)
 
     // Calculate damage reduction factors
     const ignoreDamageReduction = Math.max(attacker.ignoreDamageReduction - defender.cancelIgnoreDamageReduction, 0)
@@ -29,11 +29,14 @@ export function calculateSkillsDamage(attacker: Attacker, defender: Defender, sk
 
     // Calculate skill amplification factors
     const resistSkillAmp = Math.max(defender.effectiveResistSkillAmp - attacker.ignoreResistSkillAmp, 0)
-    const skillAmp = Math.max(attacker.effectiveSkillAmp + skill.skillAmp - resistSkillAmp, 0)
+    const skillAmp = Math.max(attacker.effectiveSkillAmp + skill.data.stats.skillAmp / 100 - resistSkillAmp, 0)
 
     // Calculate critical damage factors
     const resistCriticalDamage = Math.max(defender.resistCriticalDamage - attacker.ignoreResistCriticalDamage, 0)
-    const criticalDamage = Math.max(attacker.criticalDamage + (skill.criticalDamage || 0) - resistCriticalDamage, 0.25)
+    const criticalDamage = Math.max(
+        attacker.criticalDamage + (skill.data.stats.criticalDamage || 0 / 100) - resistCriticalDamage,
+        0.25
+    )
 
     const DEFENSE_CORRECTION_FACTOR = 85
 
@@ -41,14 +44,16 @@ export function calculateSkillsDamage(attacker: Attacker, defender: Defender, sk
     const attack = attacker.effectiveAttack * (1 + skillAmp)
 
     // Calculate final defense
-    let finalDefense = defender.defense - (skill.defenseReduction || 0)
+    let finalDefense = defender.defense - (skill.data.stats.defenseReduction || 0)
     finalDefense += ignorePenetration * defender.penetrationArmorFactor
     finalDefense -= penetration * defender.penetrationArmorFactor
     finalDefense = Math.max(finalDefense, 0)
 
     // Calculate attack reduction
     const attackReduction = Math.max(
-        1 - finalDefense / (defender.defense + defender.baselineArmor - skill.addAttack / DEFENSE_CORRECTION_FACTOR),
+        1 -
+            finalDefense /
+                (defender.defense + defender.baselineArmor - skill.data.stats.addAttack / DEFENSE_CORRECTION_FACTOR),
         0
     )
 
@@ -62,7 +67,7 @@ export function calculateSkillsDamage(attacker: Attacker, defender: Defender, sk
 
     damage.normal = attack * attackReduction
     damage.critical = damage.normal * (1 + criticalDamage) * attacker.criticalEffectiveness
-    const skillAddAttack = skill.addAttack * attackReduction
+    const skillAddAttack = skill.data.stats.addAttack * attackReduction
 
     damage.normal *= 1 + attacker.normalDamageUp
     damage.normal += skillAddAttack
@@ -86,8 +91,8 @@ export function calculateSkillsDamage(attacker: Attacker, defender: Defender, sk
 
     damage.average = damage.normal * (1 - attacker.criticalRate) + damage.critical * attacker.criticalRate
 
-    damage.averageDps = damage.average / skill.comboCastingTime
-    damage.averageDpsCombo = damage.average / skill.castingTime
+    damage.averageDps = damage.average / skill.data.comboCastingTime
+    damage.averageDpsCombo = damage.average / skill.data.castingTime
 
     return damage
 }

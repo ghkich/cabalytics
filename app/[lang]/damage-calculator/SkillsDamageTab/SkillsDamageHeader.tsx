@@ -4,7 +4,7 @@ import { DamageDisplay } from '@/app/[lang]/components/DamageDisplay'
 import React from 'react'
 import useTranslation from '@/lib/useTranslation'
 import { useCharacterBuilds } from '@/app/[lang]/damage-calculator/CharacterForm/character-builds-provider'
-import { skills } from '@/app/data/skills'
+import { battleStyleSkills } from '@/app/data/skills'
 
 type Props = {
     selectedSkills: string[]
@@ -36,7 +36,7 @@ export const SkillsDamageHeader = ({
     const attackerBattleStyle = selectedAttackerBuild?.data.battleStyleType
     const sameBattleStyleSkills = React.useMemo(() => {
         if (!attackerBattleStyle) return []
-        return skills[attackerBattleStyle].filter((skill) => selectedSkills.includes(skill.id))
+        return battleStyleSkills[attackerBattleStyle].filter((skill) => selectedSkills.includes(skill.id))
     }, [attackerBattleStyle, selectedSkills])
 
     const skillsDamageTotal = React.useMemo(() => {

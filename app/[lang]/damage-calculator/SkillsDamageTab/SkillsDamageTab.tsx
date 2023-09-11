@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { SkillsDamageHeader } from '@/app/[lang]/damage-calculator/SkillsDamageTab/SkillsDamageHeader'
-import { skills } from '@/app/data/skills'
 import { SkillsDamageListItem } from '@/app/[lang]/damage-calculator/SkillsDamageTab/SkillsDamageListItem'
 import { useCharacterBuilds } from '@/app/[lang]/damage-calculator/CharacterForm/character-builds-provider'
 import { useCalculateSkillsDamage } from '@/lib/useCalculateSkillsDamage'
@@ -8,6 +7,7 @@ import {
     prepareAttacker,
     prepareDefender,
 } from '@/app/[lang]/damage-calculator/SkillsDamageTab/prepareApiRequestPayload'
+import { battleStyleSkills } from '@/app/data/skills'
 
 export default function SkillsDamageTab() {
     const { selectedAttackerBuild, selectedDefenderBuild } = useCharacterBuilds()
@@ -15,11 +15,11 @@ export default function SkillsDamageTab() {
     const [isComboActive, setIsComboActive] = React.useState(true)
     const [selectedSkills, setSelectedSkills] = React.useState<string[]>([])
 
-    const battleStyle = selectedAttackerBuild?.data.battleStyleType
-    const battleStyleSkills = React.useMemo(() => {
-        if (!battleStyle) return []
-        return skills[battleStyle]
-    }, [battleStyle])
+    const selectedBattleStyle = selectedAttackerBuild?.data.battleStyleType
+    const selectedBattleStyleSkills = React.useMemo(() => {
+        if (!selectedBattleStyle) return []
+        return battleStyleSkills[selectedBattleStyle]
+    }, [selectedBattleStyle])
 
     const handleSelectSkill = React.useCallback(
         (skillId: string) => {
@@ -34,9 +34,9 @@ export default function SkillsDamageTab() {
     useEffect(() => {
         const attacker = prepareAttacker(selectedAttackerBuild)
         const defender = prepareDefender(selectedDefenderBuild, selectedAttackerBuild)
-        if (!attacker || !defender || !battleStyleSkills) return
-        calculateSkillsDamage({ attacker, defender, skills: battleStyleSkills })?.then()
-    }, [battleStyleSkills, calculateSkillsDamage, selectedAttackerBuild, selectedDefenderBuild])
+        if (!attacker || !defender || !selectedBattleStyleSkills) return
+        calculateSkillsDamage({ attacker, defender, skills: selectedBattleStyleSkills })?.then()
+    }, [selectedBattleStyleSkills, calculateSkillsDamage, selectedAttackerBuild, selectedDefenderBuild])
 
     return (
         <>
@@ -48,7 +48,7 @@ export default function SkillsDamageTab() {
                 onToggleCombo={() => setIsComboActive((prev) => !prev)}
             />
             <div className="flex w-full flex-col gap-0.5 bg-neutral-800 bg-opacity-10">
-                {battleStyleSkills.map((skill, index) => {
+                {selectedBattleStyleSkills.map((skill, index) => {
                     return (
                         <SkillsDamageListItem
                             key={skill.id}
