@@ -42,7 +42,6 @@ export default function SkillsDamageTab() {
     )
 
     const handleToggleSkillRankType = (skillRank: SkillRankType) => {
-        console.log(skillRank)
         setSelectedSkillRankTypes((prevSelectedRanks) => {
             if (prevSelectedRanks.includes(skillRank)) {
                 return prevSelectedRanks.filter((r) => r !== skillRank)
