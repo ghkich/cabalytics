@@ -11,12 +11,12 @@ type Props = {
 }
 
 export const DamageDisplay = ({ header, value, loading, className }: Props) => {
-    const loadingOrValue =
-        value === undefined || loading ? (
-            <FontAwesomeIcon icon={faGripDots} className="animate-pulse text-[10px]" />
-        ) : (
-            value
-        )
+    const undefinedOrLoading = value === undefined || loading
+    const loaderOrValue = undefinedOrLoading ? (
+        <FontAwesomeIcon icon={faGripDots} className="animate-pulse text-[10px]" />
+    ) : (
+        value
+    )
     return (
         <div
             className={cls(
@@ -27,10 +27,10 @@ export const DamageDisplay = ({ header, value, loading, className }: Props) => {
             {header && <div className="whitespace-nowrap text-[9px] text-neutral-600">{header}</div>}
             <div
                 className={cls(`text-sm font-normal`, {
-                    'animate-pulse': value === undefined || loading,
+                    'animate-pulse': undefinedOrLoading,
                 })}
             >
-                {loadingOrValue}
+                {loaderOrValue}
             </div>
         </div>
     )

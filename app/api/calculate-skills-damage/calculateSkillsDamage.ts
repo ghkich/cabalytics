@@ -98,8 +98,10 @@ export function calculateSkillsDamage(attacker: Attacker, defender: Defender, sk
 
     damage.average = damage.normal * (1 - attacker.criticalRate) + damage.critical * attacker.criticalRate
 
-    damage.averageDps = damage.average / skill.data.comboCastingTime
-    damage.averageDpsCombo = damage.average / skill.data.castingTime
+    const continuousDamage = skill.data.continuousDamage?.value || 0
+
+    damage.averageDps = damage.average / skill.data.castingTime + continuousDamage
+    damage.averageDpsCombo = damage.average / skill.data.comboCastingTime + continuousDamage
 
     return damage
 }

@@ -49,19 +49,22 @@ export const SkillsDamageHeader = ({
                 acc.critical += skillDamage.critical
                 acc.averageDps += skillDamage.averageDps / sameBattleStyleSkills.length
                 acc.averageDpsCombo += skillDamage.averageDpsCombo / sameBattleStyleSkills.length
+                acc.isInitial = false
                 return acc
             },
-            { normal: 0, average: 0, critical: 0, averageDps: 0, averageDpsCombo: 0 }
+            { normal: 0, average: 0, critical: 0, averageDps: 0, averageDpsCombo: 0, isInitial: true }
         )
     }, [sameBattleStyleSkills, skillsDamage])
 
+    const damageLoading = sameBattleStyleSkills.length > 0 ? isCalculating || skillsDamageTotal.isInitial : false
+
     return (
-        <div className="bg-neutral-910 @[350px]:flex-row flex w-full flex-col items-center gap-3 p-4">
-            <div className="@[400px]:flex-row flex w-full flex-col items-center gap-3">
+        <div className="flex w-full flex-col items-center gap-3 bg-neutral-910 p-4 @[350px]:flex-row">
+            <div className="flex w-full flex-col items-center gap-3 @[400px]:flex-row">
                 <ToggleButton isActive={isComboActive} activeClassName={'text-emerald-400'} onClick={onToggleCombo}>
                     Combo {isComboActive ? 'On' : 'Off'}
                 </ToggleButton>
-                <div className="text-neutral-450 flex items-center gap-1 text-xs">
+                <div className="flex items-center gap-1 text-xs text-neutral-450">
                     <span className={cls('text-neutral-300', { ['text-emerald-300']: isComboActive })}>
                         {sameBattleStyleSkills.length}
                     </span>{' '}
@@ -76,25 +79,25 @@ export const SkillsDamageHeader = ({
                             ? skillsDamageTotal.averageDpsCombo.toFixed()
                             : skillsDamageTotal.averageDps.toFixed()
                     }
-                    loading={isCalculating}
+                    loading={damageLoading}
                     className="text-indigo-400"
                 />
                 <DamageDisplay
                     header={t('damage.average')}
                     value={skillsDamageTotal.average.toFixed()}
-                    loading={isCalculating}
+                    loading={damageLoading}
                     className="text-purple-400"
                 />
                 <DamageDisplay
                     header={t('damage.normal')}
                     value={skillsDamageTotal.normal.toFixed()}
-                    loading={isCalculating}
+                    loading={damageLoading}
                     className="text-orange-300"
                 />
                 <DamageDisplay
                     header={t('damage.critical')}
                     value={skillsDamageTotal.critical.toFixed()}
-                    loading={isCalculating}
+                    loading={damageLoading}
                     className="text-sky-400"
                 />
             </div>
