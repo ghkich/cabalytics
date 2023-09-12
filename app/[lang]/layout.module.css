@@ -1,0 +1,5 @@
+.main {
+    --header-height: 58px;
+    height: calc(100% - var(--header-height));
+    min-height: calc(100vh - var(--header-height));
+}

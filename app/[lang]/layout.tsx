@@ -5,7 +5,7 @@ import { Inter } from 'next/font/google'
 import { Navigation } from '@/app/[lang]/components/Navigation'
 import { i18n, Locale } from '@/i18n.config'
 import { LanguageProvider } from '@/app/[lang]/language-provider'
-
+import styles from './layout.module.css'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
@@ -27,17 +27,19 @@ export default function RootLayout({ children, params }: { children: React.React
         <html lang={params.lang}>
             <LanguageProvider language={params.lang}>
                 <body className={inter.className}>
-                    <header className="bg-neutral-910">
-                        <div className="mx-auto flex max-w-5xl items-center gap-5 px-3 lg:px-0">
-                            <Navigation lang={params.lang} />
+                    <header>
+                        <div className="bg-neutral-910">
+                            <div className="mx-auto flex max-w-5xl items-center gap-5 px-3 lg:px-0">
+                                <Navigation lang={params.lang} />
+                            </div>
+                        </div>
+                        <div className="mt-0.5 h-2 w-full bg-neutral-875">
+                            <div className="mx-auto h-2 w-full max-w-5xl px-1.5">
+                                <div className="h-2 w-full bg-neutral-850" />
+                            </div>
                         </div>
                     </header>
-                    <div className="bg-neutral-875 mt-0.5 h-2 w-full">
-                        <div className="mx-auto h-2 w-full max-w-5xl px-1.5">
-                            <div className="bg-neutral-850 h-2 w-full" />
-                        </div>
-                    </div>
-                    <main className="">
+                    <main className={styles.main}>
                         <div className="mx-auto max-w-5xl p-1.5">{children}</div>
                     </main>
                 </body>

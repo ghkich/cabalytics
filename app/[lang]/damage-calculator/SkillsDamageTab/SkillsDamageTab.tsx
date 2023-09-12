@@ -81,7 +81,7 @@ export default function SkillsDamageTab() {
                     </ToggleButton>
                 ))}
             </div>
-            <div className="flex w-full flex-col bg-neutral-800 bg-opacity-10">
+            <div className="flex w-full flex-col">
                 {selectedBattleStyleSkills.map((skill, index) => {
                     return (
                         <SkillsDamageListItem

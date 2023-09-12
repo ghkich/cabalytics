@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
-  height: 100vh;
   @apply bg-gradient-to-t from-[#0F0F0F] to-[#121212] text-white;
-
 }
