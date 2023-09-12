@@ -7,8 +7,6 @@ export type SkillStats = {
     attack?: number
     penetration?: number
     criticalDamage?: number
-    defense?: number
-    ignorePenetration?: number
     ignoreResistSkillAmp?: number
     continuousDamage?: {
         value: number
@@ -18,6 +16,11 @@ export type SkillStats = {
         value: number
         duration: number
     }
+}
+
+export type SkillDebuffs = {
+    defense?: number
+    ignorePenetration?: number
 }
 
 export const skillTypes = ['attack', 'buff', 'debuff', 'passive'] as const
@@ -63,6 +66,7 @@ export type SkillData = {
     coolDown: number
     duration?: number
     stats: SkillStats
+    debuffs?: SkillDebuffs
 }
 
 export type Skill = {
@@ -332,6 +336,8 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             stats: {
                 skillAmp: 0,
                 addAttack: 0,
+            },
+            debuffs: {
                 ignorePenetration: -350,
             },
         }),
@@ -646,7 +652,6 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             stats: {
                 skillAmp: 90,
                 addAttack: 2257,
-                defense: -40,
             },
         }),
         generateSkill({
@@ -659,6 +664,8 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             stats: {
                 skillAmp: 100,
                 addAttack: 2909,
+            },
+            debuffs: {
                 defense: -40,
             },
         }),

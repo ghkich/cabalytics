@@ -20,7 +20,10 @@ const getDamageDivisor = (defenderType: Defender['type']) => (defenderType === '
 
 export function calculateSkillsDamage(attacker: Attacker, defender: Defender, skill: Skill) {
     // Calculate penetration factors
-    const ignorePenetration = Math.max(defender.ignorePenetration - attacker.cancelIgnorePenetration, 0)
+    const ignorePenetration = Math.max(
+        defender.ignorePenetration + (skill.data.debuffs?.ignorePenetration || 0) - attacker.cancelIgnorePenetration,
+        0
+    )
     const penetration = Math.max(attacker.penetration + (skill.data.stats.penetration || 0), 0)
 
     // Calculate damage reduction factors
@@ -28,7 +31,11 @@ export function calculateSkillsDamage(attacker: Attacker, defender: Defender, sk
     const damageReduction = Math.max(defender.damageReduction - ignoreDamageReduction, 0)
 
     // Calculate skill amplification factors
-    const resistSkillAmp = Math.max(defender.effectiveResistSkillAmp - attacker.ignoreResistSkillAmp, 0)
+    const resistSkillAmp = Math.max(
+        defender.effectiveResistSkillAmp -
+            (attacker.ignoreResistSkillAmp + (skill.data.stats.ignoreResistSkillAmp || 0)),
+        0
+    )
     const skillAmp = Math.max(attacker.effectiveSkillAmp + skill.data.stats.skillAmp / 100 - resistSkillAmp, 0)
 
     // Calculate critical damage factors
@@ -44,7 +51,7 @@ export function calculateSkillsDamage(attacker: Attacker, defender: Defender, sk
     const attack = attacker.effectiveAttack * (1 + skillAmp)
 
     // Calculate final defense
-    let finalDefense = defender.defense - (skill.data.stats.defenseReduction || 0)
+    let finalDefense = defender.defense + (skill.data.debuffs?.defense || 0)
     finalDefense += ignorePenetration * defender.penetrationArmorFactor
     finalDefense -= penetration * defender.penetrationArmorFactor
     finalDefense = Math.max(finalDefense, 0)
