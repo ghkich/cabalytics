@@ -7,25 +7,33 @@ export type SkillStats = {
     attack?: number
     penetration?: number
     criticalDamage?: number
-    defenseReduction?: number
+    defense?: number
     ignorePenetration?: number
     ignoreResistSkillAmp?: number
+    continuousDamage?: {
+        value: number
+        duration: number
+    }
+    silence?: {
+        value: number
+        duration: number
+    }
 }
 
 export const skillTypes = ['attack', 'buff', 'debuff', 'passive'] as const
 export type SkillType = (typeof skillTypes)[number]
 
 export enum SkillRankType {
-    Novice = 'Novice',
-    Apprentice = 'Apprentice',
-    Regular = 'Regular',
-    Expert = 'Expert',
-    AExpert = 'AExpert',
-    Master = 'Master',
-    AMaster = 'AMaster',
-    GMaster = 'GMaster',
-    Completer = 'Completer',
-    Transcender = 'Transcender',
+    Novice = 0,
+    Apprentice = 1,
+    Regular = 2,
+    Expert = 3,
+    AExpert = 4,
+    Master = 5,
+    AMaster = 6,
+    GMaster = 7,
+    Completer = 8,
+    Transcender = 9,
 }
 
 export type SkillRank = {
@@ -111,6 +119,81 @@ const generateSkill = (data: SkillData, disabled?: boolean) => ({
 
 export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
     [BattleStyleTypes.ForceArcher]: [
+        generateSkill({
+            name: { pt: 'Floresta de Flechas', en: 'Arrow Forest' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 2.4,
+            comboCastingTime: 2.4,
+            coolDown: 5.8,
+            stats: {
+                skillAmp: 105,
+                addAttack: 3239,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Barragem de Flechas', en: 'Arrow Barrage' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 2.2,
+            comboCastingTime: 2.2,
+            coolDown: 5.8,
+            stats: {
+                skillAmp: 95,
+                addAttack: 2587,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Disparo Sônico', en: 'Sonic Shooter' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 2.5,
+            comboCastingTime: 2.5,
+            coolDown: 5.6,
+            stats: {
+                skillAmp: 95,
+                addAttack: 1764,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Estrela Cadente', en: 'Shooting Star' },
+            type: 'attack',
+            rank: SkillRankType.Completer,
+            castingTime: 3,
+            comboCastingTime: 2.25,
+            coolDown: 5.5,
+            stats: {
+                skillAmp: 80,
+                addAttack: 1324,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Distorção Gravitacional', en: 'Gravity Distortion' },
+            type: 'attack',
+            rank: SkillRankType.GMaster,
+            castingTime: 2.3,
+            comboCastingTime: 1.5,
+            coolDown: 4.7,
+            stats: {
+                skillAmp: 80,
+                addAttack: 1239,
+            },
+        }),
+        generateSkill(
+            {
+                name: { pt: 'Disparo Perfurante', en: 'Piercing Shot' },
+                type: 'attack',
+                rank: SkillRankType.Master,
+                castingTime: 2.7,
+                comboCastingTime: 2.25,
+                coolDown: 3.2,
+                stats: {
+                    skillAmp: 55,
+                    addAttack: 672,
+                },
+            },
+            true
+        ),
         generateSkill({
             name: { pt: 'Disparo Crítico', en: 'Critical Shot' },
             type: 'attack',
@@ -238,81 +321,6 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
                 addAttack: 282,
             },
         }),
-        generateSkill(
-            {
-                name: { pt: 'Disparo Perfurante', en: 'Piercing Shot' },
-                type: 'attack',
-                rank: SkillRankType.Master,
-                castingTime: 2.7,
-                comboCastingTime: 2.25,
-                coolDown: 3.2,
-                stats: {
-                    skillAmp: 55,
-                    addAttack: 672,
-                },
-            },
-            true
-        ),
-        generateSkill({
-            name: { pt: 'Distorção Gravitacional', en: 'Gravity Distortion' },
-            type: 'attack',
-            rank: SkillRankType.GMaster,
-            castingTime: 2.3,
-            comboCastingTime: 1.5,
-            coolDown: 4.7,
-            stats: {
-                skillAmp: 80,
-                addAttack: 1239,
-            },
-        }),
-        generateSkill({
-            name: { pt: 'Estrela Cadente', en: 'Shooting Star' },
-            type: 'attack',
-            rank: SkillRankType.Completer,
-            castingTime: 3,
-            comboCastingTime: 3,
-            coolDown: 5.5,
-            stats: {
-                skillAmp: 80,
-                addAttack: 1324,
-            },
-        }),
-        generateSkill({
-            name: { pt: 'Floresta de Flechas', en: 'Arrow Forest' },
-            type: 'attack',
-            rank: SkillRankType.Transcender,
-            castingTime: 2.4,
-            comboCastingTime: 2.4,
-            coolDown: 5.8,
-            stats: {
-                skillAmp: 105,
-                addAttack: 3239,
-            },
-        }),
-        generateSkill({
-            name: { pt: 'Barragem de Flechas', en: 'Arrow Barrage' },
-            type: 'attack',
-            rank: SkillRankType.Transcender,
-            castingTime: 2.2,
-            comboCastingTime: 2.2,
-            coolDown: 5.8,
-            stats: {
-                skillAmp: 95,
-                addAttack: 2587,
-            },
-        }),
-        generateSkill({
-            name: { pt: 'Disparo Sônico', en: 'Sonic Shooter' },
-            type: 'attack',
-            rank: SkillRankType.Transcender,
-            castingTime: 2.5,
-            comboCastingTime: 2.5,
-            coolDown: 5.6,
-            stats: {
-                skillAmp: 95,
-                addAttack: 1764,
-            },
-        }),
         generateSkill({
             name: { pt: 'Fragilizar Defesa', en: 'Fragilizar Defesa' },
             type: 'debuff',
@@ -343,8 +351,318 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             },
         }),
     ],
-    [BattleStyleTypes.Wizard]: [],
-    [BattleStyleTypes.Warrior]: [],
+    [BattleStyleTypes.Wizard]: [
+        generateSkill({
+            name: { pt: 'Canhão Múltiplo', en: 'Multiple Cannon' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 2.4,
+            comboCastingTime: 2.4,
+            coolDown: 6.5,
+            stats: {
+                skillAmp: 100,
+                addAttack: 2838,
+                penetration: 20,
+                continuousDamage: {
+                    value: 90,
+                    duration: 8,
+                },
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Armadilha Glacial', en: 'Glacial Trap' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 2.2,
+            comboCastingTime: 2.2,
+            coolDown: 6.5,
+            stats: {
+                skillAmp: 90,
+                addAttack: 2186,
+                penetration: 20,
+                continuousDamage: {
+                    value: 90,
+                    duration: 4,
+                },
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Meteoro de Chamas', en: 'Meteorite' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 2.5,
+            comboCastingTime: 2.5,
+            coolDown: 5.8,
+            stats: {
+                skillAmp: 85,
+                addAttack: 1584,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Campo Multidimensional', en: 'Multidimensional Field' },
+            type: 'attack',
+            rank: SkillRankType.Completer,
+            castingTime: 3,
+            comboCastingTime: 2.35,
+            coolDown: 5.5,
+            stats: {
+                skillAmp: 80,
+                addAttack: 1712,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Canhão Duplo Supremo', en: 'Supreme Double Cannon' },
+            type: 'attack',
+            rank: SkillRankType.GMaster,
+            castingTime: 2.8,
+            comboCastingTime: 1.65,
+            coolDown: 5.1,
+            stats: {
+                skillAmp: 80,
+                addAttack: 1507,
+                continuousDamage: {
+                    value: 335,
+                    duration: 5,
+                },
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Zero Absoluto', en: 'Absolute Zero' },
+            type: 'attack',
+            rank: SkillRankType.AMaster,
+            castingTime: 3.3,
+            comboCastingTime: 2.4,
+            coolDown: 4.8,
+            stats: {
+                skillAmp: 65,
+                addAttack: 1014,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Dilúvio', en: 'Deluge' },
+            type: 'attack',
+            rank: SkillRankType.Master,
+            castingTime: 3,
+            comboCastingTime: 2.35,
+            coolDown: 3.2,
+            stats: {
+                skillAmp: 55,
+                addAttack: 872,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Vácuo', en: 'Vacuum' },
+            type: 'attack',
+            rank: SkillRankType.AExpert,
+            castingTime: 2.9,
+            comboCastingTime: 2.9,
+            coolDown: 3.4,
+            stats: {
+                skillAmp: 55,
+                addAttack: 515,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Campo de Força', en: 'Force Field' },
+            type: 'attack',
+            rank: SkillRankType.AExpert,
+            castingTime: 1.3,
+            comboCastingTime: 0.9,
+            coolDown: 180,
+            stats: {
+                skillAmp: 5,
+                addAttack: 500,
+                silence: {
+                    value: 80,
+                    duration: 4,
+                },
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Lança de Terra', en: 'Terra Lance' },
+            type: 'attack',
+            rank: SkillRankType.Regular,
+            castingTime: 1.5,
+            comboCastingTime: 1.05,
+            coolDown: 5.3,
+            stats: {
+                skillAmp: 85,
+                addAttack: 129,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Lança de Fogo', en: 'Fire Lance' },
+            type: 'attack',
+            rank: SkillRankType.Regular,
+            castingTime: 1.5,
+            comboCastingTime: 1.05,
+            coolDown: 4.9,
+            stats: {
+                skillAmp: 75,
+                addAttack: 173,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Lança Relampejante', en: 'Lightning Lance' },
+            type: 'attack',
+            rank: SkillRankType.Regular,
+            castingTime: 1.7,
+            comboCastingTime: 1.05,
+            coolDown: 5.8,
+            stats: {
+                skillAmp: 85,
+                addAttack: 179,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Canhão de Pedra', en: 'Stone Cannon' },
+            type: 'attack',
+            rank: SkillRankType.Expert,
+            castingTime: 1.7,
+            comboCastingTime: 1.25,
+            coolDown: 5.8,
+            stats: {
+                skillAmp: 95,
+                addAttack: 193,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Canhão de Fogo', en: 'Fire Cannon' },
+            type: 'attack',
+            rank: SkillRankType.Expert,
+            castingTime: 1.7,
+            comboCastingTime: 1.25,
+            coolDown: 5.3,
+            stats: {
+                skillAmp: 85,
+                addAttack: 232,
+            },
+        }),
+        generateSkill({
+            name: { pt: "Canhão d'Água", en: 'Water Cannon' },
+            type: 'attack',
+            rank: SkillRankType.Expert,
+            castingTime: 1.7,
+            comboCastingTime: 1.25,
+            coolDown: 4.8,
+            stats: {
+                skillAmp: 85,
+                addAttack: 220,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Canhão Relampejante', en: 'Lightning Cannon' },
+            type: 'attack',
+            rank: SkillRankType.Expert,
+            castingTime: 2,
+            comboCastingTime: 1.25,
+            coolDown: 6.6,
+            stats: {
+                skillAmp: 95,
+                addAttack: 285,
+            },
+        }),
+    ],
+    [BattleStyleTypes.Warrior]: [
+        generateSkill({
+            name: { pt: 'Tremor da Espada', en: 'Sword Tremor' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 3,
+            comboCastingTime: 3,
+            coolDown: 6.6,
+            stats: {
+                skillAmp: 85,
+                addAttack: 2116,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Abalo Sísmico', en: 'Earthquake' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 3,
+            comboCastingTime: 2.25,
+            coolDown: 4.5,
+            stats: {
+                skillAmp: 80,
+                addAttack: 1786,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Tufão', en: 'Typhoon' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 4.3,
+            comboCastingTime: 3.2,
+            coolDown: 8.6,
+            stats: {
+                skillAmp: 80,
+                addAttack: 1932,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Carga', en: 'Charge' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 1.3,
+            comboCastingTime: 0.3,
+            coolDown: 1.8,
+            stats: {
+                skillAmp: 0,
+                addAttack: 201,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Choque Arcano', en: 'Arcane Shock' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 1,
+            comboCastingTime: 0.4,
+            coolDown: 26.5,
+            stats: {
+                skillAmp: 20,
+                addAttack: 306,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Choque da Espada', en: 'Sword Shock' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 2.7,
+            comboCastingTime: 2.1,
+            coolDown: 3.2,
+            stats: {
+                skillAmp: 55,
+                addAttack: 496,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Decisão Apocalíptica', en: 'Apocalyptic Decision' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 2.4,
+            comboCastingTime: 2.4,
+            coolDown: 6.5,
+            stats: {
+                skillAmp: 90,
+                addAttack: 2257,
+                defense: -40,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Esmagador', en: 'Smash' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 2.4,
+            comboCastingTime: 2.4,
+            coolDown: 6.5,
+            stats: {
+                skillAmp: 100,
+                addAttack: 2909,
+                defense: -40,
+            },
+        }),
+    ],
     [BattleStyleTypes.Blader]: [],
     [BattleStyleTypes.ForceBlader]: [],
     [BattleStyleTypes.ForceShielder]: [],
