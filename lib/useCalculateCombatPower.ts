@@ -1,6 +1,8 @@
 import { attackAttributes, AttackAttributes, defenseAttributes, DefenseAttributes } from '@/app/data/attributes'
 import useFormatLocale from '@/lib/useFormatLocale'
-import { CharacterBuildStats } from '@/app/data/builds'
+import { CharacterBuild } from '@/app/data/builds'
+import { DamageMode } from '@/app/[lang]/damage-calculator/CharacterForm/character-builds-provider'
+import { isBattleStyleMagicBased } from '@/app/data/battleStyles'
 
 export type CombatPower = {
     attack: {
@@ -38,59 +40,80 @@ const sumDefenseAttributes = (attributes: DefenseAttributes) => {
     }, 0)
 }
 
+export const calculateCombatPower = (build: CharacterBuild, damageMode?: DamageMode) => {
+    const stats = build.data.stats
+    const isMagicBased = isBattleStyleMagicBased(build.data.battleStyleType)
+    const attackGeneralCombatPower = sumAttackAttributes(stats.attack.general, isMagicBased)
+    const attackPvPCombatPower = sumAttackAttributes(stats.attack.pvp, isMagicBased)
+    const attackPvECombatPower = sumAttackAttributes(stats.attack.pve, isMagicBased)
+    const defenseGeneralCombatPower = sumDefenseAttributes(stats.defense.general)
+    const defensePvPCombatPower = sumDefenseAttributes(stats.defense.pvp)
+    const defensePvECombatPower = sumDefenseAttributes(stats.defense.pve)
+    let attackTotal = attackGeneralCombatPower
+    if (damageMode === 'pvp') attackTotal += attackPvPCombatPower
+    if (damageMode === 'pve') attackTotal += attackPvECombatPower
+    let defenseTotal = defenseGeneralCombatPower
+    if (damageMode === 'pvp') defenseTotal += defensePvPCombatPower
+    if (damageMode === 'pve') defenseTotal += defensePvECombatPower
+
+    return {
+        attackGeneralCombatPower,
+        attackPvPCombatPower,
+        attackPvECombatPower,
+        defenseGeneralCombatPower,
+        defensePvPCombatPower,
+        defensePvECombatPower,
+        attackTotal,
+        defenseTotal,
+        total: attackTotal + defenseTotal,
+    }
+}
+
 export const useCalculateCombatPower = () => {
     const { formatNumber } = useFormatLocale()
 
-    return (characterStats: CharacterBuildStats, isMagicBased?: boolean): CombatPower => {
-        const attackGeneralCombatPower = sumAttackAttributes(characterStats.attack.general, isMagicBased)
-        const attackPvPCombatPower = sumAttackAttributes(characterStats.attack.pvp, isMagicBased)
-        const attackPvECombatPower = sumAttackAttributes(characterStats.attack.pve, isMagicBased)
-        const defenseGeneralCombatPower = sumDefenseAttributes(characterStats.defense.general)
-        const defensePvPCombatPower = sumDefenseAttributes(characterStats.defense.pvp)
-        const defensePvECombatPower = sumDefenseAttributes(characterStats.defense.pve)
-        const attackTotal = attackGeneralCombatPower + attackPvPCombatPower + attackPvECombatPower
-        const defenseTotal = defenseGeneralCombatPower + defensePvPCombatPower + defensePvECombatPower
-
+    return (characterBuild: CharacterBuild, damageMode?: DamageMode): CombatPower => {
+        const result = calculateCombatPower(characterBuild, damageMode)
         return {
             attack: {
                 general: {
-                    formatted: formatNumber(attackGeneralCombatPower),
-                    value: attackGeneralCombatPower,
+                    formatted: formatNumber(result.attackGeneralCombatPower),
+                    value: result.attackGeneralCombatPower,
                 },
                 pvp: {
-                    formatted: formatNumber(attackPvPCombatPower),
-                    value: attackPvPCombatPower,
+                    formatted: formatNumber(result.attackPvPCombatPower),
+                    value: result.attackPvPCombatPower,
                 },
                 pve: {
-                    formatted: formatNumber(attackPvECombatPower),
-                    value: attackPvECombatPower,
+                    formatted: formatNumber(result.attackPvECombatPower),
+                    value: result.attackPvECombatPower,
                 },
                 total: {
-                    formatted: formatNumber(attackTotal),
-                    value: attackTotal,
+                    formatted: formatNumber(result.attackTotal),
+                    value: result.attackTotal,
                 },
             },
             defense: {
                 general: {
-                    formatted: formatNumber(defenseGeneralCombatPower),
-                    value: defenseGeneralCombatPower,
+                    formatted: formatNumber(result.defenseGeneralCombatPower),
+                    value: result.defenseGeneralCombatPower,
                 },
                 pvp: {
-                    formatted: formatNumber(defensePvPCombatPower),
-                    value: defensePvPCombatPower,
+                    formatted: formatNumber(result.defensePvPCombatPower),
+                    value: result.defensePvPCombatPower,
                 },
                 pve: {
-                    formatted: formatNumber(defensePvECombatPower),
-                    value: defensePvECombatPower,
+                    formatted: formatNumber(result.defensePvECombatPower),
+                    value: result.defensePvECombatPower,
                 },
                 total: {
-                    formatted: formatNumber(defenseTotal),
-                    value: defenseTotal,
+                    formatted: formatNumber(result.defenseTotal),
+                    value: result.defenseTotal,
                 },
             },
             total: {
-                formatted: formatNumber(attackTotal + defenseTotal),
-                value: attackTotal + defenseTotal,
+                formatted: formatNumber(result.total),
+                value: result.total,
             },
         }
     }

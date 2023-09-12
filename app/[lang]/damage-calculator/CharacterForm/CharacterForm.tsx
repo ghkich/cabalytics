@@ -36,7 +36,7 @@ export const CharacterForm = ({ buildType }: Props) => {
         <div className="flex flex-col gap-0.5">
             <BuildSelectorHeader buildType={buildType} />
             <div className="flex flex-col">
-                <div className="text-neutral-450 flex h-12 gap-0.5">
+                <div className="flex h-12 gap-0.5 text-neutral-450">
                     {selectedBattleStyleType && (
                         <BattleStyleSelectorTrigger
                             battleStyles={battleStyles}
@@ -44,7 +44,7 @@ export const CharacterForm = ({ buildType }: Props) => {
                             onClick={() => setShowBattleStyleSelector((prev) => !prev)}
                         />
                     )}
-                    <div className="bg-neutral-910 flex w-full flex-col justify-center px-2 py-1">
+                    <div className="flex w-full flex-col justify-center bg-neutral-910 px-2 py-1">
                         {selectedBattleStyleType && (
                             <div className="flex items-center justify-between">
                                 <div className="w-full text-center">

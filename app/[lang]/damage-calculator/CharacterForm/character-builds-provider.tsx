@@ -1,6 +1,5 @@
 'use client'
 import React from 'react'
-import { isBattleStyleMagicBased } from '@/app/data/battleStyles'
 import {
     CharacterBuild,
     CharacterBuildData,
@@ -9,6 +8,14 @@ import {
     initialDefenderBuilds,
 } from '@/app/data/builds'
 import { useCalculateCombatPower } from '@/lib/useCalculateCombatPower'
+
+export type DamageMode = 'pvp' | 'pve'
+
+const getDamageModeByDefender = (defenderBuild?: CharacterBuild): DamageMode | undefined => {
+    if (!defenderBuild) return
+    if (defenderBuild.data.battleStyleType) return 'pvp'
+    return
+}
 
 export type CharacterBuildsContext = {
     builds: CharacterBuild[]
@@ -78,9 +85,9 @@ export const useCharacterBuilds = (buildType?: CharacterBuildType) => {
 
     const combatPower = React.useMemo(() => {
         if (!selectedBuild?.data.stats) return
-        const isMagicBased = isBattleStyleMagicBased(selectedBuild.data.battleStyleType)
-        return calculateCombatPower(selectedBuild.data.stats, isMagicBased)
-    }, [selectedBuild?.data.stats, selectedBuild?.data.battleStyleType, calculateCombatPower])
+        const damageMode = getDamageModeByDefender(selectedDefenderBuild)
+        return calculateCombatPower(selectedBuild, damageMode)
+    }, [selectedBuild, selectedDefenderBuild, calculateCombatPower])
 
     return {
         ...context,
