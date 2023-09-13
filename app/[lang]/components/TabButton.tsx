@@ -6,17 +6,19 @@ export type TabButtonProps = {
     activeClassName?: string
     onClick?: () => void
     className?: string
+    disabled?: boolean
     children: React.ReactNode
 }
 
-export function TabButton({ isActive, activeClassName, onClick, className, children }: TabButtonProps) {
+export function TabButton({ isActive, activeClassName, onClick, className, disabled, children }: TabButtonProps) {
     return (
         <button
             type="button"
             className={cls(
-                'hover:bg-neutral-850 bg-neutral-875 text-neutral-450 w-full p-1 text-xs leading-normal transition-colors duration-200 hover:text-neutral-400',
+                'w-full bg-neutral-875 p-1 text-xs leading-normal text-neutral-450 transition-colors duration-200 hover:bg-neutral-850 hover:text-neutral-400',
                 {
                     [`bg-neutral-825 hover:bg-neutral-825 ${activeClassName} hover:${activeClassName}`]: isActive,
+                    ['pointer-events-none select-none opacity-75']: disabled,
                 },
                 className
             )}

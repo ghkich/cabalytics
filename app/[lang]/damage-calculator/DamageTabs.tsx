@@ -19,12 +19,14 @@ const damageTabs = [
         label: 'BM2',
         icon: faAxeBattle,
         className: 'text-neutral-500',
+        disabled: true,
     },
     {
         id: 'bm3',
         label: 'BM3',
         icon: faSwords,
         className: 'text-neutral-500',
+        disabled: true,
     },
 ]
 
@@ -33,15 +35,15 @@ export const DamageTabs = () => {
 
     return (
         <div
-            className={cls('@container flex w-full flex-col gap-0.5', {
+            className={cls('flex w-full flex-col gap-0.5 @container', {
                 ['pointer-events-none select-none opacity-50 grayscale']: !selectedAttackerBuild?.data.battleStyleType,
             })}
         >
             <div className="flex w-full gap-0.5">
                 {damageTabs.map((mode) => (
-                    <TabButton key={mode.id} isActive={mode.id === 'skills'}>
-                        <div className="p-2.5 uppercase">
-                            <FontAwesomeIcon icon={mode.icon} className={cls('mr-3 text-sm', mode.className)} />
+                    <TabButton key={mode.id} isActive={mode.id === 'skills'} disabled={mode.disabled}>
+                        <div className=" p-2.5 uppercase">
+                            <FontAwesomeIcon icon={mode.icon} className={cls('mr-2 text-sm', mode.className)} />
                             <span>{mode.label}</span>
                         </div>
                     </TabButton>
