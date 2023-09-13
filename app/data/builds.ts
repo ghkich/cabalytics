@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { AttackAttributes, DefenseAttributes } from '@/app/data/attributes'
 import { BattleStyleTypes } from '@/app/data/battleStyles'
 
-const initialAttackAttributes: AttackAttributes = {
+export const initialAttackAttributes: AttackAttributes = {
     attack: 4000,
     magicAttack: 4000,
     attackRate: 6500,
@@ -24,7 +24,7 @@ const initialAttackAttributes: AttackAttributes = {
     cancelIgnorePenetration: 0,
 }
 
-const zeroAttackAttributes: AttackAttributes = {
+export const zeroAttackAttributes: AttackAttributes = {
     attack: 0,
     magicAttack: 0,
     attackRate: 0,
@@ -46,7 +46,7 @@ const zeroAttackAttributes: AttackAttributes = {
     cancelIgnorePenetration: 0,
 }
 
-const initialDefenseAttributes: DefenseAttributes = {
+export const initialDefenseAttributes: DefenseAttributes = {
     hp: 7500,
     defense: 3500,
     defenseRate: 6500,
@@ -63,7 +63,7 @@ const initialDefenseAttributes: DefenseAttributes = {
     finalDamageDown: 0,
 }
 
-const zeroDefenseAttributes: DefenseAttributes = {
+export const zeroDefenseAttributes: DefenseAttributes = {
     hp: 0,
     defense: 0,
     defenseRate: 0,
@@ -106,7 +106,7 @@ export type CharacterBuild = {
     data: CharacterBuildData
 }
 
-const generateCharacterBuild = (data: CharacterBuildData): CharacterBuild => {
+export const generateCharacterBuild = (data: CharacterBuildData): CharacterBuild => {
     return {
         id: uuidv4(),
         data,

@@ -149,7 +149,7 @@ export const getBattleStyles = (lang: Locale): BattleStyle[] =>
         }))
         .sort((a, b) => a.popularity - b.popularity)
 
-export const isBattleStyleMagicBased = (battleStyle?: BattleStyleTypes): boolean => {
-    if (!battleStyle) return false
+export const isBattleStyleMagicBased = (battleStyle?: BattleStyleTypes): boolean | undefined => {
+    if (!battleStyle) return
     return battleStylesData[battleStyle].isMagicBased
 }

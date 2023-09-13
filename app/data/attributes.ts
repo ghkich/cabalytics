@@ -1,3 +1,39 @@
+export type AttributeTypeValue = 'attack' | 'defense'
+export const attributeTypes: { value: AttributeTypeValue; label: string }[] = [
+    {
+        value: 'attack',
+        label: 'ATK',
+    },
+    {
+        value: 'defense',
+        label: 'DEF',
+    },
+]
+export type AttributeCategoryValue = 'general' | 'pvp' | 'pve'
+export const attributeCategories: { value: AttributeCategoryValue; label: { pt: string; en: string } }[] = [
+    {
+        value: 'general',
+        label: {
+            pt: 'Geral',
+            en: 'General',
+        },
+    },
+    {
+        value: 'pvp',
+        label: {
+            pt: 'PVP',
+            en: 'PVP',
+        },
+    },
+    {
+        value: 'pve',
+        label: {
+            pt: 'PVE',
+            en: 'PVE',
+        },
+    },
+]
+
 export type AttackAttributes = {
     attack: number
     magicAttack: number

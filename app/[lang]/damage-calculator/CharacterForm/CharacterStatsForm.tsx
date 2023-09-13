@@ -1,48 +1,21 @@
 import React, { ChangeEvent, useState } from 'react'
 import { cls, getBuildTypeColor } from '@/lib/utils'
 import { TabButton } from '@/app/[lang]/components/TabButton'
-import { AttackAttributes, attackAttributes, DefenseAttributes, defenseAttributes } from '@/app/data/attributes'
+import {
+    AttackAttributes,
+    attackAttributes,
+    attributeCategories,
+    AttributeCategoryValue,
+    attributeTypes,
+    AttributeTypeValue,
+    DefenseAttributes,
+    defenseAttributes,
+} from '@/app/data/attributes'
 import { AttributeInput } from '@/app/[lang]/components/AttributeInput'
 import { useCharacterBuilds } from '@/app/[lang]/damage-calculator/CharacterForm/character-builds-provider'
 import useTranslation from '@/lib/useTranslation'
 import { getBattleStyles } from '@/app/data/battleStyles'
 import { CharacterBuildType } from '@/app/data/builds'
-
-type AttributeTypeValue = 'attack' | 'defense'
-const attributeTypes: { value: AttributeTypeValue; label: string }[] = [
-    {
-        value: 'attack',
-        label: 'ATK',
-    },
-    {
-        value: 'defense',
-        label: 'DEF',
-    },
-]
-type AttributeCategoryValue = 'general' | 'pvp' | 'pve'
-const attributeCategories: { value: AttributeCategoryValue; label: { pt: string; en: string } }[] = [
-    {
-        value: 'general',
-        label: {
-            pt: 'Geral',
-            en: 'General',
-        },
-    },
-    {
-        value: 'pvp',
-        label: {
-            pt: 'PVP',
-            en: 'PVP',
-        },
-    },
-    {
-        value: 'pve',
-        label: {
-            pt: 'PVE',
-            en: 'PVE',
-        },
-    },
-]
 
 type CharacterStatsFormProps = {
     buildType: CharacterBuildType
