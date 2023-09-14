@@ -1,7 +1,11 @@
 {
+  "metadata": {
+    "title": "Calculadora de Dano",
+    "description": "Calculadora de Dano para Cabal Online"
+  },
   "navigation": {
-    "cabalytics": "Cabalytics",
-    "damage_calculator": "Calculadora de Danos",
+    "about": "Sobre",
+    "calculator": "Calculadora",
     "collection_appraiser": "Avaliador de Coleção"
   },
   "placeholders": {

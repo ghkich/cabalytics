@@ -1,15 +1,25 @@
-import { getDictionary } from '@/lib/dictionary'
-import { Locale } from '@/i18n.config'
+'use client'
+import React from 'react'
+import { DamageTabs } from '@/app/[lang]/damage-calculator/DamageTabs'
+import { CharacterBuildsProvider } from '@/app/[lang]/damage-calculator/CharacterForm/character-builds-provider'
+import { CharacterForm } from '@/app/[lang]/damage-calculator/CharacterForm/CharacterForm'
 
-export default async function Home({ params: { lang } }: { params: { lang: Locale } }) {
-    const { navigation } = await getDictionary(lang)
+export default function DamageCalculator() {
     return (
-        <div className="flex max-w-lg flex-col p-4">
-            <h1 className="pb-2 uppercase text-neutral-300">{navigation.cabalytics}</h1>
-            <p className="text-neutral-450 text-sm">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Quisquam, voluptatum.
-                Quisquam,
-            </p>
+        <div className="">
+            <CharacterBuildsProvider>
+                <div className="flex flex-col gap-1.5 md:flex-row">
+                    <div className="animate-slide-in-short min-w-[240px]">
+                        <CharacterForm buildType="attacker" />
+                    </div>
+                    <div className="animate-slide-in-short flex w-full flex-col items-center">
+                        <DamageTabs />
+                    </div>
+                    <div className="animate-slide-in-short min-w-[240px]">
+                        <CharacterForm buildType="defender" />
+                    </div>
+                </div>
+            </CharacterBuildsProvider>
         </div>
     )
 }

@@ -7,18 +7,17 @@ import { Exo_2 } from 'next/font/google'
 const exo2 = Exo_2({ subsets: ['latin'] })
 
 const getRoutes = (lang: Locale) => [
-    { href: `/${lang}`, name: 'cabalytics', isHome: true },
-    { href: `/${lang}/damage-calculator`, name: 'damage_calculator' },
-    { href: `/${lang}/collection-appraiser`, name: 'collection_appraiser' },
+    { href: `/${lang}/about`, name: 'about', isHome: false },
+    // { href: `/${lang}/damage-calculator`, name: 'calculator' },
 ]
 
 export const Navigation = async ({ lang }: { lang: Locale }) => {
     const t = await getTranslations(lang)
     return (
-        <nav className="group flex w-full items-center gap-5 opacity-60 transition-opacity duration-1000 hover:opacity-100 hover:grayscale-0">
+        <nav className="group flex items-center gap-5">
             {getRoutes(lang).map(({ href, name, isHome }) => (
                 <NavigationLink key={href} href={href} className="">
-                    <div className={cls({ [`${exo2.className} translate-y-[-2px] text-[16px]`]: isHome })}>
+                    <div className={cls({ [`${exo2.className} translate-y-[-1px] text-[16px]`]: isHome })}>
                         {t(`navigation.${name}`)}
                     </div>
                 </NavigationLink>
