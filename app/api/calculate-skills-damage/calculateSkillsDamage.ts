@@ -46,7 +46,7 @@ export function calculateSkillsDamage(attacker: Attacker, defender: Defender, sk
     damage.critical = damage.normal * (1 + criticalDamage) * attacker.criticalEffectiveness
 
     // Compute additional attack for the skill
-    const skillAddAttack = skill.data.stats.addAttack * attackReduction
+    const skillAddAttack = skill.data.stats.addAttack + (skill.data.stats.addAttackPerRage || 0) * 10 * attackReduction
 
     // Adjust normal damage
     damage.normal *= 1 + attacker.normalDamageUp / 100

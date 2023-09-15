@@ -881,6 +881,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             stats: {
                 skillAmp: 90,
                 addAttack: 2768,
+                addAttackPerRage: 380,
                 penetration: 50,
             },
             debuffs: {
