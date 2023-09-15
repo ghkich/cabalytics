@@ -13,6 +13,7 @@ export type SkillStats = {
 }
 
 export type SkillDebuffs = {
+    attack?: number
     defense?: number
     ignorePenetration?: number
     resistCriticalRate?: number
@@ -870,7 +871,119 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             },
         }),
     ],
-    [BattleStyleTypes.ForceShielder]: [],
+    [BattleStyleTypes.ForceShielder]: [
+        generateSkill({
+            name: { pt: 'Granada do Escudo', en: 'Shield Grenade' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 3,
+            comboCastingTime: 3,
+            coolDown: 5.1,
+            stats: {
+                skillAmp: 95,
+                addAttack: 2160,
+                criticalDamage: 50,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Destruição Infernal', en: 'Infernal Destruction' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 2.2,
+            comboCastingTime: 2.2,
+            coolDown: 6.5,
+            stats: {
+                skillAmp: 95,
+                addAttack: 1764,
+                criticalDamage: 50,
+            },
+            debuffs: {
+                attack: -40,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Barragem de Escudo', en: 'Shield Barrage' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 4,
+            comboCastingTime: 3.15,
+            coolDown: 4.5,
+            stats: {
+                skillAmp: 80,
+                addAttack: 1659,
+                criticalDamage: 100,
+            },
+            continuousDamage: {
+                value: 67,
+                duration: 8,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Cólera do Escudo', en: 'Shield Wrath' },
+            type: 'attack',
+            rank: SkillRankType.Completer,
+            castingTime: 4,
+            comboCastingTime: 3.25,
+            coolDown: 8.3,
+            stats: {
+                skillAmp: 80,
+                addAttack: 1555,
+            },
+            isAffectedByNumberOfTargets: true,
+        }),
+        generateSkill({
+            name: { pt: 'Explosão do Escudo', en: 'Shield Explosion' },
+            type: 'attack',
+            rank: SkillRankType.GMaster,
+            castingTime: 3.3,
+            comboCastingTime: 2,
+            coolDown: 3.8,
+            stats: {
+                skillAmp: 65,
+                addAttack: 685,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Raio do Escudo Arcano', en: 'Arcane Shield Ray' },
+            type: 'attack',
+            rank: SkillRankType.AMaster,
+            castingTime: 2.5,
+            comboCastingTime: 1.7,
+            coolDown: 3,
+            stats: {
+                skillAmp: 55,
+                addAttack: 452,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Carga de Escudo', en: 'Shield Charge' },
+            type: 'attack',
+            rank: SkillRankType.Expert,
+            castingTime: 1.3,
+            comboCastingTime: 0.8,
+            coolDown: 180,
+            stats: {
+                skillAmp: 10,
+                addAttack: 500,
+                accuracy: 1000,
+            },
+            debuffs: {
+                resistCriticalRate: -21,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Choque Arcano', en: 'Arcane Shock' },
+            type: 'attack',
+            rank: SkillRankType.Expert,
+            castingTime: 1,
+            comboCastingTime: 0.4,
+            coolDown: 26.5,
+            stats: {
+                skillAmp: 20,
+                addAttack: 306,
+            },
+        }),
+    ],
     [BattleStyleTypes.Gladiator]: [
         generateSkill({
             name: { pt: 'Lançamento de Chakram', en: 'Chakram Launch' },
