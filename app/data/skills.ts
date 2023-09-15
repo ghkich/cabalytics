@@ -4,7 +4,9 @@ import { v4 as uuidv4 } from 'uuid'
 export type SkillStats = {
     skillAmp: number
     addAttack: number
+    addAttackPerRage?: number
     attack?: number
+    accuracy?: number
     penetration?: number
     criticalDamage?: number
     ignoreResistSkillAmp?: number
@@ -61,6 +63,7 @@ export type SkillData = {
     duration?: number
     stats: SkillStats
     debuffs?: SkillDebuffs
+    isAffectedByNumberOfTargets?: boolean
     continuousDamage?: {
         value: number
         duration: number
@@ -132,6 +135,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
                 skillAmp: 80,
                 addAttack: 1324,
             },
+            isAffectedByNumberOfTargets: true,
         }),
         generateSkill({
             name: { pt: 'Distorção Gravitacional', en: 'Gravity Distortion' },
@@ -733,6 +737,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
                 skillAmp: 80,
                 addAttack: 1832,
             },
+            isAffectedByNumberOfTargets: true,
         }),
         generateSkill({
             name: { pt: 'Impacto Infernal', en: 'Infernal Impact' },
@@ -865,7 +870,191 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
         }),
     ],
     [BattleStyleTypes.ForceShielder]: [],
-    [BattleStyleTypes.Gladiator]: [],
+    [BattleStyleTypes.Gladiator]: [
+        generateSkill({
+            name: { pt: 'Lançamento de Chakram', en: 'Chakram Launch' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 2.4,
+            comboCastingTime: 2.4,
+            coolDown: 6.6,
+            stats: {
+                skillAmp: 90,
+                addAttack: 2768,
+                penetration: 50,
+            },
+            debuffs: {
+                defense: -40,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Lâmina Ilusória', en: 'Illusionary Blade' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 2.6,
+            comboCastingTime: 2.6,
+            coolDown: 6.6,
+            stats: {
+                skillAmp: 80,
+                addAttack: 2116,
+                addAttackPerRage: 380,
+                penetration: 50,
+            },
+            debuffs: {
+                defense: -40,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Ilusão Momentânea', en: 'Momentary Illusion' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 3.5,
+            comboCastingTime: 3.5,
+            coolDown: 8.2,
+            stats: {
+                skillAmp: 80,
+                addAttack: 1961,
+                addAttackPerRage: 350,
+                penetration: 50,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Lâmina Rubra', en: 'Red Blade' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 3.1,
+            comboCastingTime: 3.1,
+            coolDown: 6.9,
+            stats: {
+                skillAmp: 75,
+                addAttack: 1638,
+                addAttackPerRage: 340,
+                accuracy: 200,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Lâmina Furiosa', en: 'Furious Blade' },
+            type: 'attack',
+            rank: SkillRankType.GMaster,
+            castingTime: 3,
+            comboCastingTime: 3,
+            coolDown: 6.6,
+            isAffectedByNumberOfTargets: true,
+            stats: {
+                skillAmp: 70,
+                addAttack: 1088,
+                addAttackPerRage: 200,
+                accuracy: 200,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Corte Eterno', en: 'Eternal Cut' },
+            type: 'attack',
+            rank: SkillRankType.AMaster,
+            castingTime: 2.2,
+            comboCastingTime: 2.2,
+            coolDown: 2.5,
+            stats: {
+                skillAmp: 60,
+                addAttack: 553,
+                addAttackPerRage: 200,
+                penetration: 10,
+                criticalDamage: 20,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Ataque Lunar', en: 'Lunar Attack' },
+            type: 'attack',
+            rank: SkillRankType.AExpert,
+            castingTime: 1.1,
+            comboCastingTime: 1.1,
+            coolDown: 180,
+            stats: {
+                skillAmp: 10,
+                addAttack: 500,
+                accuracy: 1000,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Investida Mística', en: 'Mystic Enchant' },
+            type: 'attack',
+            rank: SkillRankType.AExpert,
+            castingTime: 1.3,
+            comboCastingTime: 1.3,
+            coolDown: 29.5,
+            stats: {
+                skillAmp: 30,
+                addAttack: 510,
+                addAttackPerRage: 52,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Desaparecer', en: 'Disappear' },
+            type: 'attack',
+            rank: SkillRankType.AExpert,
+            castingTime: 1.1,
+            comboCastingTime: 1.1,
+            coolDown: 1.5,
+            stats: {
+                skillAmp: 55,
+                addAttack: 221,
+                addAttackPerRage: 36,
+                accuracy: 500,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Deslizar Rápida', en: 'Quick Slide' },
+            type: 'attack',
+            rank: SkillRankType.Expert,
+            castingTime: 1,
+            comboCastingTime: 1,
+            coolDown: 1.6,
+            stats: {
+                skillAmp: 20,
+                addAttack: 358,
+                addAttackPerRage: 32,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Corte da Tempestade', en: 'Storm Cut' },
+            type: 'attack',
+            rank: SkillRankType.Expert,
+            castingTime: 2.2,
+            comboCastingTime: 2.2,
+            coolDown: 2.5,
+            stats: {
+                skillAmp: 45,
+                addAttack: 313,
+                addAttackPerRage: 46,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Passo da Escuridão', en: 'Darkness Step' },
+            type: 'attack',
+            rank: SkillRankType.Expert,
+            castingTime: 2,
+            comboCastingTime: 2,
+            coolDown: 3.8,
+            stats: {
+                skillAmp: 45,
+                addAttack: 314,
+                addAttackPerRage: 22,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Caminhos Cruzados', en: 'Cross Paths' },
+            type: 'attack',
+            rank: SkillRankType.Regular,
+            castingTime: 2,
+            comboCastingTime: 2,
+            coolDown: 2.5,
+            stats: {
+                skillAmp: 35,
+                addAttack: 200,
+                addAttackPerRage: 22,
+            },
+        }),
+    ],
     [BattleStyleTypes.ForceGunner]: [],
     [BattleStyleTypes.DarkMage]: [],
 }
