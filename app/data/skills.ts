@@ -167,19 +167,6 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             true
         ),
         generateSkill({
-            name: { pt: 'Disparo Crítico', en: 'Critical Shot' },
-            type: 'attack',
-            rank: SkillRankType.Novice,
-            castingTime: 1.3,
-            comboCastingTime: 1.1,
-            coolDown: 1.8,
-            stats: {
-                skillAmp: 25,
-                addAttack: 147,
-                criticalDamage: 100,
-            },
-        }),
-        generateSkill({
             name: { pt: 'Disparo Sombrio', en: 'Shadow Shot' },
             type: 'attack',
             rank: SkillRankType.AExpert,
@@ -189,6 +176,42 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             stats: {
                 skillAmp: 65,
                 addAttack: 252,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Canhão de Pedra', en: 'Stone Cannon' },
+            type: 'attack',
+            rank: SkillRankType.Expert,
+            castingTime: 1.5,
+            comboCastingTime: 1.25,
+            coolDown: 5.8,
+            stats: {
+                skillAmp: 105,
+                addAttack: 222,
+            },
+        }),
+        generateSkill({
+            name: { pt: "Canhão d'Água", en: 'Aqua Cannon' },
+            type: 'attack',
+            rank: SkillRankType.Expert,
+            castingTime: 1.5,
+            comboCastingTime: 1.25,
+            coolDown: 4.8,
+            stats: {
+                skillAmp: 95,
+                addAttack: 260,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Canhão de Fogo', en: 'Fire Cannon' },
+            type: 'attack',
+            rank: SkillRankType.Expert,
+            castingTime: 1.5,
+            comboCastingTime: 1.25,
+            coolDown: 5.3,
+            stats: {
+                skillAmp: 95,
+                addAttack: 282,
             },
         }),
         generateSkill({
@@ -270,39 +293,16 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             true
         ),
         generateSkill({
-            name: { pt: 'Canhão de Pedra', en: 'Stone Cannon' },
+            name: { pt: 'Disparo Crítico', en: 'Critical Shot' },
             type: 'attack',
-            rank: SkillRankType.Expert,
-            castingTime: 1.5,
-            comboCastingTime: 1.25,
-            coolDown: 5.8,
+            rank: SkillRankType.Novice,
+            castingTime: 1.3,
+            comboCastingTime: 1.1,
+            coolDown: 1.8,
             stats: {
-                skillAmp: 105,
-                addAttack: 222,
-            },
-        }),
-        generateSkill({
-            name: { pt: "Canhão d'Água", en: 'Aqua Cannon' },
-            type: 'attack',
-            rank: SkillRankType.Expert,
-            castingTime: 1.5,
-            comboCastingTime: 1.25,
-            coolDown: 4.8,
-            stats: {
-                skillAmp: 95,
-                addAttack: 260,
-            },
-        }),
-        generateSkill({
-            name: { pt: 'Canhão de Fogo', en: 'Fire Cannon' },
-            type: 'attack',
-            rank: SkillRankType.Expert,
-            castingTime: 1.5,
-            comboCastingTime: 1.25,
-            coolDown: 5.3,
-            stats: {
-                skillAmp: 95,
-                addAttack: 282,
+                skillAmp: 25,
+                addAttack: 147,
+                criticalDamage: 100,
             },
         }),
         generateSkill({
@@ -465,42 +465,6 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             },
         }),
         generateSkill({
-            name: { pt: 'Lança de Terra', en: 'Terra Lance' },
-            type: 'attack',
-            rank: SkillRankType.Regular,
-            castingTime: 1.5,
-            comboCastingTime: 1.05,
-            coolDown: 5.3,
-            stats: {
-                skillAmp: 85,
-                addAttack: 129,
-            },
-        }),
-        generateSkill({
-            name: { pt: 'Lança de Fogo', en: 'Fire Lance' },
-            type: 'attack',
-            rank: SkillRankType.Regular,
-            castingTime: 1.5,
-            comboCastingTime: 1.05,
-            coolDown: 4.9,
-            stats: {
-                skillAmp: 75,
-                addAttack: 173,
-            },
-        }),
-        generateSkill({
-            name: { pt: 'Lança Relampejante', en: 'Lightning Lance' },
-            type: 'attack',
-            rank: SkillRankType.Regular,
-            castingTime: 1.7,
-            comboCastingTime: 1.05,
-            coolDown: 5.8,
-            stats: {
-                skillAmp: 85,
-                addAttack: 179,
-            },
-        }),
-        generateSkill({
             name: { pt: 'Canhão de Pedra', en: 'Stone Cannon' },
             type: 'attack',
             rank: SkillRankType.Expert,
@@ -548,18 +512,57 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
                 addAttack: 285,
             },
         }),
+        generateSkill({
+            name: { pt: 'Lança de Terra', en: 'Terra Lance' },
+            type: 'attack',
+            rank: SkillRankType.Regular,
+            castingTime: 1.5,
+            comboCastingTime: 1.05,
+            coolDown: 5.3,
+            stats: {
+                skillAmp: 85,
+                addAttack: 129,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Lança de Fogo', en: 'Fire Lance' },
+            type: 'attack',
+            rank: SkillRankType.Regular,
+            castingTime: 1.5,
+            comboCastingTime: 1.05,
+            coolDown: 4.9,
+            stats: {
+                skillAmp: 75,
+                addAttack: 173,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Lança Relampejante', en: 'Lightning Lance' },
+            type: 'attack',
+            rank: SkillRankType.Regular,
+            castingTime: 1.7,
+            comboCastingTime: 1.05,
+            coolDown: 5.8,
+            stats: {
+                skillAmp: 85,
+                addAttack: 179,
+            },
+        }),
     ],
     [BattleStyleTypes.Warrior]: [
         generateSkill({
-            name: { pt: 'Tremor da Espada', en: 'Sword Tremor' },
+            name: { pt: 'Esmagador', en: 'Smash' },
             type: 'attack',
             rank: SkillRankType.Transcender,
-            castingTime: 3,
-            comboCastingTime: 3,
-            coolDown: 6.6,
+            castingTime: 2.4,
+            comboCastingTime: 2.4,
+            coolDown: 6.5,
             stats: {
-                skillAmp: 85,
-                addAttack: 2116,
+                skillAmp: 100,
+                addAttack: 2909,
+            },
+            debuffs: {
+                defense: -40,
             },
         }),
         generateSkill({
@@ -575,18 +578,15 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             },
         }),
         generateSkill({
-            name: { pt: 'Esmagador', en: 'Smash' },
+            name: { pt: 'Tremor da Espada', en: 'Sword Tremor' },
             type: 'attack',
             rank: SkillRankType.Transcender,
-            castingTime: 2.4,
-            comboCastingTime: 2.4,
-            coolDown: 6.5,
+            castingTime: 3,
+            comboCastingTime: 3,
+            coolDown: 6.6,
             stats: {
-                skillAmp: 100,
-                addAttack: 2909,
-            },
-            debuffs: {
-                defense: -40,
+                skillAmp: 85,
+                addAttack: 2116,
             },
         }),
         generateSkill({
@@ -674,18 +674,6 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             },
         }),
         generateSkill({
-            name: { pt: 'Desbalancear', en: 'Unbalance' },
-            type: 'attack',
-            rank: SkillRankType.Regular,
-            castingTime: 1.6,
-            comboCastingTime: 0.95,
-            coolDown: 2.1,
-            stats: {
-                skillAmp: 0,
-                addAttack: 185,
-            },
-        }),
-        generateSkill({
             name: { pt: 'Lâmina Crescente', en: 'Crescent Blade' },
             type: 'attack',
             rank: SkillRankType.Regular,
@@ -695,6 +683,18 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             stats: {
                 skillAmp: 35,
                 addAttack: 220,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Desbalancear', en: 'Unbalance' },
+            type: 'attack',
+            rank: SkillRankType.Regular,
+            castingTime: 1.6,
+            comboCastingTime: 0.95,
+            coolDown: 2.1,
+            stats: {
+                skillAmp: 0,
+                addAttack: 185,
             },
         }),
     ],
@@ -827,18 +827,6 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             },
         }),
         generateSkill({
-            name: { pt: 'Desbalancear', en: 'Unbalance' },
-            type: 'attack',
-            rank: SkillRankType.Regular,
-            castingTime: 1.6,
-            comboCastingTime: 0.95,
-            coolDown: 2.1,
-            stats: {
-                skillAmp: 0,
-                addAttack: 185,
-            },
-        }),
-        generateSkill({
             name: { pt: 'Corte Astral', en: 'Astral Cut' },
             type: 'attack',
             rank: SkillRankType.Regular,
@@ -868,6 +856,18 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             continuousDamage: {
                 value: 62,
                 duration: 8,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Desbalancear', en: 'Unbalance' },
+            type: 'attack',
+            rank: SkillRankType.Regular,
+            castingTime: 1.6,
+            comboCastingTime: 0.95,
+            coolDown: 2.1,
+            stats: {
+                skillAmp: 0,
+                addAttack: 185,
             },
         }),
     ],
