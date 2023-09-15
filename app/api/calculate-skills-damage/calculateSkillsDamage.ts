@@ -29,7 +29,7 @@ const getDamageDivisor = (defenderType: Defender['type']) => (defenderType === '
 
 export function calculateSkillsDamage(attacker: Attacker, defender: Defender, skill: Skill) {
     const { ignorePenetration, penetration } = calculatePenetration(attacker, defender, skill)
-    const { damageReduction } = calculateDamageReduction(attacker, defender, skill)
+    const { damageReduction } = calculateDamageReduction(attacker, defender)
     const { skillAmp } = calculateSkillAmplification(attacker, defender, skill)
     const { criticalRate } = calculateCriticalRate(attacker, defender, skill)
     const { criticalDamage } = calculateCriticalDamage(attacker, defender, skill)
