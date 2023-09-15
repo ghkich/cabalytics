@@ -17,6 +17,7 @@ export type SkillDebuffs = {
     ignorePenetration?: number
     resistCriticalRate?: number
     resistCriticalDamage?: number
+    evasion?: number
 }
 
 export const skillTypes = ['attack', 'buff', 'debuff', 'passive'] as const
@@ -1056,6 +1057,166 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             },
         }),
     ],
-    [BattleStyleTypes.ForceGunner]: [],
+    [BattleStyleTypes.ForceGunner]: [
+        generateSkill({
+            name: { pt: 'Corte Mecânico', en: 'Mechanical Cut' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 3.3,
+            comboCastingTime: 3.3,
+            coolDown: 14.3,
+            stats: {
+                skillAmp: 90,
+                addAttack: 3279,
+                penetration: 40,
+                criticalDamage: 30,
+            },
+            debuffs: {
+                evasion: -200,
+            },
+            isAffectedByNumberOfTargets: true,
+        }),
+        generateSkill({
+            name: { pt: 'Bombardeiro Temporal', en: 'Temporal Bomber' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 2.4,
+            comboCastingTime: 2.4,
+            coolDown: 6.8,
+            stats: {
+                skillAmp: 100,
+                addAttack: 2838,
+                penetration: 40,
+                criticalDamage: 30,
+            },
+            debuffs: {
+                evasion: -200,
+            },
+            isAffectedByNumberOfTargets: true,
+        }),
+        generateSkill({
+            name: { pt: 'Vingador', en: 'Avenger' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 3.3,
+            comboCastingTime: 3.3,
+            coolDown: 6.7,
+            stats: {
+                skillAmp: 85,
+                addAttack: 2090,
+                penetration: 40,
+                criticalDamage: 30,
+            },
+            isAffectedByNumberOfTargets: true,
+        }),
+        generateSkill({
+            name: { pt: 'Convocação à Valquíria', en: 'Valkyrie Call' },
+            type: 'attack',
+            rank: SkillRankType.Completer,
+            castingTime: 3.2,
+            comboCastingTime: 3.2,
+            coolDown: 7.5,
+            stats: {
+                skillAmp: 80,
+                addAttack: 1412,
+                penetration: 30,
+                criticalDamage: 20,
+            },
+            isAffectedByNumberOfTargets: true,
+        }),
+        generateSkill({
+            name: { pt: 'Mouse Mk-2', en: 'Mouse Mk-2' },
+            type: 'attack',
+            rank: SkillRankType.Completer,
+            castingTime: 3.3,
+            comboCastingTime: 3.3,
+            coolDown: 5.6,
+            stats: {
+                skillAmp: 80,
+                addAttack: 1455,
+                penetration: 30,
+                criticalDamage: 20,
+            },
+            isAffectedByNumberOfTargets: true,
+        }),
+        generateSkill({
+            name: { pt: 'Tiro de Ampla Cobertura', en: 'Wide Coverage Shot' },
+            type: 'attack',
+            rank: SkillRankType.GMaster,
+            castingTime: 3.7,
+            comboCastingTime: 3.7,
+            coolDown: 9.3,
+            stats: {
+                skillAmp: 80,
+                addAttack: 1452,
+                penetration: 20,
+                criticalDamage: 15,
+            },
+            isAffectedByNumberOfTargets: true,
+        }),
+        generateSkill({
+            name: { pt: 'Bombardeiro Explosivo', en: 'Explosive Bomber' },
+            type: 'attack',
+            rank: SkillRankType.GMaster,
+            castingTime: 3.7,
+            comboCastingTime: 3.7,
+            coolDown: 9.2,
+            stats: {
+                skillAmp: 80,
+                addAttack: 1433,
+                penetration: 20,
+                criticalDamage: 15,
+            },
+            isAffectedByNumberOfTargets: true,
+        }),
+        generateSkill({
+            name: { pt: 'Atira Granada', en: 'Throw Grenade' },
+            type: 'attack',
+            rank: SkillRankType.AMaster,
+            castingTime: 3,
+            comboCastingTime: 3,
+            coolDown: 3.5,
+            stats: {
+                skillAmp: 65,
+                addAttack: 685,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Mísseis do Pôr do Sol', en: 'Sunset Missiles' },
+            type: 'attack',
+            rank: SkillRankType.Master,
+            castingTime: 2.5,
+            comboCastingTime: 2.5,
+            coolDown: 3.3,
+            stats: {
+                skillAmp: 60,
+                addAttack: 662,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Satélite Relâmpago', en: 'Lightning Satellite' },
+            type: 'attack',
+            rank: SkillRankType.AExpert,
+            castingTime: 2.3,
+            comboCastingTime: 2.3,
+            coolDown: 2.6,
+            stats: {
+                skillAmp: 55,
+                addAttack: 612,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Bala de Íon', en: 'Ion Bullet' },
+            type: 'attack',
+            rank: SkillRankType.AExpert,
+            castingTime: 2,
+            comboCastingTime: 2,
+            coolDown: 2.5,
+            stats: {
+                skillAmp: 55,
+                addAttack: 605,
+            },
+        }),
+    ],
     [BattleStyleTypes.DarkMage]: [],
 }
