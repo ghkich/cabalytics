@@ -1,6 +1,15 @@
 import { Skill } from '@/app/data/skills'
 import { BattleStyleTypes } from '@/app/data/battleStyles'
 import { AttackAttributes, DefenseAttributes } from '@/app/data/attributes'
+import {
+    calculateAttackReduction,
+    calculateCriticalDamage,
+    calculateCriticalRate,
+    calculateDamageReduction,
+    calculateFinalDefense,
+    calculatePenetration,
+    calculateSkillAmplification,
+} from '@/app/api/calculate-skills-damage/calculateAttributeFactors'
 
 export type Attacker = {
     battleStyleType: BattleStyleTypes
@@ -19,87 +28,59 @@ export type Defender = {
 const getDamageDivisor = (defenderType: Defender['type']) => (defenderType === 'player' ? 4.688 : 1)
 
 export function calculateSkillsDamage(attacker: Attacker, defender: Defender, skill: Skill) {
-    // Calculate penetration factors
-    const ignorePenetration = Math.max(
-        defender.ignorePenetration + (skill.data.debuffs?.ignorePenetration || 0) - attacker.cancelIgnorePenetration,
-        0
-    )
-    const penetration = Math.max(attacker.penetration + (skill.data.stats.penetration || 0), 0)
+    const { ignorePenetration, penetration } = calculatePenetration(attacker, defender, skill)
+    const { damageReduction } = calculateDamageReduction(attacker, defender, skill)
+    const { skillAmp } = calculateSkillAmplification(attacker, defender, skill)
+    const { criticalRate } = calculateCriticalRate(attacker, defender, skill)
+    const { criticalDamage } = calculateCriticalDamage(attacker, defender, skill)
 
-    // Calculate damage reduction factors
-    const ignoreDamageReduction = Math.max(attacker.ignoreDamageReduction - defender.cancelIgnoreDamageReduction, 0)
-    const damageReduction = Math.max(defender.damageReduction - ignoreDamageReduction, 0)
+    const attackAmplified = attacker.effectiveAttack * (1 + skillAmp)
 
-    // Calculate skill amplification factors
-    const resistSkillAmp = Math.max(
-        defender.effectiveResistSkillAmp -
-            (attacker.ignoreResistSkillAmp + (skill.data.stats.ignoreResistSkillAmp || 0)),
-        0
-    )
-    const skillAmp = Math.max(attacker.effectiveSkillAmp + skill.data.stats.skillAmp / 100 - resistSkillAmp, 0)
+    const finalDefense = calculateFinalDefense(defender, skill, ignorePenetration, penetration)
+    const attackReduction = calculateAttackReduction(defender, skill, finalDefense)
 
-    // Calculate critical damage factors
-    const resistCriticalDamage = Math.max(defender.resistCriticalDamage - attacker.ignoreResistCriticalDamage, 0)
-    const criticalDamage = Math.max(
-        attacker.criticalDamage + (skill.data.stats.criticalDamage || 0) / 100 - resistCriticalDamage,
-        0.25
-    )
+    const damage = { normal: 0, average: 0, critical: 0, averageDps: 0, averageDpsCombo: 0 }
 
-    const DEFENSE_CORRECTION_FACTOR = 85
-
-    // Calculate effective attack
-    const attack = attacker.effectiveAttack * (1 + skillAmp)
-
-    // Calculate final defense
-    let finalDefense = defender.defense + (skill.data.debuffs?.defense || 0)
-    finalDefense += ignorePenetration * defender.penetrationArmorFactor
-    finalDefense -= penetration * defender.penetrationArmorFactor
-    finalDefense = Math.max(finalDefense, 0)
-
-    // Calculate attack reduction
-    const attackReduction = Math.max(
-        1 -
-            finalDefense /
-                (defender.defense + defender.baselineArmor - skill.data.stats.addAttack / DEFENSE_CORRECTION_FACTOR),
-        0
-    )
-
-    const damage = {
-        normal: 0,
-        average: 0,
-        critical: 0,
-        averageDps: 0,
-        averageDpsCombo: 0,
-    }
-
-    damage.normal = attack * attackReduction
+    // Compute the base normal and critical damage
+    damage.normal = attackAmplified * attackReduction
     damage.critical = damage.normal * (1 + criticalDamage) * attacker.criticalEffectiveness
+
+    // Compute additional attack for the skill
     const skillAddAttack = skill.data.stats.addAttack * attackReduction
 
-    damage.normal *= 1 + attacker.normalDamageUp
+    // Adjust normal damage
+    damage.normal *= 1 + attacker.normalDamageUp / 100
     damage.normal += skillAddAttack
     damage.normal -= damageReduction
     damage.normal = Math.max(damage.normal, 0)
     damage.normal += attacker.addDamage
 
+    // Adjust critical damage
     damage.critical += skillAddAttack
     damage.critical -= damageReduction
     damage.critical = Math.max(damage.critical, 0)
     damage.critical += attacker.addDamage
     damage.critical = Math.max(damage.critical, damage.normal)
 
-    damage.normal = damage.normal * (1 + attacker.finalDamageUp) * (1 - defender.finalDamageDown)
+    // Apply final damage multipliers for normal and critical damage
+    const finalDamageMultiplier = (1 + attacker.finalDamageUp / 100) * (1 - defender.finalDamageDown / 100)
+    damage.normal *= finalDamageMultiplier
+    damage.critical *= finalDamageMultiplier
+
+    // Divide by type-specific damage divisor
+    const damageDivisor = getDamageDivisor(defender.type)
+    damage.normal /= damageDivisor
+    damage.critical /= damageDivisor
+
+    // Ensure minimum damage
     damage.normal = Math.max(damage.normal, 1)
-    damage.normal = damage.normal / getDamageDivisor(defender.type)
-
-    damage.critical = damage.critical * (1 + attacker.finalDamageUp) * (1 - defender.finalDamageDown)
     damage.critical = Math.max(damage.critical, 1)
-    damage.critical = damage.critical / getDamageDivisor(defender.type)
 
-    damage.average = damage.normal * (1 - attacker.criticalRate) + damage.critical * attacker.criticalRate
+    // Calculate average damage
+    damage.average = damage.normal * (1 - criticalRate) + damage.critical * criticalRate
 
+    // Calculate DPS
     const continuousDamage = skill.data.continuousDamage?.value || 0
-
     damage.averageDps = damage.average / skill.data.castingTime + continuousDamage
     damage.averageDpsCombo = damage.average / skill.data.comboCastingTime + continuousDamage
 

@@ -25,21 +25,23 @@ export const prepareAttacker = (attackBuild?: CharacterBuild): Attacker | undefi
         battleStyleType,
         criticalEffectiveness: battleStylesData[battleStyleType].criticalEffectiveness,
         effectiveAttack: getFinalAttackAttributeValue(buildStats, isAttackerMagicBased ? 'magicAttack' : 'attack'),
-        criticalDamage: getFinalAttackAttributeValue(buildStats, 'criticalDamage') / 100,
-        criticalRate: getFinalAttackAttributeValue(buildStats, 'criticalRate') / 100,
-        effectiveSkillAmp:
-            getFinalAttackAttributeValue(buildStats, isAttackerMagicBased ? 'magicSkillAmp' : 'swordSkillAmp') / 100,
+        criticalDamage: getFinalAttackAttributeValue(buildStats, 'criticalDamage'),
+        criticalRate: getFinalAttackAttributeValue(buildStats, 'criticalRate'),
+        effectiveSkillAmp: getFinalAttackAttributeValue(
+            buildStats,
+            isAttackerMagicBased ? 'magicSkillAmp' : 'swordSkillAmp'
+        ),
         penetration: getFinalAttackAttributeValue(buildStats, 'penetration'),
         addDamage: getFinalAttackAttributeValue(buildStats, 'addDamage'),
-        finalDamageUp: getFinalAttackAttributeValue(buildStats, 'finalDamageUp') / 100,
+        finalDamageUp: getFinalAttackAttributeValue(buildStats, 'finalDamageUp'),
         ignoreDamageReduction: getFinalAttackAttributeValue(buildStats, 'ignoreDamageReduction'),
-        ignoreResistCriticalDamage: getFinalAttackAttributeValue(buildStats, 'ignoreResistCriticalDamage') / 100,
-        ignoreResistCriticalRate: getFinalAttackAttributeValue(buildStats, 'ignoreResistCriticalRate') / 100,
-        ignoreResistSkillAmp: getFinalAttackAttributeValue(buildStats, 'ignoreResistSkillAmp') / 100,
-        normalDamageUp: getFinalAttackAttributeValue(buildStats, 'normalDamageUp') / 100,
+        ignoreResistCriticalDamage: getFinalAttackAttributeValue(buildStats, 'ignoreResistCriticalDamage'),
+        ignoreResistCriticalRate: getFinalAttackAttributeValue(buildStats, 'ignoreResistCriticalRate'),
+        ignoreResistSkillAmp: getFinalAttackAttributeValue(buildStats, 'ignoreResistSkillAmp'),
+        normalDamageUp: getFinalAttackAttributeValue(buildStats, 'normalDamageUp'),
         cancelIgnorePenetration: getFinalAttackAttributeValue(buildStats, 'cancelIgnorePenetration'),
-        attackRate: getFinalAttackAttributeValue(buildStats, 'attackRate') / 100,
-        accuracy: getFinalAttackAttributeValue(buildStats, 'accuracy') / 100,
+        attackRate: getFinalAttackAttributeValue(buildStats, 'attackRate'),
+        accuracy: getFinalAttackAttributeValue(buildStats, 'accuracy'),
         minimumDamage: getFinalAttackAttributeValue(buildStats, 'minimumDamage'),
         ignoreEvasion: getFinalAttackAttributeValue(buildStats, 'ignoreEvasion'),
     }
@@ -70,20 +72,19 @@ export const prepareDefender = (defenseBuild?: CharacterBuild, attackBuild?: Cha
         baselineArmor: battleStylesData[battleStyleType].baselineArmor,
         hp: getFinalDefenseAttributeValue(buildStats, 'hp'),
         defense: getFinalDefenseAttributeValue(buildStats, 'defense'),
-        defenseRate: getFinalDefenseAttributeValue(buildStats, 'defenseRate') / 100,
-        evasion: getFinalDefenseAttributeValue(buildStats, 'evasion') / 100,
+        defenseRate: getFinalDefenseAttributeValue(buildStats, 'defenseRate'),
+        evasion: getFinalDefenseAttributeValue(buildStats, 'evasion'),
         damageReduction: getFinalDefenseAttributeValue(buildStats, 'damageReduction'),
-        resistCriticalRate: getFinalDefenseAttributeValue(buildStats, 'resistCriticalRate') / 100,
-        resistCriticalDamage: getFinalDefenseAttributeValue(buildStats, 'resistCriticalDamage') / 100,
-        effectiveResistSkillAmp:
-            getFinalDefenseAttributeValue(
-                buildStats,
-                isAttackerMagicBased ? 'resistMagicSkillAmp' : 'resistSwordSkillAmp'
-            ) / 100,
+        resistCriticalRate: getFinalDefenseAttributeValue(buildStats, 'resistCriticalRate'),
+        resistCriticalDamage: getFinalDefenseAttributeValue(buildStats, 'resistCriticalDamage'),
+        effectiveResistSkillAmp: getFinalDefenseAttributeValue(
+            buildStats,
+            isAttackerMagicBased ? 'resistMagicSkillAmp' : 'resistSwordSkillAmp'
+        ),
         ignorePenetration: getFinalDefenseAttributeValue(buildStats, 'ignorePenetration'),
         ignoreAccuracy: getFinalDefenseAttributeValue(buildStats, 'ignoreAccuracy'),
         cancelIgnoreDamageReduction: getFinalDefenseAttributeValue(buildStats, 'cancelIgnoreDamageReduction'),
         cancelIgnoreEvasion: getFinalDefenseAttributeValue(buildStats, 'cancelIgnoreEvasion'),
-        finalDamageDown: getFinalDefenseAttributeValue(buildStats, 'finalDamageDown') / 100,
+        finalDamageDown: getFinalDefenseAttributeValue(buildStats, 'finalDamageDown'),
     }
 }
