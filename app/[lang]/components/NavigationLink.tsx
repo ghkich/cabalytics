@@ -15,7 +15,7 @@ export function NavigationLink({ href, className, goBackText, goBackHref, childr
             className={cls(
                 'group relative px-2 text-xs text-neutral-500 transition-colors duration-200 hover:text-neutral-400',
                 {
-                    'text-neutral-300 hover:text-neutral-300': isActive,
+                    // 'text-neutral-300 hover:text-neutral-300': isActive,
                 },
                 className
             )}

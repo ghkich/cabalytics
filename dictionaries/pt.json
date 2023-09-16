@@ -4,7 +4,7 @@
     "description": "Calculadora de Dano para Cabal Online"
   },
   "navigation": {
-    "about": "Sobre",
+    "about": "Sobre o projeto",
     "about_go_back": "Voltar para a calculadora",
     "calculator": "Calculadora",
     "collection_appraiser": "Avaliador de Coleção"

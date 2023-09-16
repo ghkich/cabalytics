@@ -4,7 +4,7 @@
     "description": "Damage Calculator for Cabal Online"
   },
   "navigation": {
-    "about": "About",
+    "about": "About the project",
     "about_go_back": "Go Back to Calculator",
     "calculator": "Calculator",
     "collection_appraiser": "Collection Appraiser"
@@ -49,7 +49,7 @@
     "side_note": "Please note that the current version of Cabalc is in active development, and some features are not yet fully implemented.",
     "side_note_2": "It is likely that you may encounter bugs or receive inaccurate results.",
     "help_text": "If you're interested in contributing, whether through testing, providing feedback, reporting bugs, or offering suggestions, please feel free to reach out to me using any of the contact options below:",
-    "credits": "I extend my gratitude to everyone who has assisted or is currently assisting in any capacity to make this app a reality:",
+    "credits": "I extend my gratitude to everyone who has assisted or is currently assisting in any capacity to make this app better:",
     "credits_jota": "For assisting me with the testing",
     "credits_wormy": "For all the valuable information I gathered from your blog and for making the Combat Power calculation formula available:"
   }
