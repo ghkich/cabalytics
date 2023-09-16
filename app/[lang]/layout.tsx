@@ -34,7 +34,7 @@ export default function RootLayout({ children, params }: { children: React.React
         <html lang={params.lang}>
             <LanguageProvider language={params.lang}>
                 <body className={inter.className}>
-                    <header>
+                    <header className="relative z-50">
                         <div className="bg-neutral-910">
                             <div className="mx-auto flex max-w-5xl items-center justify-between gap-5 px-3 lg:px-0">
                                 <div className="flex shrink-0 items-center gap-2">
@@ -58,7 +58,7 @@ export default function RootLayout({ children, params }: { children: React.React
                         </div>
                     </header>
                     <main className={styles.main}>
-                        <div className="mx-auto max-w-5xl p-1.5">{children}</div>
+                        <div className="mx-auto max-w-5xl px-1.5">{children}</div>
                     </main>
                 </body>
             </LanguageProvider>

@@ -16,7 +16,13 @@ export const Navigation = async ({ lang }: { lang: Locale }) => {
     return (
         <nav className="group flex items-center gap-5">
             {getRoutes(lang).map(({ href, name, isHome }) => (
-                <NavigationLink key={href} href={href} className="">
+                <NavigationLink
+                    key={href}
+                    href={href}
+                    className=""
+                    goBackText={t(`navigation.${name}_go_back`)}
+                    goBackHref={`/${lang}/`}
+                >
                     <div className={cls({ [`${exo2.className} translate-y-[-1px] text-[16px]`]: isHome })}>
                         {t(`navigation.${name}`)}
                     </div>

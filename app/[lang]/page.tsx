@@ -6,16 +6,16 @@ import { CharacterForm } from '@/app/[lang]/damage-calculator/CharacterForm/Char
 
 export default function DamageCalculator() {
     return (
-        <div className="">
+        <div className="pt-1.5">
             <CharacterBuildsProvider>
                 <div className="flex flex-col gap-1.5 md:flex-row">
-                    <div className="animate-slide-in-short min-w-[240px]">
+                    <div className="min-w-[240px] animate-slide-in-short">
                         <CharacterForm buildType="attacker" />
                     </div>
-                    <div className="animate-slide-in-short flex w-full flex-col items-center">
+                    <div className="flex w-full animate-slide-in-short flex-col items-center">
                         <DamageTabs />
                     </div>
-                    <div className="animate-slide-in-short min-w-[240px]">
+                    <div className="min-w-[240px] animate-slide-in-short">
                         <CharacterForm buildType="defender" />
                     </div>
                 </div>

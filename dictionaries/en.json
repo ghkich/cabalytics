@@ -5,6 +5,7 @@
   },
   "navigation": {
     "about": "About",
+    "about_go_back": "Go Back to Calculator",
     "calculator": "Calculator",
     "collection_appraiser": "Collection Appraiser"
   },
@@ -34,5 +35,22 @@
     "normal": "Normal",
     "critical": "Critical",
     "continuous": "Cont."
+  },
+  "about": {
+    "hello": "Hello! I'm StarrK, the creator of Cabalc",
+    "what_is": "Cabalc is a specialized damage calculator for Cabal Online, created to assist players in making well-informed decisions on equipment selection and where to invest their resources.",
+    "history_paragraph_1": "I recently returned to Cabal Online after an almost 12-year break and felt excited to pick up this project again. It was one of my first app creations and it's where I originally discovered my passion for web development.",
+    "history_paragraph_2": "I paused work on Cabalc when ESTsoft introduced a new Episode that significantly altered the game's damage formulas. I did try to adapt to these changes at the time, but as I was no longer actively playing Cabal, the project went on the back burner.",
+    "history_paragraph_3": "While Combat Power is now a reliable metric for gauging a character's damage capabilities, it lacks the granularity needed for specific in-game scenarios. My keen interest in dissecting intricate game mechanics has spurred me to continue my quest for pinpointing the game's exact damage formulas.",
+    "history_paragraph_4": "Though I haven't fully deciphered the game's damage algorithms, I'm pleased with the progress to date. I've conducted comprehensive tests with the FA, WI, and WA classes, and aim to expand my research to include other classes and in-game contexts soon.",
+    "history_paragraph_5": "I welcome contributions in any form, be it through testing, offering feedback, or suggesting enhancements. If you'd like to get involved or report a bug, don't hesitate to reach out via any of my social media channels.",
+    "history_paragraph_6": "Thank you for your interest, and I sincerely hope that Cabalc proves useful to you. Wishing you an excellent gaming experience!",
+    "footer_note": "Please note that this app is a fan-created project and has no official ties or endorsements from ESTsoft or Cabal Online. It was developed by an enthusiast of the game, expressly for the gaming community.",
+    "side_note": "Please note that the current version of Cabalc is in active development, and some features are not yet fully implemented.",
+    "side_note_2": "It is likely that you may encounter bugs or receive inaccurate results.",
+    "help_text": "If you're interested in contributing, whether through testing, providing feedback, reporting bugs, or offering suggestions, please feel free to reach out to me using any of the contact options below:",
+    "credits": "I extend my gratitude to everyone who has assisted or is currently assisting in any capacity to make this app a reality:",
+    "credits_jota": "For assisting me with the testing",
+    "credits_wormy": "For all the valuable information I gathered from your blog and for making the Combat Power calculation formula available:"
   }
 }
