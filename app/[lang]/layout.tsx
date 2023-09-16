@@ -10,6 +10,7 @@ import { getDictionary } from '@/lib/dictionary'
 import { cls } from '@/lib/utils'
 import { NavigationLink } from '@/app/[lang]/components/NavigationLink'
 import { Navigation } from '@/app/[lang]/components/Navigation'
+import Script from 'next/script'
 
 config.autoAddCss = false
 
@@ -32,6 +33,20 @@ export async function generateMetadata({ params: { lang } }: { params: { lang: L
 export default function RootLayout({ children, params }: { children: React.ReactNode; params: { lang: Locale } }) {
     return (
         <html lang={params.lang}>
+            <Script
+                strategy="lazyOnload"
+                src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+            />
+            <Script id="google-analytics-script" strategy="lazyOnload">
+                {`
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+                    gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+                    page_path: window.location.pathname,
+                    });
+                `}
+            </Script>
             <LanguageProvider language={params.lang}>
                 <body className={inter.className}>
                     <header className="relative z-50">
