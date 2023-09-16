@@ -53,7 +53,10 @@ export default function RootLayout({ children, params }: { children: React.React
                         <div className="bg-neutral-910">
                             <div className="mx-auto flex max-w-5xl items-center justify-between gap-5 px-3 lg:px-0">
                                 <div className="flex shrink-0 items-center gap-2">
-                                    <NavigationLink href={`/${params.lang}`} className="flex items-center gap-2 py-2.5">
+                                    <NavigationLink
+                                        href={`/${params.lang}`}
+                                        className="flex items-center gap-2 py-4 md:py-2.5"
+                                    >
                                         <h1 className={cls(exo2.className, 'text-sm uppercase text-neutral-400')}>
                                             Cabalc <span className="text-neutral-600">V5</span>
                                         </h1>

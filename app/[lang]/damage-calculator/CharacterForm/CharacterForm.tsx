@@ -36,7 +36,7 @@ export const CharacterForm = ({ buildType }: Props) => {
         <div className="flex flex-col gap-0.5">
             <BuildSelectorHeader buildType={buildType} />
             <div className="flex flex-col">
-                <div className="flex h-12 gap-0.5 text-neutral-450">
+                <div className="flex h-16 gap-0.5 text-neutral-450 md:h-12">
                     {selectedBattleStyleType && (
                         <BattleStyleSelectorTrigger
                             battleStyles={battleStyles}
@@ -48,18 +48,20 @@ export const CharacterForm = ({ buildType }: Props) => {
                         {selectedBattleStyleType && (
                             <div className="flex items-center justify-between">
                                 <div className="w-full text-center">
-                                    <div className="text-[10px] font-light">Combat Power</div>
-                                    <div className="text-[11px] text-orange-200">{combatPower?.total.formatted}</div>
+                                    <div className="text-[12px] font-light md:text-[10px]">Combat Power</div>
+                                    <div className="text-[13px] text-orange-200 md:text-[11px]">
+                                        {combatPower?.total.formatted}
+                                    </div>
                                 </div>
                             </div>
                         )}
                         {!selectedBattleStyleType && (
-                            <div className="text-center text-[10px] font-light text-neutral-400">
+                            <div className="text-center text-[12px] font-light text-neutral-400 md:text-[10px]">
                                 {t(`phrases.select_a`)} <b className="font-semibold">{t(`terms.battle_style`)}</b>
                             </div>
                         )}
                     </div>
-                    {selectedBattleStyleType && <div className="w-[66px] shrink-0 bg-neutral-900"></div>}
+                    {selectedBattleStyleType && <div className="w-[98px] shrink-0 bg-neutral-900 md:w-[66px]"></div>}
                 </div>
                 <BattleStyleSelector
                     battleStyles={battleStyles}

@@ -33,7 +33,7 @@ const BuildSelectorHeader = ({ buildType }: Props) => {
                         isActive={build.id === selectedBuild?.id}
                         onClick={() => handleSelectBuildId(build.id)}
                         activeClassName={buildTypeColor}
-                        className="w-8"
+                        className="w-12 p-2.5 md:w-8"
                     >
                         {index + 1}
                     </TabButton>
@@ -41,9 +41,9 @@ const BuildSelectorHeader = ({ buildType }: Props) => {
             </div>
             <div
                 className={cls(
-                    'bg-neutral-875 text-neutral-450 flex w-full items-center justify-center py-2 text-center text-[10px] uppercase transition-all duration-200',
+                    'flex w-full items-center justify-center bg-neutral-875 py-2 text-center text-[12px] uppercase text-neutral-450 transition-all duration-200 md:text-[10px]',
                     {
-                        [`text-[11px] ${buildTypeColor}`]: !selectedBuild?.data.battleStyleType,
+                        [`text-[13px] md:text-[11px] ${buildTypeColor}`]: !selectedBuild?.data.battleStyleType,
                     }
                 )}
             >
@@ -56,7 +56,7 @@ const BuildSelectorHeader = ({ buildType }: Props) => {
                         isActive={build.id === selectedBuild?.id}
                         onClick={() => handleSelectBuildId(build.id)}
                         activeClassName={buildTypeColor}
-                        className="w-8"
+                        className="w-12 p-2.5 md:w-8"
                     >
                         {index + middleIndex + 1}
                     </TabButton>

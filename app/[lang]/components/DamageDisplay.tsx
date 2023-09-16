@@ -24,9 +24,9 @@ export const DamageDisplay = ({ header, value, loading, className }: Props) => {
                 className
             )}
         >
-            {header && <div className="whitespace-nowrap text-[9px] text-neutral-600">{header}</div>}
+            {header && <div className="whitespace-nowrap text-[11px] text-neutral-600 md:text-[9px]">{header}</div>}
             <div
-                className={cls(`text-sm font-normal`, {
+                className={cls(`text-[16px] font-normal md:text-sm`, {
                     'animate-pulse': undefinedOrLoading,
                 })}
             >

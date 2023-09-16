@@ -21,7 +21,7 @@ const BattleStyleSelector: React.FC<BattleStyleSelectorProps> = ({
     return (
         <div
             className={cls('transition-max-height max-h-0 overflow-hidden duration-300 ease-in-out', {
-                'max-h-[120px]': isOpen,
+                'max-h-[150px] md:max-h-[120px]': isOpen,
             })}
         >
             <div className="grid grid-cols-3 gap-x-0.5">
@@ -30,7 +30,7 @@ const BattleStyleSelector: React.FC<BattleStyleSelectorProps> = ({
                         type="button"
                         key={`select-battle-style-${battleStyle.type}`}
                         className={cls(
-                            'hover:bg-neutral-825 bg-neutral-875 mt-0.5 flex cursor-pointer flex-col items-center justify-center gap-1 px-0.5 py-2  text-neutral-400 transition-all duration-200 hover:opacity-100',
+                            'mt-0.5 flex cursor-pointer flex-col items-center justify-center gap-1 bg-neutral-875 px-0.5 py-3 text-neutral-400 transition-all  duration-200 hover:bg-neutral-825 hover:opacity-100 md:py-2',
                             {
                                 [`bg-neutral-825 ${activeClassName} opacity-100`]:
                                     selectedBattleStyleType === battleStyle.type,
@@ -42,10 +42,10 @@ const BattleStyleSelector: React.FC<BattleStyleSelectorProps> = ({
                             <Image
                                 src={battleStyle.icon}
                                 alt={battleStyle.description}
-                                className="opacity-90 transition-all duration-200"
+                                className="w-[20px] opacity-90 transition-all duration-200 md:w-[18px]"
                                 width={20}
                             />
-                            <div className="text-xs">{battleStyle.acronym}</div>
+                            <div className="text-sm md:text-xs">{battleStyle.acronym}</div>
                         </div>
                     </button>
                 ))}

@@ -48,11 +48,11 @@ export const AttributeInput = ({ onChange, name, label, value, min, max }: Props
     }
 
     return (
-        <div className="group relative flex w-full flex-col items-center gap-1 bg-neutral-900 pl-2 text-xs transition-all duration-200 hover:py-2.5">
+        <div className="group relative flex w-full flex-col items-center gap-1 bg-neutral-900 py-2 pl-2 text-[16px] transition-all duration-200 hover:py-5 md:py-[1px] md:text-xs md:hover:py-2.5">
             <div className="flex w-full items-center gap-1">
                 <label
                     htmlFor={name}
-                    className="text-neutral-450 w-full whitespace-nowrap group-hover:text-neutral-200"
+                    className="w-full whitespace-nowrap text-neutral-450 group-hover:text-neutral-200"
                 >
                     {label}
                 </label>
@@ -65,7 +65,7 @@ export const AttributeInput = ({ onChange, name, label, value, min, max }: Props
                         value={value}
                         onChange={handleChange}
                         className={cls(
-                            'w-[75px] bg-transparent py-1 pr-2 text-right text-neutral-400 outline-none transition-all duration-200 group-hover:pr-6 group-hover:text-sm group-hover:text-neutral-200',
+                            'w-[100px] bg-transparent py-1 pr-2 text-right text-neutral-400 outline-none transition-all duration-200 group-hover:pr-12 group-hover:text-[18px] group-hover:text-neutral-200 md:w-[75px] md:group-hover:pr-6 md:group-hover:text-sm',
                             getClassNameByAttributeName(name)
                         )}
                     />
@@ -74,22 +74,22 @@ export const AttributeInput = ({ onChange, name, label, value, min, max }: Props
                     <button
                         tabIndex={-1}
                         type="button"
-                        className="bg-neutral-850 absolute right-0 top-0 z-10 flex h-6 w-5 items-center justify-center text-neutral-200 opacity-0 transition-all duration-200 group-hover:opacity-100"
+                        className="absolute right-0 top-0 z-10 flex h-[36px] w-10 items-center justify-center bg-neutral-850 text-neutral-200 opacity-0 transition-all duration-200 group-hover:opacity-100 md:h-[22px] md:w-5"
                         onClick={() => handleChange(undefined, 1)}
                     >
-                        <FontAwesomeIcon icon={faCaretUp} />
+                        <FontAwesomeIcon icon={faCaretUp} className="text-lg md:text-xs" />
                     </button>
                     <button
                         tabIndex={-1}
                         type="button"
-                        className="bg-neutral-850 absolute bottom-0 right-0 z-10 flex h-6 w-5 items-center justify-center text-neutral-200 opacity-0 transition-all duration-200 group-hover:opacity-100"
+                        className="absolute bottom-0 right-0 z-10 flex h-[36px] w-10 items-center justify-center bg-neutral-850 text-neutral-200 opacity-0 transition-all duration-200 group-hover:opacity-100 md:h-[22px] md:w-5"
                         onClick={() => handleChange(undefined, -1)}
                     >
                         <FontAwesomeIcon icon={faCaretDown} />
                     </button>
                 </div>
             </div>
-            <div className="absolute bottom-0 left-1 right-20 top-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+            <div className="absolute bottom-0 left-1 right-28 top-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100 md:right-20">
                 <RangeSlider
                     tabIndex={-1}
                     id={`${name}-slider`}

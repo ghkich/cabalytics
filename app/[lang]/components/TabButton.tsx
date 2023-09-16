@@ -15,7 +15,7 @@ export function TabButton({ isActive, activeClassName, onClick, className, disab
         <button
             type="button"
             className={cls(
-                'w-full bg-neutral-875 p-1 text-xs leading-normal text-neutral-450 transition-colors duration-200 hover:bg-neutral-850 hover:text-neutral-400',
+                'w-full bg-neutral-875 p-2 text-sm leading-normal text-neutral-450 transition-colors duration-200 hover:bg-neutral-850 hover:text-neutral-400 md:p-1 md:text-xs',
                 {
                     [`bg-neutral-825 hover:bg-neutral-825 ${activeClassName} hover:${activeClassName}`]: isActive,
                     ['pointer-events-none select-none opacity-75']: disabled,

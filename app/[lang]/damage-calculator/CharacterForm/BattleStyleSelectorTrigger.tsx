@@ -18,9 +18,8 @@ const BattleStyleSelectorTrigger: React.FC<BattleStyleSelectorProps> = ({
         <button
             type="button"
             onClick={onClick}
-            className="bg-neutral-875 hover:bg-neutral-825 relative flex h-12 w-[66px] shrink-0 items-center justify-center overflow-hidden transition-colors duration-200 active:bg-neutral-900"
+            className="relative flex h-16 w-[98px] shrink-0 items-center justify-center overflow-hidden bg-neutral-875 transition-colors duration-200 hover:bg-neutral-825 active:bg-neutral-900 md:h-12 md:w-[66px]"
         >
-            <div className="absolute h-8 w-8 rounded-full bg-neutral-100 bg-opacity-5 blur"></div>
             {battleStyles.map((battleStyle) => {
                 return (
                     <Image
@@ -28,7 +27,7 @@ const BattleStyleSelectorTrigger: React.FC<BattleStyleSelectorProps> = ({
                         src={battleStyle.icon}
                         alt={battleStyle.description}
                         loading="eager"
-                        className={cls('animate-spin-selection absolute opacity-0', {
+                        className={cls('absolute w-[45px] animate-spin-selection opacity-0 md:w-[32px]', {
                             'opacity-100': selectedBattleStyleType === battleStyle.type,
                         })}
                         width={32}

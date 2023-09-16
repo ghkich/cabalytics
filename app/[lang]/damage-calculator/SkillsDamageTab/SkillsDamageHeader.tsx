@@ -64,7 +64,7 @@ export const SkillsDamageHeader = ({
                 <ToggleButton isActive={isComboActive} activeClassName={'text-emerald-400'} onClick={onToggleCombo}>
                     Combo {isComboActive ? 'On' : 'Off'}
                 </ToggleButton>
-                <div className="flex items-center gap-1 text-xs text-neutral-450">
+                <div className="flex items-center gap-1 text-[13px] text-neutral-450 md:text-xs">
                     <span className={cls('text-neutral-300', { ['text-emerald-300']: isComboActive })}>
                         {sameBattleStyleSkills.length}
                     </span>{' '}

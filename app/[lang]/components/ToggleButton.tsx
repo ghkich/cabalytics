@@ -14,9 +14,9 @@ export function ToggleButton({ isActive, activeClassName, onClick, className, ch
         <button
             type="button"
             className={cls(
-                'bg-neutral-850 text-neutral-450 whitespace-nowrap border border-neutral-800 px-4 py-1.5 text-xs transition-colors duration-200 hover:text-neutral-300',
+                'whitespace-nowrap border border-neutral-800 bg-neutral-850 px-4 py-2.5 text-[12px] text-neutral-450 transition-colors duration-200 hover:text-neutral-300 md:py-1.5',
                 {
-                    [`bg-neutral-825 border-neutral-100 border-opacity-5 ${activeClassName} hover:${activeClassName}`]:
+                    [`border-neutral-100 border-opacity-5 bg-neutral-825 ${activeClassName} hover:${activeClassName}`]:
                         isActive,
                 },
                 className

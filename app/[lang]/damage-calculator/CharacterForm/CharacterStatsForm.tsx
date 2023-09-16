@@ -73,8 +73,8 @@ export default function CharacterStatsForm({ buildType, disabled }: CharacterSta
                         activeClassName={buildTypeColor}
                         onClick={() => setSelectedAttributeType(attributeType.value)}
                     >
-                        <div className="text-[12px]">{attributeType.label}</div>
-                        <div className="text-[9px] font-light text-neutral-500 text-opacity-75">
+                        <div className="text-[14px] md:text-[12px]">{attributeType.label}</div>
+                        <div className="text-[11px] font-light text-neutral-500 text-opacity-75 md:text-[9px]">
                             {combatPower?.[attributeType.value].total.formatted}
                         </div>
                     </TabButton>
@@ -88,8 +88,8 @@ export default function CharacterStatsForm({ buildType, disabled }: CharacterSta
                         activeClassName={buildTypeColor}
                         onClick={() => setSelectedAttributeCategory(attributeCategory.value)}
                     >
-                        <div className="text-[11px]">{attributeCategory.label[lang]}</div>
-                        <div className="text-[9px] font-light text-neutral-500 text-opacity-75">
+                        <div className="text-[13px] md:text-[11px]">{attributeCategory.label[lang]}</div>
+                        <div className="text-[11px] font-light text-neutral-500 text-opacity-75 md:text-[9px]">
                             {combatPower?.[selectedAttributeType][attributeCategory.value].formatted}
                         </div>
                     </TabButton>

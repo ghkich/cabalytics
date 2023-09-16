@@ -40,7 +40,7 @@ export const SkillsDamageListItem = ({
             aria-checked={isSelected}
             onClick={() => onClick(skill.id)}
             className={cls(
-                `transition-max-height flex max-h-[60px] w-full animate-slide-in-long cursor-pointer items-center bg-neutral-875 text-neutral-400 transition-all duration-200 hover:bg-neutral-850 hover:text-neutral-400 active:bg-neutral-910`,
+                `transition-max-height flex max-h-[60px] w-full animate-slide-in-long cursor-pointer items-center bg-neutral-875 text-neutral-400 transition-all duration-200 hover:bg-neutral-850 hover:text-neutral-400 active:bg-neutral-910 `,
                 {
                     'bg-neutral-825 text-neutral-300 hover:bg-neutral-825 hover:text-neutral-200': isSelected,
                     ['pointer-events-none max-h-0 !opacity-0']: isHidden && !isSelected,
@@ -50,15 +50,15 @@ export const SkillsDamageListItem = ({
             )}
             style={style}
         >
-            <div className="w-16 border-r border-neutral-700 border-opacity-50 text-center">
+            <div className="w-12 border-r border-neutral-700 border-opacity-50 text-center md:w-14">
                 <FontAwesomeIcon
                     icon={isSelected ? faCircleCheck : faCircle}
-                    className={cls(`text-sm text-neutral-700`, {
+                    className={cls(`text-[16px] text-neutral-700 md:text-sm`, {
                         'text-emerald-300': isSelected,
                     })}
                 />
             </div>
-            <div className="flex w-full px-4 py-3">
+            <div className="flex w-full items-center px-4 py-3">
                 <div className="w-full">
                     <h2 className="text-[13px]">{skill.data.name[lang]}</h2>
                     <div className="flex gap-1.5 text-[10px] text-neutral-500 text-opacity-75">
@@ -72,7 +72,7 @@ export const SkillsDamageListItem = ({
                                 {isComboActive ? skill.data.comboCastingTime : skill.data.castingTime}s
                             </span>
                         </div>
-                        <div>
+                        <div className="hidden md:inline">
                             [ {skill.data.stats.skillAmp.toFixed()}% / +{skill.data.stats.addAttack} ]
                         </div>
                     </div>

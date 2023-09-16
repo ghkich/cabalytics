@@ -73,7 +73,7 @@ export default function SkillsDamageTab() {
                         key={skillRank.type}
                         onClick={() => handleToggleSkillRankType(skillRank.type)}
                         isActive={selectedSkillRankTypes.includes(skillRank.type)}
-                        className="truncate border-none px-2 text-[11px]"
+                        className="truncate border-none px-2 py-3 text-[12px] md:text-[11px]"
                         activeClassName="text-emerald-300"
                     >
                         {skillRank.description[lang]}
