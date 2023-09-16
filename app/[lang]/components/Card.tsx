@@ -8,6 +8,8 @@ export type CardProps = {
 
 export function Card({ className, children }: CardProps) {
     return (
-        <div className={cls('space-y-3 bg-neutral-900 p-5 text-[13px]  text-neutral-450', className)}>{children}</div>
+        <div className={cls('space-y-3 bg-neutral-900 px-6 py-5 text-[13px]  text-neutral-450', className)}>
+            {children}
+        </div>
     )
 }
