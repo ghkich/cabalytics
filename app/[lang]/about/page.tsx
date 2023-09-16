@@ -38,7 +38,7 @@ export default async function About({ params }: { params: { lang: Locale } }) {
                 </div>
                 <div className="w-[5px] self-stretch bg-neutral-900 bg-opacity-50"></div>
                 <div className="flex flex-col gap-0.5 md:w-1/3">
-                    <Card className="bg-neutral-850 py-4 text-center">
+                    <Card className="bg-neutral-875 py-4 text-center">
                         <h2 className="text-xs text-neutral-400">
                             Versão 5.00a - <span className="text-[11px] text-orange-300">Alpha Release</span>
                         </h2>
@@ -49,7 +49,7 @@ export default async function About({ params }: { params: { lang: Locale } }) {
                         </p>
                         <p>{t('about.side_note_2')}</p>
                     </Card>
-                    <Card className="bg-neutral-850 text-xs leading-normal">
+                    <Card className="bg-neutral-875 text-xs leading-normal">
                         <p>{t('about.help_text')}</p>
                     </Card>
                     <Card className="bg-neutral-900 text-xs">
@@ -85,9 +85,8 @@ export default async function About({ params }: { params: { lang: Locale } }) {
                             <li>
                                 <span className="text-neutral-300">Mr. Wormy</span> - {t('about.credits_wormy')}{' '}
                                 <a href="https://mrwormy.tiiny.site/" target="_blank" className="text-neutral-400">
-                                    link
+                                    Link
                                 </a>
-                                .
                             </li>
                         </ul>
                     </Card>
