@@ -717,7 +717,7 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             },
         }),
         generateSkill({
-            name: { pt: 'Caçador Falcão', en: 'Falcon&amp;s Prey' },
+            name: { pt: 'Caçador Falcão', en: `Falcon${"'"}s Prey` },
             type: 'attack',
             rank: SkillRankType.Transcender,
             castingTime: 2.4,
