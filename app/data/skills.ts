@@ -14,6 +14,7 @@ export type SkillStats = {
 
 export type SkillDebuffs = {
     attack?: number
+    attackRate?: number
     defense?: number
     ignorePenetration?: number
     resistCriticalRate?: number
@@ -698,7 +699,91 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             },
         }),
     ],
-    [BattleStyleTypes.Blader]: [],
+    [BattleStyleTypes.Blader]: [
+        generateSkill({
+            name: { pt: 'Chamas do Infinito', en: 'Infinite Flame' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 2.2,
+            comboCastingTime: 2.2,
+            coolDown: 6.5,
+            stats: {
+                skillAmp: 85,
+                addAttack: 2747,
+                criticalDamage: 25,
+            },
+            debuffs: {
+                attackRate: -300,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Caçador Falcão', en: 'Falcon&amp;s Prey' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 2.4,
+            comboCastingTime: 2.4,
+            coolDown: 6.5,
+            stats: {
+                skillAmp: 95,
+                addAttack: 3399,
+                criticalDamage: 25,
+            },
+            debuffs: {
+                attackRate: -300,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Tempestade Mortal', en: 'Deadly Tempest' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 3,
+            comboCastingTime: 3,
+            coolDown: 6.5,
+            stats: {
+                skillAmp: 85,
+                addAttack: 2401,
+                criticalDamage: 25,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Corte Relâmpago', en: 'Lightning Slash' },
+            type: 'attack',
+            rank: SkillRankType.Completer,
+            castingTime: 3,
+            comboCastingTime: 2.8,
+            coolDown: 7.1,
+            stats: {
+                skillAmp: 80,
+                addAttack: 1807,
+                criticalDamage: 20,
+            },
+            isAffectedByNumberOfTargets: true,
+        }),
+        generateSkill({
+            name: { pt: 'Choque Arcano', en: 'Arcane Shock' },
+            type: 'attack',
+            rank: SkillRankType.Expert,
+            castingTime: 1,
+            comboCastingTime: 0.4,
+            coolDown: 26.5,
+            stats: {
+                skillAmp: 20,
+                addAttack: 306,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Corte Circular', en: 'Circular Slash' },
+            type: 'attack',
+            rank: SkillRankType.Regular,
+            castingTime: 2.1,
+            comboCastingTime: 1.3,
+            coolDown: 2.6,
+            stats: {
+                skillAmp: 25,
+                addAttack: 341,
+            },
+        }),
+    ],
     [BattleStyleTypes.ForceBlader]: [
         generateSkill({
             name: { pt: 'Tremor Cataclísmico', en: 'Cataclysmic Tremor' },
