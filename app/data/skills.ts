@@ -701,22 +701,6 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
     ],
     [BattleStyleTypes.Blader]: [
         generateSkill({
-            name: { pt: 'Chamas do Infinito', en: 'Infinite Flame' },
-            type: 'attack',
-            rank: SkillRankType.Transcender,
-            castingTime: 2.2,
-            comboCastingTime: 2.2,
-            coolDown: 6.5,
-            stats: {
-                skillAmp: 85,
-                addAttack: 2747,
-                criticalDamage: 25,
-            },
-            debuffs: {
-                attackRate: -300,
-            },
-        }),
-        generateSkill({
             name: { pt: 'Caçador Falcão', en: `Falcon${"'"}s Prey` },
             type: 'attack',
             rank: SkillRankType.Transcender,
@@ -726,6 +710,22 @@ export const battleStyleSkills: Record<BattleStyleTypes, Skill[]> = {
             stats: {
                 skillAmp: 95,
                 addAttack: 3399,
+                criticalDamage: 25,
+            },
+            debuffs: {
+                attackRate: -300,
+            },
+        }),
+        generateSkill({
+            name: { pt: 'Chamas do Infinito', en: 'Infinite Flame' },
+            type: 'attack',
+            rank: SkillRankType.Transcender,
+            castingTime: 2.2,
+            comboCastingTime: 2.2,
+            coolDown: 6.5,
+            stats: {
+                skillAmp: 85,
+                addAttack: 2747,
                 criticalDamage: 25,
             },
             debuffs: {
